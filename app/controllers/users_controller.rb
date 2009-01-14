@@ -34,6 +34,7 @@ class UsersController < ApplicationController
   
 protected
   def get_user
-    @user = params[:id] ? User.find(params[:id]) : current_user
+    @user = params[:id] ? User.find_by_login(params[:id]) : current_user
+    raise ActiveRecord::RecordNotFound unless @user
   end
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090114032142) do
+ActiveRecord::Schema.define(:version => 20090114035451) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20090114032142) do
     t.string   "type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
 
   add_index "companies", ["account_id"], :name => "index_companies_on_account_id"

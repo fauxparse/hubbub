@@ -1,4 +1,6 @@
 class CompaniesController < ApplicationController
+  before_filter :get_company, :only => [ :show, :edit, :update, :destroy ]
+  
   # GET /companies
   # GET /companies.xml
   def index
@@ -13,8 +15,6 @@ class CompaniesController < ApplicationController
   # GET /companies/1
   # GET /companies/1.xml
   def show
-    @company = current_account.companies.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @company }
@@ -34,7 +34,6 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1/edit
   def edit
-    @company = current_account.companies.find(params[:id])
   end
 
   # POST /companies
@@ -57,8 +56,6 @@ class CompaniesController < ApplicationController
   # PUT /companies/1
   # PUT /companies/1.xml
   def update
-    @company = current_account.companies.find(params[:id])
-
     respond_to do |format|
       if @company.update_attributes(params[:company])
         flash[:notice] = 'Company was successfully updated.'
@@ -74,12 +71,17 @@ class CompaniesController < ApplicationController
   # DELETE /companies/1
   # DELETE /companies/1.xml
   def destroy
-    @company = current_account.companies.find(params[:id])
     @company.destroy
 
     respond_to do |format|
       format.html { redirect_to companies_path }
       format.xml  { head :ok }
     end
+  end
+  
+protected
+  def get_company
+    @company = current_account.companies.find_by_slug(params[:id])
+    raise ActiveRecord::RecordNotFound if @company.nil?
   end
 end
