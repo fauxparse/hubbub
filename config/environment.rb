@@ -27,6 +27,8 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
+  
+  config.gem "authlogic"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
@@ -55,7 +57,7 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_gallifrey_session',
+    :session_key => '_hubbub_session',
     :secret      => '761ce393fb2dd7cbac4457c2b619236b186e408aeaac5cd5c0450d10d57401f53593677f950e773c13e5c31a1d590b3979719289f6f07a5b73514e2023e19a4f'
   }
 
