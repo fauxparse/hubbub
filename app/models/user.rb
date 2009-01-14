@@ -4,4 +4,10 @@ class User < ActiveRecord::Base
   
   alias_attribute :to_s, :name
   alias_attribute :to_param, :login
+  
+  #--
+  # TODO proper name fields
+  def name
+    login
+  end
 end

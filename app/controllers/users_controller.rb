@@ -2,15 +2,19 @@ class UsersController < ApplicationController
   before_filter :login_required, :only => [ :show, :edit, :update ]
   before_filter :get_user, :except => [ :new, :create ]
 
+  def index
+    @companies = params[:company_id] ? [ current_company ] : current_account.companies.all(:include => :users)
+  end
+
   def new
-    @user = current_account.users.new
+    @user = current_account.users.build(:company_id => current_company.id)
   end
 
   def create
-    @user = current_account.users.new(params[:user])
+    @user = current_account.users.build(params[:user])
     if @user.save
       flash[:notice] = "Account registered!"
-      redirect_back_or_default settings_path
+      redirect_back_or_default @user
     else
       render :action => :new
     end

@@ -1,0 +1,5 @@
+<h1>Users</h1>
+
+<% @companies.each do |company| -%>
+	<%= render :partial => company.class.name.underscore, :object => company %>
+<% end -%>

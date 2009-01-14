@@ -16,9 +16,10 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :current_company
   
   before_filter :check_account_status
+  before_filter :login_required
   
   layout :current_layout_name
 
@@ -62,5 +63,9 @@ protected
 
   def current_layout_name
     public_site? ? 'public' : 'application'
+  end
+
+  def current_company
+    @company ||= params[:company_id] ? Company.find_by_slug(params[:company_id]) : Company.find(current_account.agency_id)
   end
 end

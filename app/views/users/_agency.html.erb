@@ -1,0 +1,5 @@
+<% content_tag :div, :class => "agency", :id => dom_id(agency) do -%>
+	<%= content_tag :h2, agency %>
+	<%= render :partial => agency.users %>
+	<%= link_to "New user", new_company_user_path(agency) %>
+<% end -%>

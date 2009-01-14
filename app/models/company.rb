@@ -1,5 +1,6 @@
 class Company < ActiveRecord::Base
   belongs_to :account
+  has_many :users
   
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug, :scope => :account_id
@@ -7,6 +8,8 @@ class Company < ActiveRecord::Base
   
   alias_attribute :to_s, :name
   alias_attribute :to_param, :slug
+
+  #default_scope :order => "name ASC"
 
 protected
   def generate_slug

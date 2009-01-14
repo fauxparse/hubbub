@@ -21,5 +21,6 @@ protected
   
   def create_account_agency
     self.create_agency :name => self.name, :account => self
+    save
   end
 end
