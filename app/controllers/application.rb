@@ -2,6 +2,8 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  include SubdomainAccounts
+  
   helper :all # include all helpers, all the time
 
   # See ActionController::RequestForgeryProtection for details
@@ -15,8 +17,19 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user
+  
+  before_filter :check_account_status
+  
+  layout :current_layout_name
 
-private
+protected
+  def check_account_status
+    #unless account_subdomain == default_account_subdomain
+      # TODO: this is where we could check to see if the account is active as well (paid, etc...)
+      redirect_to default_account_url if current_account.nil? 
+    #end
+  end
+
   def current_user_session
     @current_user_session ||= UserSession.find
   end
@@ -41,5 +54,13 @@ private
   def redirect_back_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
+  end
+  
+  def public_site?
+    account_subdomain == default_account_subdomain
+  end
+
+  def current_layout_name
+    public_site? ? 'public' : 'application'
   end
 end

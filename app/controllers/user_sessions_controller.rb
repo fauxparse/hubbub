@@ -9,7 +9,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = "Logged in successfully"
-      redirect_back_or_default account_url
+      redirect_back_or_default settings_url # TODO send to dashboard instead
     else
       render :action => :new
     end
@@ -18,6 +18,6 @@ class UserSessionsController < ApplicationController
   def destroy
     current_user_session.destroy
     flash[:notice] = "Logged out successfully"
-    redirect_back_or_default new_user_session_url
+    redirect_back_or_default login_session_url
   end
 end

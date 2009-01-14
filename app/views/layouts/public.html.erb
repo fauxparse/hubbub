@@ -11,14 +11,6 @@
  
 <h1>Hubbub</h1>
  
-<% if !current_user %>
-  <%= link_to "Register", new_user_path %> |
-  <%= link_to "Log In", new_user_session_path %> |
-<% else %>
-  <%= link_to "Settings", settings_path %> |
-  <%= link_to "Log Out", user_session_path, :method => :delete %>
-<% end %>
- 
 <p style="color: green"><%= flash[:notice] %></p>
  
 <%= yield  %>

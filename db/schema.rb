@@ -9,7 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090114014946) do
+ActiveRecord::Schema.define(:version => 20090114022150) do
+
+  create_table "accounts", :force => true do |t|
+    t.string   "name"
+    t.string   "subdomain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -29,6 +38,8 @@ ActiveRecord::Schema.define(:version => 20090114014946) do
     t.string   "last_login_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "account_id"
+    t.boolean  "admin"
   end
 
 end
