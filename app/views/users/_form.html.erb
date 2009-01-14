@@ -7,3 +7,11 @@
 <%= form.label :password_confirmation %><br />
 <%= form.password_field :password_confirmation %><br />
 <br />
+<%= form.label :company_id %><br />
+<%= form.select :company_id, current_account.companies.collect { |c| [ c.name, c.id ] } %><br />
+<br />
+<% if current_user.admin? -%>
+	<%= form.check_box :admin %>
+	<%= form.label :admin, "Administrator?" %>
+	<br />
+<% end -%>

@@ -1,0 +1,5 @@
+<h1>Editing company</h1>
+
+<% form_for @company, :url => company_path(@company) do |form| %>
+	<%= render :partial => "form", :object => form, :locals => { :button => "Save" } %>
+<% end %>

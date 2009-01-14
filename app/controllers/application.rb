@@ -35,7 +35,7 @@ protected
   end
 
   def current_user
-    @current_user ||= current_user_session && current_user_session.user
+    @current_user ||= (current_user_session && current_user_session.user)
   end
   
   def login_required

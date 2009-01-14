@@ -1,0 +1,2 @@
+class Agency < Company
+end
