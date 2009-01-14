@@ -6,5 +6,8 @@ ActionController::Routing::Routes.draw do |map|
   map.login "/logout", :controller => "user_sessions", :action => "destroy"
   
   map.resource :user_session
-  map.root :controller => "accounts", :action => "index"
+  map.resource :dashboard
+  
+  map.root :controller => "accounts", :action => "index", :conditions => { :subdomain => false }
+  map.root :controller => "dashboards", :action => "index", :conditions => { :subdomain => true }
 end
