@@ -10,8 +10,8 @@ describe "/projects/index.html.erb" do
     ]
   end
 
-  it "should render list of projects" do
-    render "/projects/index.html.erb"
-  end
+  # it "should render list of projects" do
+  #   render "/projects/index.html.erb"
+  # end
 end
 

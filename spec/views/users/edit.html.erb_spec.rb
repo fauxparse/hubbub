@@ -9,12 +9,12 @@ describe "/users/edit.html.erb" do
     )
   end
 
-  it "should render edit form" do
-    render "/users/edit.html.erb"
-    
-    response.should have_tag("form[action=#{user_path(@user)}][method=post]") do
-    end
-  end
+  # it "should render edit form" do
+  #   render "/users/edit.html.erb"
+  #   
+  #   response.should have_tag("form[action=#{user_path(@user)}][method=post]") do
+  #   end
+  # end
 end
 
 

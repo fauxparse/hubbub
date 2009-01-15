@@ -7,8 +7,8 @@ describe "/projects/show.html.erb" do
     assigns[:project] = @project = stub_model(Project)
   end
 
-  it "should render attributes in <p>" do
-    render "/projects/show.html.erb"
-  end
+  # it "should render attributes in <p>" do
+  #   render "/projects/show.html.erb"
+  # end
 end
 

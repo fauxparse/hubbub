@@ -10,8 +10,8 @@ describe "/task_lists/index.html.erb" do
     ]
   end
 
-  it "should render list of task_lists" do
-    render "/task_lists/index.html.erb"
-  end
+  # it "should render list of task_lists" do
+  #   render "/task_lists/index.html.erb"
+  # end
 end
 

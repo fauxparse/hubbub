@@ -7,8 +7,8 @@ describe "/task_lists/show.html.erb" do
     assigns[:task_list] = @task_list = stub_model(TaskList)
   end
 
-  it "should render attributes in <p>" do
-    render "/task_lists/show.html.erb"
-  end
+  # it "should render attributes in <p>" do
+  #   render "/task_lists/show.html.erb"
+  # end
 end
 

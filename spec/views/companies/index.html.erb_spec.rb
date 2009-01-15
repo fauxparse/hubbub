@@ -10,8 +10,8 @@ describe "/companies/index.html.erb" do
     ]
   end
 
-  it "should render list of companies" do
-    render "/companies/index.html.erb"
-  end
+  # it "should render list of companies" do
+  #   render "/companies/index.html.erb"
+  # end
 end
 

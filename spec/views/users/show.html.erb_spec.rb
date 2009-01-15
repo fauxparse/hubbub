@@ -7,8 +7,8 @@ describe "/users/show.html.erb" do
     assigns[:user] = @user = stub_model(User)
   end
 
-  it "should render attributes in <p>" do
-    render "/users/show.html.erb"
-  end
+  # it "should render attributes in <p>" do
+  #   render "/users/show.html.erb"
+  # end
 end
 

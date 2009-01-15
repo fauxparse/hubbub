@@ -9,12 +9,12 @@ describe "/projects/edit.html.erb" do
     )
   end
 
-  it "should render edit form" do
-    render "/projects/edit.html.erb"
-    
-    response.should have_tag("form[action=#{project_path(@project)}][method=post]") do
-    end
-  end
+  # it "should render edit form" do
+  #   render "/projects/edit.html.erb"
+  #   
+  #   response.should have_tag("form[action=#{project_path(@project)}][method=post]") do
+  #   end
+  # end
 end
 
 

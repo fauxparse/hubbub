@@ -9,12 +9,12 @@ describe "/task_lists/edit.html.erb" do
     )
   end
 
-  it "should render edit form" do
-    render "/task_lists/edit.html.erb"
-    
-    response.should have_tag("form[action=#{task_list_path(@task_list)}][method=post]") do
-    end
-  end
+  # it "should render edit form" do
+  #   render "/task_lists/edit.html.erb"
+  #   
+  #   response.should have_tag("form[action=#{task_list_path(@task_list)}][method=post]") do
+  #   end
+  # end
 end
 
 
