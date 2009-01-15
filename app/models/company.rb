@@ -3,7 +3,7 @@ class Company < ActiveRecord::Base
   has_many :users
   has_many :projects
   
-  validates_presence_of :name, :slug
+  validates_presence_of :name, :slug, :account_id
   validates_uniqueness_of :name, :slug, :scope => :account_id
   before_validation :generate_slug
   

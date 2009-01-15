@@ -9,4 +9,8 @@ class TaskList < ActiveRecord::Base
   def to_param
     "#{id}_#{name.parameterize}"
   end
+  
+  def empty?
+    open_tasks_count.zero?
+  end
 end
