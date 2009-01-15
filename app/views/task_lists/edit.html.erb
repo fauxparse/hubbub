@@ -1,0 +1,8 @@
+<h1>Editing Task List</h1>
+
+<% form_for @task_list do |form| %>
+	<%= render :partial => "form", :object => form, :locals => { :button => "Create" } %>
+<% end %>
+
+<%= link_to 'Show', @task_list %> |
+<%= link_to 'Back', project_task_lists_path(scope) %>

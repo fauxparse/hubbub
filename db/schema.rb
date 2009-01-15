@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090115201109) do
+ActiveRecord::Schema.define(:version => 20090115230159) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -51,6 +51,16 @@ ActiveRecord::Schema.define(:version => 20090115201109) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "task_lists", :force => true do |t|
+    t.integer  "project_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "current_state"
+    t.integer  "open_tasks_count", :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "login"
