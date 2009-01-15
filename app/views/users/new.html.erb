@@ -1,7 +1,5 @@
 <h1>Register</h1>
  
-<% form_for @user, :url => company_users_path(current_company) do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial => "form", :object => f %>
-  <%= f.submit "Register" %>
+<% form_for @user, :url => company_users_path(current_company) do |form| %>
+  <%= render :partial => "form", :object => form, :locals => { :button => "Create" } %>
 <% end %>

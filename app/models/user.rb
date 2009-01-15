@@ -4,10 +4,11 @@ class User < ActiveRecord::Base
   
   alias_attribute :to_s, :name
   alias_attribute :to_param, :login
-  
-  #--
-  # TODO proper name fields
-  def name
-    login
+
+  validates_presence_of :name
+  validates_uniqueness_of :display_name, :scope => :account_id
+
+  def display_name
+    (s = super).blank? ? name : s
   end
 end

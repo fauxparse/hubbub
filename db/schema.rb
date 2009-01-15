@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090114035451) do
+ActiveRecord::Schema.define(:version => 20090114195510) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -53,6 +53,10 @@ ActiveRecord::Schema.define(:version => 20090114035451) do
     t.integer  "account_id"
     t.boolean  "admin"
     t.integer  "company_id"
+    t.string   "name"
+    t.string   "display_name"
+    t.string   "email"
+    t.string   "phone"
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"

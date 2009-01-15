@@ -1,17 +1,14 @@
-<%= form.label :login %><br />
-<%= form.text_field :login %><br />
-<br />
-<%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
-<%= form.password_field :password %><br />
-<br />
-<%= form.label :password_confirmation %><br />
-<%= form.password_field :password_confirmation %><br />
-<br />
-<%= form.label :company_id %><br />
-<%= form.select :company_id, current_account.companies.collect { |c| [ c.name, c.id ] } %><br />
-<br />
-<% if current_user.admin? -%>
-	<%= form.check_box :admin %>
-	<%= form.label :admin, "Administrator?" %>
-	<br />
-<% end -%>
+<%= form.error_messages %>
+<ol class="form">
+	<li class="text"><%= form.label :name %> <%= form.text_field :name %></li>
+	<li class="text"><%= form.label :display_name %> <%= form.text_field :display_name %></li>
+	<li class="text"><%= form.label :email %> <%= form.text_field :email %></li>
+	<li class="text"><%= form.label :login %> <%= form.text_field :login %></li>
+	<li class="text"><%= form.label :password, form.object.new_record? ? nil : "Change password" %> <%= form.password_field :password %></li>
+	<li class="text"><%= form.label :password_confirmation, "Confirm password" %> <%= form.password_field :password_confirmation %></li>
+	<li class="text"><%= form.label :company_id %> <%= form.select :company_id, current_account.companies.collect { |c| [ c.name, c.id ] } %></li>
+	<% if current_user.admin? -%>
+		<li class="text"><%= form.check_box :admin %> <%= form.label :admin, "Administrator?" %></li>
+	<% end -%>
+	<li class="buttons"><%= form.submit button, :class => "button" %></li>
+</ol>
