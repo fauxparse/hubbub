@@ -1,0 +1,841 @@
+require "#{File.dirname(__FILE__)}/spec_helper"
+require "#{File.dirname(__FILE__)}/../lib/stateful"
+
+#
+# WARNING - THIS IS A SANDPIT
+# AND I AM PLAYING WITH PLASTIC TRACTORS
+#
+# this code is barely the beginning of a sketch
+# and is committed solely so i can pick it up from home.
+#
+# ignore this warning at your peril.
+
+describe 'Stateful' do
+  include SpecHelper
+
+  before do
+    @model = ModelWithStateful.new
+  end
+
+  after do
+    Stateful.reset!
+  end
+
+  describe "Stateful class methods" do
+    describe "accessor for specifications" do
+      it "should return an empty OrderedHash with no specifications" do
+        Stateful.specifications.should == ActiveSupport::OrderedHash.new( )
+      end
+
+      it "should return an OrderedHash with one specification" do
+        Stateful.specify do
+          state :old
+        end
+        Stateful[:default].should be_kind_of( Stateful::Specification )
+        Stateful[:default].states.length.should == 1
+
+        Stateful.specifications.should_not be_nil
+        Stateful.specifications.should be_kind_of( ActiveSupport::OrderedHash )
+        Stateful.specifications.length.should == 1
+      end
+
+      it "should update the existing specification if specify is called twice for the same specification" do
+        Stateful.specify do
+          state :new
+        end
+
+        Stateful[:default].states.length.should == 1
+        Stateful[:default].states.map(&:name).should == [:new]
+
+        Stateful.specify do
+          state :old
+        end
+
+        Stateful[:default].states.length.should == 2
+        Stateful[:default].states.map(&:name).should == [:new, :old]
+      end
+    end
+  end
+
+
+  describe 'ActiveRecord inclusion of Stateful' do
+
+    it "should have a stateful class method having included Stateful" do
+      @model.class.should respond_to('stateful')
+    end
+
+    describe "when a second activerecord object requires Stateful" do
+      before do
+        class ModelWithSomeStateful < ActiveRecord::Base
+          set_table_name 'spec_models'
+          include Stateful
+          stateful do
+            state :only
+          end
+        end
+
+        class ModelWithDifferentStateful < ActiveRecord::Base
+          set_table_name 'spec_models'
+          include Stateful
+
+          stateful do
+            state :wizz do |state|
+              state.event :fizzle, :to => :fizz
+            end
+            state :fizz do |state|
+              state.event :wizzle, :to => :wizz
+            end
+          end
+
+          stateful("StringName", :string_instance) do
+            state :stringy
+          end
+
+          stateful()
+        end
+      end
+
+      it "should define a spec for each of the stateful blocks" do
+        Stateful[ ModelWithSomeStateful, :stateful ].should be_kind_of( Stateful::Specification )
+        Stateful[ ModelWithSomeStateful, :stateful ].states.map(&:name).should == [:only]
+
+        Stateful[ ModelWithDifferentStateful, :stateful ].should be_kind_of( Stateful::Specification )
+        Stateful[ ModelWithDifferentStateful, :stateful ].states.map(&:name).should == [:wizz, :fizz]
+
+        Stateful[ "StringName" ].should be_kind_of( Stateful::Specification )
+        Stateful[ "StringName" ].states.map(&:name).should == [:stringy]
+      end
+
+      it "should bind to the class which defined it" do
+        @some = ModelWithSomeStateful.new( )
+        @some.should respond_to('stateful')
+
+        @some.stateful.should_not be_nil
+        @some.stateful.should be_kind_of( Stateful::Instance )
+
+        @some.stateful.specification.should be_kind_of( Stateful::Specification )
+        @some.stateful.specification.should == Stateful[ ModelWithSomeStateful, :stateful ]
+
+        @diff = ModelWithDifferentStateful.new()
+        @diff.should respond_to('stateful')
+
+        @diff.stateful.should_not be_nil
+        @diff.stateful.should be_kind_of( Stateful::Instance )
+
+        @diff.stateful.specification.should be_kind_of( Stateful::Specification )
+        @diff.stateful.specification.should == Stateful[ ModelWithDifferentStateful, :stateful ]
+
+        @diff.should respond_to('string_instance')
+        @diff.string_instance.should be_kind_of( Stateful::Instance )
+        @diff.string_instance.specification.should == Stateful[ "StringName" ]
+      end
+
+
+      it "does not interfere with the stateful of the first object" do
+        Stateful[ ModelWithSomeStateful ].should be_kind_of( Stateful::Specification )
+        Stateful[ ModelWithSomeStateful, :stateful ].should be_kind_of( Stateful::Specification )
+        Stateful[ ModelWithSomeStateful ].should == Stateful[ ModelWithSomeStateful, :stateful ]
+        Stateful[ ModelWithSomeStateful ].states.map(&:name).should == [:only]
+
+        Stateful[ ModelWithDifferentStateful ].should be_kind_of( Stateful::Specification )
+        Stateful[ ModelWithDifferentStateful, :stateful ].should be_kind_of( Stateful::Specification )
+        Stateful[ ModelWithDifferentStateful ].should  == Stateful[ ModelWithDifferentStateful, :stateful ]
+        Stateful[ ModelWithDifferentStateful ].states.map(&:name).should == [:wizz, :fizz]
+
+
+        ModelWithSomeStateful.new.stateful.state_name.should      == :only
+        ModelWithDifferentStateful.new.stateful.state_name.should == :wizz
+      end
+    end
+
+    describe "when an activerecord defines multiple Statefuls" do
+      before do
+        class HasTwo < ActiveRecord::Base
+
+          set_table_name 'spec_models'
+          include Stateful
+
+          stateful do  # Stateful[ HasTwo, :stateful ] # stateful_state
+            state :only
+          end
+
+          stateful( HasTwo, :status ) do # Stateful[ HasTwo, :stateful ] # status_state
+            state :wizz do |state|
+              state.event :fizzle, :to => :fizz
+            end
+            state :fizz do |state|
+              state.event :wizzle, :to => :wizz
+            end
+          end
+
+          stateful( "Snoo", :snoo ) do # Stateful[ "Snoo" ] , method: snoo
+
+            state :pending do |state|
+              state.event :approve, :to => :approved
+
+              state.event :check_approval do |event|
+                event.execute do |model|
+                  # just do something with the model
+                end
+              end
+
+            end
+
+            state :approved
+          end
+        end
+
+      end
+
+      it "does not interfere with the stateful of the first object" do
+        Stateful[ HasTwo ].should be_kind_of( Stateful::Specification )
+        Stateful[ HasTwo ].should == Stateful[ HasTwo, :stateful ]
+        Stateful[ HasTwo ].states.map(&:name).should == [ :only ]
+
+        Stateful[ HasTwo, :status ].should be_kind_of( Stateful::Specification )
+        Stateful[ HasTwo, :status ].should_not == Stateful[ HasTwo, :stateful ]
+        Stateful[ HasTwo, :status ].states.map(&:name).should == [ :wizz, :fizz ]
+      end
+
+      it "should create an accessor method and instance variable with the name of the method specified" do
+        @instance = HasTwo.new()
+        @instance.should respond_to('status')
+        @instance.status.specification.should == Stateful[ HasTwo, :status ]
+      end
+    end
+
+
+    describe "when a non-AR object includes Stateful" do
+      it "should raise an ArgumentError" do
+        lambda {  class Foo; include Stateful; end  }.should raise_error( ArgumentError )
+      end
+    end
+
+  end
+
+  describe 'stateful instance method' do
+    describe 'A class with no specification but which has included the Stateful module' do
+      before do
+        @none    = ModelWithStateful.new()
+      end
+
+      it "should not have a stateful method before the default stateful has been specified" do
+        # @none.should_not respond_to('stateful')
+      end
+
+    end
+
+    describe "A class with an empty default stateful" do
+      before do
+        @empty    = ModelWithStateful.new
+        ModelWithStateful.class_eval do
+          stateful do
+          end
+        end
+      end
+
+      it "should have a stateful method which returns nil because the stateful has no state" do
+        @empty.should respond_to('stateful')
+        @empty.stateful.should be_nil
+      end
+
+      it "should create a specification for the model in Stateful" do
+        Stateful[ ModelWithStateful ].should_not be_nil
+        Stateful[ ModelWithStateful ].should be_kind_of( Stateful::Specification )
+      end
+
+      it "should return nil without an error when instance.stateful is called with no block" do
+        lambda do
+          @empty.stateful
+        end.should_not raise_error( )
+        @empty.stateful.should be_nil
+      end
+
+      it "should return the stateful specification when the class method :stateful is called with no block" do
+        @empty.class.stateful.should be_kind_of( Stateful::Specification )
+      end
+
+    end
+
+    describe "A class with two states and two events" do
+      before do
+        @simple    = ModelWithStateful.new
+
+        ModelWithStateful.class_eval do
+
+          attr_accessor :previous_name
+
+          # how contrived is this?
+          def set_previous_name *arg
+            @previous_name = read_attribute(:name)
+          end
+
+          stateful do
+
+            state :new do |state|
+              state.event :age, :transitions_to => :old
+            end
+
+            state :old do |state|
+              state.event( :be_reborn, :to => :new ) do |event|
+
+                event.before :set_previous_name
+
+                event.execute do |model, new_name|
+                  model.name = new_name
+                end
+
+              end
+            end
+
+          end
+        end
+
+      end
+
+      it "should return the stateful specification when the class method :stateful is called with no block" do
+        @simple.class.stateful.should be_kind_of( Stateful::Specification )
+      end
+
+      it "should return a Stateful::Instance for the model instance when called with no block" do
+        @simple.stateful
+        @simple.stateful.should be_kind_of( Stateful::Instance )
+        @simple.stateful.specification.should == Stateful[ @simple.class ]
+        @simple.stateful.receiver.should == @simple
+      end
+
+      it "should have two states (new and old)" do
+        @simple.stateful.states.length.should == 2
+        @simple.stateful.states.map(&:name).should == [:new, :old]
+      end
+
+      it "should have one event for each state" do
+        @simple.stateful.events.values.length.should == 2
+        @simple.stateful.events[:new].length.should == 1
+        @simple.stateful.events[:new].first.name.should == :age
+        @simple.stateful.events[:new].first.transitions_to.should == :old
+        @simple.stateful.events[:old].length.should == 1
+        @simple.stateful.events[:old].length.should == 1
+        @simple.stateful.events[:old].first.name.should == :be_reborn
+        @simple.stateful.events[:old].first.transitions_to.should == :new
+      end
+
+      it "should initially have the stateful_state :new" do
+        @simple.stateful.state_name.should == :new
+        @simple.stateful.state.name.should == :new
+      end
+
+      it "should have created a method for each event on the receiver" do
+        @simple.should respond_to('age')
+        @simple.should respond_to('be_reborn')
+      end
+
+      it "should change the state when a simple event is called" do
+        @simple.stateful.state_name.should == :new
+        @simple.age
+        @simple.stateful.state_name.should == :old
+      end
+
+      it "should not allow direct assignment of state " do
+        lambda { @simple.stateful.set_state :new }.should raise_error(NoMethodError)
+      end
+
+      it "should initialize with state as the first state if the stateful column is nil" do
+        @simple.stateful.should be_kind_of( Stateful::Instance )
+        @simple.stateful.states.should_not be_empty
+        @simple.stateful.states.first.should be_kind_of( Stateful::State )
+        @simple.stateful.specification.should be_kind_of( Stateful::Specification )
+        @simple.stateful.state.should_not be_nil
+        @simple.stateful.state_name.should_not be_nil
+        @simple.stateful.state_name.should == :new
+        @simple.stateful.state.name.should == :new
+        @simple.stateful.state.should == @simple.stateful.states.first
+        @simple.stateful.state.should be_kind_of( Stateful::State )
+      end
+
+      it "should trigger an IllegalTransition when an event is called in the wrong state" do
+        @simple.stateful.state_name.should == :new
+        lambda {  @simple.be_reborn("Sven") }.should raise_error( Stateful::IllegalTransition )
+        @simple.age
+        @simple.stateful.state_name.should == :old
+        lambda {  @simple.be_reborn("Pieter") }.should_not raise_error( Stateful::IllegalTransition )
+        @simple.stateful.state_name.should == :new
+      end
+
+      it "should have a proc in the execute hook for be_reborn" do
+        @event = @simple.stateful.states[:old].events[:be_reborn]
+        @event.hooks.should be_kind_of( Stateful::Events::HookSet )
+        @event.hooks.execute.should_not be_nil
+        @event.hooks.execute.should be_kind_of( Proc )
+      end
+
+      it "should require a name argument when be_reborn is called" do
+        @simple.age
+        @simple.stateful.state_name.should == :old
+        lambda { @simple.be_reborn }.should raise_error( ArgumentError )
+        lambda { @simple.be_reborn("Wendy") }.should_not raise_error( ArgumentError )
+      end
+
+      it "should execute the code in the execute block when be_reborn is called" do
+        @simple.name.should be_nil
+        @simple.age
+        @simple.be_reborn("Rasputin")
+        @simple.name.should == "Rasputin"
+      end
+
+      it "should have a method reference in the before hook for be_reborn" do
+
+      end
+
+      it "should store the name of the method for the before hook in hooks.before_name" do
+        @event = @simple.stateful.states[:old].events[:be_reborn]
+        @event.hooks.before.should == :set_previous_name
+      end
+    end
+
+  end
+
+  describe 'specify block' do
+
+    describe 'An empty stateful specification' do
+
+      before do
+        Stateful.specify do
+          # nothing
+        end
+      end
+
+      it "should define a specification for Stateful[:default]" do
+        Stateful[:default].should_not be_nil
+        Stateful[:default].class.should == Stateful::Specification
+        Stateful.specifications.length.should == 1
+        Stateful.specifications[:default].should == Stateful[:default]
+      end
+
+      it "should create a :default Specification with an empty collection of states" do
+        Stateful[:default].states.should == []
+      end
+
+      it "should have the column :stateful_state" do
+        Stateful[:default].column_name.should == 'default_state'
+      end
+    end
+
+    describe 'An empty stateful specification with a specified column_name' do
+
+      before do
+        Stateful.specify( :field => 'status' ) do
+        end
+      end
+
+      it "should have the column specified" do
+        Stateful.specifications.should_not be_empty
+        Stateful.specifications.keys.should == [:default]
+        Stateful[:default].column_name.should == 'status'
+      end
+    end
+
+    describe 'An empty stateful specification with a name and specified column_name' do
+
+      before do
+        Stateful.specify( "BORIS", :field => 'status' ) do
+        end
+      end
+
+      it "should have the name specified" do
+        Stateful.specifications.keys.should == [:BORIS]
+        Stateful[:BORIS].should_not be_nil
+        Stateful[:BORIS].should be_kind_of( Stateful::Specification )
+      end
+
+      it "should have the column specified" do
+        Stateful["BORIS"].column_name.should == 'status'
+      end
+
+      it "should have a default column_name" do
+        Stateful.specify("FAT CHICKS") do
+        end.column_name.should == "fat_chicks_state"
+      end
+    end
+
+  end
+
+  describe "State class" do
+    before do
+      @state = Stateful::State.new('new')
+    end
+
+    describe "Simple constructor" do
+      it "should create a named state" do
+        @state.name.should == :new
+      end
+    end
+
+    describe "instance methods" do
+
+      it "should add an event when the event method is called" do
+        @state.event :snoo, :transitions_to => "fuh"
+        @state.events.should be_kind_of( Array )
+        @state.events.first.name.should == :snoo
+        @state.events.first.transitions_to.should == :fuh
+      end
+
+      it "should have an :events method which returns an array of events" do
+        @state.event :snoo,   :transitions_to => "fuh"
+        @state.event :wibble, :transitions_to => :drongo
+        @state.events.should be_kind_of( Array )
+        @state.events.map(&:name).should == [:snoo, :wibble]
+      end
+
+      it "should return the named event if passed an event name" do
+        @state.event :snoo,   :transitions_to => "fuh"
+        @state.event :wibble, :transitions_to => :drongo
+        @state.events[:snoo].should be_kind_of(Stateful::Event)
+        @state.events[:snoo].name.should == :snoo
+      end
+
+      it "should replace an existing event if the name has been taken" do
+        @state.event :snoo, :transitions_to => "wizz"
+        @state.event :snoo, :transitions_to => "fizz"
+        @state.events.length.should == 1
+        @state.events[:snoo].transitions_to.should == :fizz
+      end
+
+      it "should allow :to as a shorthand for :transitions_to" do
+        @state.event :snoo, :to => "wozzle"
+        @state.events.first.transitions_to.should == :wozzle
+      end
+
+      it "should have a method events_to() which returns a list of events transitioning to the named event" do
+        @state.event :burn , :to => :broken
+        @state.event :bash,  :to => :broken
+        @state.event :drown, :to => :broken
+        @state.event :sell,  :to => :sold
+        @state.should respond_to(:events_to)
+        @state.events_to(:broken).should be_kind_of( Array )
+        @state.events_to(:broken).length.should == 3
+        @state.events_to(:broken).map(&:name).should_not include(:sell)
+        @state.events_to(:broken).map(&:name).should == [:burn, :bash, :drown]
+        @state.events_to('broken').map(&:name).should == [:burn, :bash, :drown]
+      end
+    end
+  end
+
+  describe "Event class" do
+    before do
+      @event = Stateful::Event.new(:new, :old)
+    end
+
+    describe "A simple constructor" do
+      it "should create a named state" do
+        @event.name.should           == :new
+        @event.transitions_to.should == :old
+      end
+    end
+
+    describe "require" do
+      describe "passed just a symbol" do
+        it "should create a Requirement" do
+          @event.requires :valid?
+          @event.requirements.should_not be_empty
+        end
+
+        it "should call a method on the receiver and return its value" do
+
+        end
+      end
+    end
+
+    describe "satisfy" do
+
+    end
+
+    describe "before" do
+
+    end
+
+    describe "after" do
+    end
+
+    describe "execute" do
+    end
+
+  end
+
+  describe "Event rule" do
+    describe "constructor" do
+
+    end
+  end
+
+  describe "Specification class" do
+
+    describe "with an empty block" do
+      before do
+        @spec = Stateful::Specification.new( ) do
+        end
+      end
+
+      it "should create a new specification" do
+        @spec.should be_kind_of( Stateful::Specification )
+      end
+
+      it "should have an empty list of states" do
+        @spec.states.should == []
+      end
+
+      it "should have an empty collection of events" do
+        @spec.events.should == ActiveSupport::OrderedHash.new()
+      end
+
+    end
+
+    describe "with single state and no event" do
+      before do
+        @spec = Stateful::Specification.new( ) do
+          state :new
+        end
+      end
+
+      it "should create a new specification" do
+        @spec.should be_kind_of( Stateful::Specification )
+      end
+
+      it "should have a single state" do
+        @spec.states.length.should == 1
+        @state = @spec.states.first
+        @state.should be_kind_of( Stateful::State )
+        @state.name.should == :new
+      end
+
+      it "should have an empty collection of events for the state :new" do
+        @spec.states.first.events.should be_empty
+        @spec.events.values.first.should be_empty
+      end
+
+      it "should have a state accessor which takes a name and returns the named state" do
+        @spec.states[:new].should be_kind_of(Stateful::State)
+        @spec.states[:new].name.should  == :new
+        @spec.states["new"].name.should == :new
+      end
+
+    end
+
+    describe "with two states with an event each" do
+      before do
+        @spec = Stateful::Specification.new( ) do
+          state :young do |state|
+            state.event :age, :transitions_to => :old
+          end
+
+          state :old do |state|
+            state.event :rejuvenate, :transitions_to => :young
+          end
+
+        end
+      end
+
+      it "should have two states in order" do
+        @spec.states.should_not be_empty
+        @spec.states.length.should == 2
+        @spec.states.map(&:name).should == [:young, :old]
+      end
+
+      it "should have an events collection with states as keys and events as values" do
+        @spec.events.should be_kind_of( ActiveSupport::OrderedHash )
+        @spec.events.should_not be_empty
+        @spec.events.keys.should == @spec.states.map(&:name)
+        @spec.events.values.first.should be_kind_of( Array )
+        @spec.events.values.compact.length.should == 2
+        @spec.events.values.flatten.first.should be_kind_of( Stateful::Event )
+        @spec.events.values.flatten.map(&:name).should == [:age, :rejuvenate]
+        @spec.events[:young].first.name.should == :age
+        @spec.events[:old].first.name.should == :rejuvenate
+      end
+    end
+
+    describe "with 4 states and contrived every_state and every_event declarations" do
+      before do
+        @spec = Stateful.specify do
+
+          state :young do |state|
+            state.event :age, :transitions_to => :old
+
+            state.exit do |model|
+              model.lose_hair
+              model.gain_weight
+              model.buy_house
+            end
+
+          end
+
+          state :old do |state|
+            state.event :rejuvenate, :transitions_to => :young
+          end
+
+          state :cremated do |state|
+
+            state.entry :distribute_inheritance
+
+          end
+
+          state :dead do |state|
+            state.event :cremate,    :to => :cremated
+          end
+
+          every_state do |state|
+            state.event :die, :transitions_to => :dead, :except => :cremated
+          end
+
+          every_event do |event|
+            event.satisfy( :has_oxygen, :except => [ :die ] )
+            event.requires :coffin,  :only => :cremate
+            event.requires :cancer,  :only => [ :die ]
+          end
+        end
+      end
+
+      it "should have 4 states" do
+        @spec.states.length.should == 4
+      end
+
+      it "should have an event :die transitioning from :old to :dead" do
+        @spec.states[:old].events_to(:dead).length.should  == 1
+        @spec.states[:old].events_to(:dead)[0].name.should == :die
+      end
+
+      it "should not have an event transitioning :dead to :dead" do
+        @spec.states[:dead].events_to(:dead).length.should == 0
+      end
+
+      it "should not have an event transitioning from :cremated to :die" do
+        @spec.states[:cremated].events_to(:dead).length.should == 0
+      end
+
+      it "should have a satisfier for each event except :die" do
+        @spec.every_event
+        @spec.every_event.satisfiers.length.should == 1
+       # @spec.every_event.satisfiers_for( :die ).length.should == 0
+        @spec.events.values.flatten.each do |evt|
+          evt.should be_kind_of( Stateful::Event )
+          evt.should respond_to('satisfiers')
+          if evt.name == :die
+            evt.satisfiers.length.should == 0
+          else
+            evt.satisfiers.length.should == 1
+          end
+        end
+      end
+
+      it "should require :cancer to :die" do
+        @spec.states[:young].events[:die].requirements.should_not be_empty
+        @spec.states[:young].events[:die].requirements.detect do |evt|
+          evt.condition == :cancer
+        end.should_not be_nil
+      end
+
+      it "should not require :cancer to rejuvenate" do
+        @spec.states[:old].events[:rejuvenate].requirements.map(&:condition).should_not include(:cancer)
+      end
+
+      it "should require a coffin to be cremated but not to die" do
+        @spec.states[:young].events[:die].requirements.map(&:condition).should_not include(:coffin)
+        @spec.states[:dead].events[:cremate].requirements.map(&:condition).should include(:coffin)
+      end
+
+      it "should have an on_exit hook for :young but not an on_entry hook " do
+        @spec.states[:young].on_exit.should be_kind_of( Proc )
+        @spec.states[:young].on_entry.should be_nil
+      end
+
+      it "should have an on_entry hook for :cremated but not an on_exit hook " do
+        @spec.states[:cremated].on_entry.should be_kind_of( Symbol )
+        @spec.states[:cremated].on_exit.should be_nil
+      end
+
+      it "should bind this stateful to the specified method when bind_to_receiver is called" do
+        Stateful[ :default ].should == @spec
+        @model = ModelWithStateful.new()
+        @model.should_not respond_to('status')
+        @model.should_not respond_to('die')
+
+        @spec.bind_to_class ModelWithStateful, :status
+        @model.should respond_to('status')
+        @model.should respond_to('die')
+        @model.status.should_not be_nil
+        @model.status.should be_kind_of( Stateful::Instance )
+        @model.status.specification.name.should == @spec.name
+      end
+
+      it "should be able to take a proc for :except ... "
+
+
+    end
+  end
+
+  describe 'Simple test stateful' do
+
+    describe "preconditions" do
+      it "should not raise an error" do
+        setup_simple_stateful
+      end
+    end
+
+    describe "by itself" do
+
+      before do
+        setup_simple_stateful
+        Stateful[:simple].should_not be_nil
+        Stateful[:simple].should be_kind_of( Stateful::Specification )
+        @spec = Stateful[:simple]
+      end
+
+      it "Should have the column_name 'order_status'" do
+        @spec.column_name.should == 'simple_state'
+      end
+
+      describe "New state" do
+
+        it "Should have a state :new which is the first" do
+          @spec.states.map(&:name).should include( :new )
+          @spec.states.first.name.should == :new
+        end
+
+        describe ":save_draft event" do
+
+          it "Should have an event :save_draft which transtions_to :draft" do
+            @spec.states[:new].events_to(:draft).length.should == 1
+            @spec.states[:new].events_to(:draft).first.name.should == :save_draft
+          end
+
+          it "Should have an execute block" do
+            @event = @spec.stages[:new].events[:save_draft]
+            @event.hooks.should_not be_nil
+            @event.hooks.should be_kind_of( Stateful::Events::HookSet )
+            @event.hooks.execute.should_not be_nil
+            @event.hooks.execute.should be_kind_of( Proc )
+          end
+        end
+
+      end
+
+      describe "Draft state" do
+        it "should have a :scrap event with an execute block" do
+
+        end
+      end
+    end
+
+    describe "on a model" do
+
+    end
+
+  end
+
+  it "should recursively merge the metadata on every_state / every_event if there is more than one invocation"
+  it "should merge the events etc defined in if there is more than one invocation"
+  it "should be able to have multple statefuls bound to different instance variables / accessors"
+  it "should be possible to bind an existing stateful to a model"
+  it "should be possible to include Stateful in a non-ActiveRecord object"
+end
+

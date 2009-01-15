@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :companies, :shallow => true do |company|
     company.resources :users
+    company.resources :projects
   end
 
   map.resource :settings, :controller => "users"

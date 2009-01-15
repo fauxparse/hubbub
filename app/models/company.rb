@@ -1,6 +1,7 @@
 class Company < ActiveRecord::Base
   belongs_to :account
   has_many :users
+  has_many :projects
   
   validates_presence_of :name, :slug
   validates_uniqueness_of :name, :slug, :scope => :account_id

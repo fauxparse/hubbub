@@ -1,0 +1,214 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+    Methods
+
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Methods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
+  <base target="docwin" />
+</head>
+<body>
+<div id="index">
+  <h1 class="section-bar">Methods</h1>
+  <div id="index-entries">
+    <a href="classes/Stateful.html#M000018">[] (Stateful)</a><br />
+    <a href="classes/Stateful/Specification.html#M000077">[] (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Binding.html#M000125">[] (Stateful::Binding)</a><br />
+    <a href="classes/Stateful/ArrayNameAccessor.html#M000024">[] (Stateful::ArrayNameAccessor)</a><br />
+    <a href="classes/Stateful/Specification.html#M000078">[]= (Stateful::Specification)</a><br />
+    <a href="classes/Stateful.html#M000019">[]= (Stateful)</a><br />
+    <a href="classes/Stateful/Instance.html#M000164">abort_transition (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Transition.html#M000161">active? (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Hooks/Base.html#M000038">add (Stateful::Hooks::Base)</a><br />
+    <a href="classes/Stateful/Binding.html#M000132">add_before_create_hook! (Stateful::Binding)</a><br />
+    <a href="classes/Posty.html#M000010">add_to_publication (Posty)</a><br />
+    <a href="classes/Stateful/EveryEvent.html#M000124">after (Stateful::EveryEvent)</a><br />
+    <a href="classes/Stateful/Specification.html#M000058">all_events (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/EveryEvent.html#M000119">apply_to_matching_events (Stateful::EveryEvent)</a><br />
+    <a href="classes/Stateful/EveryState.html#M000052">apply_to_matching_states (Stateful::EveryState)</a><br />
+    <a href="classes/Stateful/Args.html#M000045">assert_argument_types (Stateful::Args)</a><br />
+    <a href="classes/Stateful/Args.html#M000044">bad_arg (Stateful::Args)</a><br />
+    <a href="classes/Stateful/EveryEvent.html#M000122">before (Stateful::EveryEvent)</a><br />
+    <a href="classes/Stateful/Instance.html#M000163">begin_transition (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Binding.html#M000135">bind! (Stateful::Binding)</a><br />
+    <a href="classes/Stateful/Specification.html#M000057">bind_to_class (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Transition.html#M000141">binding (Stateful::Transition)</a><br />
+    <a href="classes/SpecificationSpecHelper.html#M000183">call_with (SpecificationSpecHelper)</a><br />
+    <a href="classes/Stateful/Instance.html#M000178">can_trigger? (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Transition.html#M000145">commit! (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Transition.html#M000158">complete? (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Transition.html#M000157">completed? (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Transition.html#M000147">condition_failure_messages (Stateful::Transition)</a><br />
+    <a href="classes/SpecificationSpecHelper.html#M000182">const (SpecificationSpecHelper)</a><br />
+    <a href="classes/Stateful/Instance.html#M000167">current_transition (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Event/Requirement.html#M000112">default_message (Stateful::Event::Requirement)</a><br />
+    <a href="classes/Stateful/Binding.html#M000130">define_accessor_method! (Stateful::Binding)</a><br />
+    <a href="classes/Stateful/Hooks/Base.html#M000035">define_add_hook_method (Stateful::Hooks::Base)</a><br />
+    <a href="classes/Stateful/Binding.html#M000133">define_complex_event_methods! (Stateful::Binding)</a><br />
+    <a href="classes/Stateful/Binding.html#M000131">define_simple_event_methods! (Stateful::Binding)</a><br />
+    <a href="classes/CreateSpecModels.html#M000007">down (CreateSpecModels)</a><br />
+    <a href="classes/Stateful/Event.html#M000094">dynamic_targets? (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Specification.html#M000066">each_event (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Specification.html#M000064">each_state (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Event/Halter.html#M000116">evaluate (Stateful::Event::Halter)</a><br />
+    <a href="classes/Stateful/Event.html#M000103">evaluate_requirements (Stateful::Event)</a><br />
+    <a href="classes/Stateful/State.html#M000085">event (Stateful::State)</a><br />
+    <a href="classes/Stateful/EveryState.html#M000051">event (Stateful::EveryState)</a><br />
+    <a href="classes/Stateful/Instance.html#M000176">event_requirement_failure_messages (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Instance.html#M000175">event_triggerable? (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Instance.html#M000177">events (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/EveryState.html#M000050">events_for (Stateful::EveryState)</a><br />
+    <a href="classes/Stateful/ItemsMatchingOptions.html#M000028">events_matching (Stateful::ItemsMatchingOptions)</a><br />
+    <a href="classes/Stateful/State.html#M000086">events_to (Stateful::State)</a><br />
+    <a href="classes/Stateful/Specification.html#M000067">every_event (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Specification.html#M000065">every_state (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Transition.html#M000152">exceptions (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Transition.html#M000148">executable? (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Transition.html#M000146">execute (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/EveryEvent.html#M000123">execute (Stateful::EveryEvent)</a><br />
+    <a href="classes/Stateful/ItemsMatchingOptions.html#M000026">extract_match_options (Stateful::ItemsMatchingOptions)</a><br />
+    <a href="classes/SpecificationSpecHelper.html#M000184">fail_with (SpecificationSpecHelper)</a><br />
+    <a href="classes/Stateful/Binding.html#M000127">field_name (Stateful::Binding)</a><br />
+    <a href="classes/Stateful/Binding.html#M000129">field_name= (Stateful::Binding)</a><br />
+    <a href="classes/Stateful/Instance.html#M000166">finalize_transition (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Specification.html#M000075">find (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Event.html#M000097">find_state_by_name (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Transition.html#M000160">finished? (Stateful::Transition)</a><br />
+    <a href="classes/SpecHelper/Foo.html#M000016">good? (SpecHelper::Foo)</a><br />
+    <a href="files/vendor/plugins/stateful/rstakeout_rb.html#M000001">growl (vendor/plugins/stateful/rstakeout.rb)</a><br />
+    <a href="files/vendor/plugins/stateful/rstakeout_rb.html#M000002">growl_fail (vendor/plugins/stateful/rstakeout.rb)</a><br />
+    <a href="files/vendor/plugins/stateful/rstakeout_rb.html#M000003">growl_pass (vendor/plugins/stateful/rstakeout.rb)</a><br />
+    <a href="classes/Stateful/Instance.html#M000169">halt (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Transition.html#M000149">halt! (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Event.html#M000106">halt_if (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Instance.html#M000172">halt_messages (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Transition.html#M000151">halt_messages (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Instance.html#M000170">halted? (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Transition.html#M000156">halted? (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Transition.html#M000150">halted_with (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Transition.html#M000153">halts (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Hooks/Base.html#M000034">has (Stateful::Hooks::Base)</a><br />
+    <a href="classes/Stateful/Hooks/EventMethods.html#M000031">hooks (Stateful::Hooks::EventMethods)</a><br />
+    <a href="classes/Stateful/Hooks/StateMethods.html#M000033">hooks (Stateful::Hooks::StateMethods)</a><br />
+    <a href="classes/SpecHelper.html#M000011">import (SpecHelper)</a><br />
+    <a href="classes/Stateful/Hooks/StateMethods.html#M000032">included (Stateful::Hooks::StateMethods)</a><br />
+    <a href="classes/Stateful.html#M000017">included (Stateful)</a><br />
+    <a href="classes/Stateful/Hooks/EventMethods.html#M000030">included (Stateful::Hooks::EventMethods)</a><br />
+    <a href="classes/Stateful/Event.html#M000108">inspect (Stateful::Event)</a><br />
+    <a href="classes/Stateful/State.html#M000088">inspect (Stateful::State)</a><br />
+    <a href="classes/Stateful/IllegalState.html#M000082">inspect (Stateful::IllegalState)</a><br />
+    <a href="classes/Stateful/Specification.html#M000070">inspect (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Hooks/Base.html#M000036">install (Stateful::Hooks::Base)</a><br />
+    <a href="files/vendor/plugins/stateful/specs/stateful_spec_rb.html#M000004">it_should_match_with (vendor/plugins/stateful/specs/stateful_spec.rb)</a><br />
+    <a href="classes/Stateful/ItemsMatchingOptions.html#M000027">items_matching (Stateful::ItemsMatchingOptions)</a><br />
+    <a href="classes/Stateful/State.html#M000083">label (Stateful::State)</a><br />
+    <a href="classes/Stateful/Event.html#M000089">label (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Transition.html#M000154">last_halt (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Loader.html#M000046">load! (Stateful::Loader)</a><br />
+    <a href="classes/Stateful/Loader.html#M000048">load_library (Stateful::Loader)</a><br />
+    <a href="classes/Stateful/Loader.html#M000047">load_path (Stateful::Loader)</a><br />
+    <a href="classes/Stateful/Specification.html#M000059">load_specification (Stateful::Specification)</a><br />
+    <a href="classes/SpecModel.html#M000185">messages (SpecModel)</a><br />
+    <a href="classes/Stateful/EveryState.html#M000049">new (Stateful::EveryState)</a><br />
+    <a href="classes/Stateful/EveryEvent.html#M000118">new (Stateful::EveryEvent)</a><br />
+    <a href="classes/Stateful/State.html#M000084">new (Stateful::State)</a><br />
+    <a href="classes/Stateful/IllegalState.html#M000080">new (Stateful::IllegalState)</a><br />
+    <a href="classes/Stateful/Specification.html#M000056">new (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Transition.html#M000138">new (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/TransitionHalted.html#M000180">new (Stateful::TransitionHalted)</a><br />
+    <a href="classes/Stateful/Instance.html#M000162">new (Stateful::Instance)</a><br />
+    <a href="classes/Stateful.html#M000022">new (Stateful)</a><br />
+    <a href="classes/Stateful/Event.html#M000091">new (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Event/Requirement.html#M000111">new (Stateful::Event::Requirement)</a><br />
+    <a href="classes/Stateful/IllegalEvent.html#M000079">new (Stateful::IllegalEvent)</a><br />
+    <a href="classes/Stateful/Binding.html#M000126">new (Stateful::Binding)</a><br />
+    <a href="classes/Stateful/Transition.html#M000136">next (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Transition.html#M000143">obj (Stateful::Transition)</a><br />
+    <a href="classes/SpecHelper/Foo.html#M000015">ok? (SpecHelper::Foo)</a><br />
+    <a href="classes/Stateful/EveryState.html#M000053">on_entry (Stateful::EveryState)</a><br />
+    <a href="classes/Stateful/EveryState.html#M000054">on_exit (Stateful::EveryState)</a><br />
+    <a href="classes/Stateful/Event/Halter.html#M000117">process_arguments (Stateful::Event::Halter)</a><br />
+    <a href="classes/Stateful/Args.html#M000043">raise_argument_error (Stateful::Args)</a><br />
+    <a href="classes/Stateful/Transition.html#M000142">receiver (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Instance.html#M000171">reload_state! (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Hooks/Base.html#M000039">remove (Stateful::Hooks::Base)</a><br />
+    <a href="classes/Stateful/EveryEvent.html#M000120">requires (Stateful::EveryEvent)</a><br />
+    <a href="classes/Stateful/Event.html#M000105">requires (Stateful::Event)</a><br />
+    <a href="files/vendor/plugins/stateful/specs/transition_spec_rb.html#M000005">reset! (vendor/plugins/stateful/specs/transition_spec.rb)</a><br />
+    <a href="classes/Stateful.html#M000023">reset! (Stateful)</a><br />
+    <a href="classes/Stateful/Specification.html#M000076">reset! (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Hooks/Base.html#M000041">run (Stateful::Hooks::Base)</a><br />
+    <a href="classes/Stateful/Transition.html#M000144">run_hook (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Hooks/Base.html#M000040">run_hook_slot (Stateful::Hooks::Base)</a><br />
+    <a href="classes/SpecHelper.html#M000014">run_migrations (SpecHelper)</a><br />
+    <a href="classes/Stateful/EveryEvent.html#M000121">satisfy (Stateful::EveryEvent)</a><br />
+    <a href="classes/Stateful/Event.html#M000104">satisfy (Stateful::Event)</a><br />
+    <a href="classes/Posty.html#M000009">scribble_in_margins (Posty)</a><br />
+    <a href="classes/Posty.html#M000008">scribbles (Posty)</a><br />
+    <a href="classes/Stateful/Event/Rule.html#M000114">set_condition (Stateful::Event::Rule)</a><br />
+    <a href="classes/Stateful/Binding.html#M000128">set_field_name (Stateful::Binding)</a><br />
+    <a href="classes/Stateful/Event/Satisfier.html#M000110">set_name (Stateful::Event::Satisfier)</a><br />
+    <a href="classes/Stateful/Event/Rule.html#M000115">set_name (Stateful::Event::Rule)</a><br />
+    <a href="classes/Stateful/Event.html#M000100">set_targets (Stateful::Event)</a><br />
+    <a href="classes/SpecHelper.html#M000012">setup_basic (SpecHelper)</a><br />
+    <a href="classes/OldSpecHelper.html#M000187">setup_event_tester (OldSpecHelper)</a><br />
+    <a href="classes/OldSpecHelper.html#M000186">setup_post_lifecycle (OldSpecHelper)</a><br />
+    <a href="classes/OldSpecHelper.html#M000188">setup_simple_stateful (OldSpecHelper)</a><br />
+    <a href="classes/Stateful/Event.html#M000092">single_target? (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Hooks/Base.html#M000037">slot_names_from_hook_name (Stateful::Hooks::Base)</a><br />
+    <a href="classes/Stateful/Transition.html#M000140">specification (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Specification.html#M000072">specifications (Stateful::Specification)</a><br />
+    <a href="classes/Stateful.html#M000020">specifications (Stateful)</a><br />
+    <a href="classes/Stateful.html#M000021">specify (Stateful)</a><br />
+    <a href="classes/Stateful/Transition.html#M000155">started? (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Instance.html#M000168">state (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Specification.html#M000063">state (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Transition.html#M000137">state= (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Instance.html#M000179">state_field_value (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/ModelClassMethods.html#M000042">stateful (Stateful::ModelClassMethods)</a><br />
+    <a href="classes/Stateful/ItemsMatchingOptions.html#M000029">states_matching (Stateful::ItemsMatchingOptions)</a><br />
+    <a href="classes/Stateful/Event.html#M000093">static_targets? (Stateful::Event)</a><br />
+    <a href="classes/Stateful/ItemsMatchingOptions.html#M000025">subset (Stateful::ItemsMatchingOptions)</a><br />
+    <a href="classes/Stateful/Event.html#M000095">target_state (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Event.html#M000096">target_state_name (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Event.html#M000098">target_state_names (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Event.html#M000099">target_states (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Binding.html#M000134">target_states_by_event_name (Stateful::Binding)</a><br />
+    <a href="classes/Stateful/Event.html#M000090">targets (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Event/Requirement.html#M000113">test (Stateful::Event::Requirement)</a><br />
+    <a href="classes/Stateful/Transition.html#M000159">test_only? (Stateful::Transition)</a><br />
+    <a href="classes/Stateful/Specification.html#M000068">to_hash (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Event.html#M000109">to_instance (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Specification.html#M000071">to_json (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Specification.html#M000073">to_name (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/EveryState.html#M000055">to_s (Stateful::EveryState)</a><br />
+    <a href="classes/Stateful/Specification.html#M000069">to_s (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/TransitionHalted.html#M000181">to_s (Stateful::TransitionHalted)</a><br />
+    <a href="classes/Stateful/Event.html#M000107">to_s (Stateful::Event)</a><br />
+    <a href="classes/Stateful/IllegalState.html#M000081">to_s (Stateful::IllegalState)</a><br />
+    <a href="classes/Stateful/State.html#M000087">to_s (Stateful::State)</a><br />
+    <a href="classes/Stateful/Instance.html#M000165">transition! (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Event.html#M000102">transitions_to? (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Instance.html#M000174">trigger (Stateful::Instance)</a><br />
+    <a href="classes/Stateful/Instance.html#M000173">trigger_event (Stateful::Instance)</a><br />
+    <a href="classes/CreateSpecModels.html#M000006">up (CreateSpecModels)</a><br />
+    <a href="classes/SpecHelper.html#M000013">use_active_record (SpecHelper)</a><br />
+    <a href="classes/Stateful/Specification.html#M000062">validate! (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Specification.html#M000061">validate_event_targets! (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Specification.html#M000074">validate_name (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Specification.html#M000060">validate_name! (Stateful::Specification)</a><br />
+    <a href="classes/Stateful/Event.html#M000101">verify! (Stateful::Event)</a><br />
+    <a href="classes/Stateful/Transition.html#M000139">verify! (Stateful::Transition)</a><br />
+  </div>
+</div>
+</body>
+</html>

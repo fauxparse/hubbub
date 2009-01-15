@@ -1,0 +1,11 @@
+LATER
+
+[ ] requirements / satisfy conditions should be able to affect others,
+    either matching, or not matching, a set of tags. Tags, like Meta,
+    can be added to pretty much everything, but tags are kept as an
+    array of Symbols.
+
+
+TOP
+
+[ ] :transitions_to should be able to take an array

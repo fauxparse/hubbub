@@ -1,6 +1,7 @@
 class Account < ActiveRecord::Base
   belongs_to :agency
   has_many :companies
+  has_many :projects, :through => :companies
   has_many :users
   authenticates_many :user_sessions
 

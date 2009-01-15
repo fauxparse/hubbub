@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090114195510) do
+ActiveRecord::Schema.define(:version => 20090115201109) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(:version => 20090114195510) do
   end
 
   add_index "companies", ["account_id"], :name => "index_companies_on_account_id"
+
+  create_table "projects", :force => true do |t|
+    t.integer  "company_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "current_state"
+    t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false

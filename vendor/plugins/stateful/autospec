@@ -1,0 +1,8 @@
+#!/bin/bash
+if "$1" ; then
+  ruby ./rstakeout.rb "spec --color --format specdoc ./specs/*.rb" specs/* lib/*
+else
+  ruby ./rstakeout.rb "spec --color --format specdoc $1 " specs/* lib/*
+fi
+
+

@@ -1,0 +1,9 @@
+<h1>Listing projects</h1>
+
+<ul class="projects">
+	<% for project in @projects %>
+		<%= link_to project, project %>
+	<% end %>
+</ul>
+
+<%= link_to 'New project', new_company_project_path(current_company) %>

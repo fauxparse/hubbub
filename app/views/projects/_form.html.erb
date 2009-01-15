@@ -1,0 +1,7 @@
+<%= form.error_messages %>
+<ol class="form">
+	<li class="text"><%= form.label :name %> <%= form.text_field :name, :class => "text" %></li>
+	<li class="textarea"><%= form.label :description %> <%= form.text_area :description %></li>
+	<li class="text"><%= form.label :company_id %> <%= form.select :company_id, current_account.companies.collect { |c| [ c.name, c.id ] }, {}, :disabled => scope.is_a?(Company) %></li>
+	<li class="buttons"><%= form.submit button, :class => "button" %></li>
+</ol>

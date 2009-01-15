@@ -1,0 +1,224 @@
+h1. What is Stateful? [ Stateful is BETA Software ]
+
+Stateful is a framework for definining and working with state machines
+and event transitions in ruby. It is written by David Lee, based on
+Ryan Allen's Workflow.
+
+h3. What does it have in common with all state machines?
+
+* It keeps track of the State of objects; the State of a given object
+  is always one of a finite set you have described.
+* It allows the state of an object to Transition to another State by
+  triggering an Event.
+* It describes a set of rules which govern these Transitions.
+
+h3. What's unique about Stateful?
+
+Stateful aims to go beyond existing state machine implementations, to
+deliver enough power and flexibility to:
+
+* Define arbitrarily complex workflow / state machines without repeating yourself
+* Add any number of distinct states to just about anything
+* Drive as much of the behaviour of your application as you feel appropriate
+* Use introspection to understand, and help your users understand complex
+  and dynamic workflows processes, eg:
+* which Events are available from the current State?
+** which States can each Event lead to?
+** are the conditions governing a Transition satisfied?
+** if not, which ones aren't? What does the user have to do in order to satisfy them?
+* Write less code at a higher level of abstraction
+
+h3. How does it fit together? Is there a two minute guide to Stateful's
+    internals?
+
+* A stateful object - an instance of a class in which you included
+  Stateful - can have have one or more Specifications. I'll call the
+  stateful object the "receiver".
+* Each Specification bound to a receiver's class gives the receiver
+  its own accessor method (receiver.stateful by default) and instance
+  variable or ActiveRecord text field (the default is
+  receiver.stateful_state).
+* Each Specification has a finite set of named States, only one of
+  which may be occupied by the receiver at a time.
+* Each state has a set of Events which lead to one or more new
+  States.
+* When an Event is triggered, a Transition occurs. A Transition is
+  like an instance of an Event, just as the stateful object's
+  accessor method(s) return an Instance of a Specification.
+* Both States and Events have a set of Requirements which must be met
+  in order for the Transition to complete.
+* Both States and Events have a set of Hooks which can attach
+  behaviours to any phase of the Transition.
+* Each Transition has a reference to the stateful object which it is
+  concerned with, any arguments passed while triggering the Event,
+  and the Event and States involved.
+* The active Transition is yielded to each Requirement condition or
+  Hook; this provides a consistent interface and provides easy access
+  to everything relevant to the code being evaluated.
+* The Transition can be Halted from within Requirements and most
+  kinds of Hooks, just as it can be by a Requirement. A Halted
+  Transition can be inspected for information about what caused it to
+  become Halted, and from where.
+
+h3. What about the part I'll actually use - is the API nice?
+
+Stateful's API has been designed to be as flexible, self-contained,
+and easy to introspect as possible, and "as simple as possible, but no
+simpler". For example:
+
+* Add similar events to every state, or a collection of states,
+  without repeating yourself
+* Define Requirements or Hooks either on the receiver or within
+  the Specification itself
+* Traverse, inspect, and modify a Specification at runtime if you
+  wish; store and read metadata from a Specification or any of its
+  components; reuse a Specification with different receiver classes,
+  or on the same class with a different accessor and field names.
+* ActiveRecord is supported but not required; just about anything
+  which can have a method and instance variable can be stateful.
+* It tries to avoid doing anything which would prevent it
+  co-existing peacefully with other rails plugins, ruby libraries,
+  or code of your own devising. A method is usually defined on the
+  receiver for each event, but these can be suppressed if you
+  prefer to avoid cluttering the receiver.
+* We've kept the specification syntax as terse as possible without
+  causing undue internal complexity, sacrificing expressiveness, or
+  leaving Ruby. It should be easy to implement your own DSL if you
+  want a more succinct or 'safe' (ie, non-executable) definition
+  syntax.
+* Stateful strives to be Hacker Friendly (tm) - easy to extend and
+  modify for your own purposes if you need to. All code is MIT
+  licensed.
+
+h4. Money talks, bullshit walks. Show me some code.
+
+Fair call.
+
+Here's a minimal example of Stateful being used with ActiveRecord:
+
+<pre><code>
+
+# We make a column stateful_state in the migration ( the default
+# column name )
+
+create_table :wibbles do |t|
+  t.string :name, :null => false
+  t.text   :description
+  t.string :stateful_state, :null => false
+end
+
+# Our ActiveRecord class definition
+
+class Wibble < ActiveRecord::Base
+  include Stateful
+
+  # Define at least one state. The first one will be the default.
+  stateful do
+    state :normal
+  end
+
+end
+
+</pre></code>
+
+Now any Wibble that's created will have the default state
+'normal'.
+
+Note that the field wibbles.stateful_state will be NULL *until* the
+state of the wibble is initialized by calling wibble.stateful - it's a
+Schroedinger's Cat thing; asking for the state of an object will set
+the field which records it to the default value if it is empty.
+
+Handily, when Stateful is included it adds a before_create hook
+which does this for us, ensuring that we don't have to repeat
+ourselves with a default column value in the migration.
+
+Here's another example, which leaves a fair bit to be desired.  A more
+thorough walkthrough will follow when i finish Grand Theft Auto IV -
+for now, you can look at the source code, or the specs, or send me a
+message demanding better documentation.
+
+<pre>
+<code>
+
+class Message < ActiveRecord::Base
+  include Stateful
+  acts_as_paranoid
+
+  belongs_to :recipient, :class_name => 'User'
+  belongs_to :sender,    :class_name => 'User'
+
+  validates_presence_of :message, :subject
+
+  # requirement condition for state :new's :read_message event
+  # like all Stateful callbacks, its expects a Transition object,
+  # which has access to pretty much anything else we might want to
+  # get hold of.
+  #
+  # t.args : contains any arguments passed when the event was triggered
+  # t.obj  : is the Message instance
+
+  def permission_to_read?( t )
+    # the message's recipient is the only one allowed to read it.
+    t.args.first == t.obj.recipient
+  end
+
+  # stateful Specification
+
+  stateful do
+
+    state :new do |s|
+
+      s.event :read_message, :transitions_to => :read do |event|
+
+        # since we don't define a block, the method matching this
+        # requirement's name will be called on the receiver. We could
+        # as easily define the behaviour here, but we may want to use it
+        # in more than one place.
+
+        event.requires( :permission_to_read?,
+                        :message => "You don't have read permission.")
+
+        event.execute do |t|
+          t.receiver.read_at = Time.now
+        end
+
+      end
+    end
+
+    state :read
+
+    state :deleted
+
+    all_events do |e|
+      e.requires :valid?
+      e.after    :save!
+    end
+
+    all_states do |s|
+
+      s.event :delete, :to => :deleted do |e|
+
+        # if they can read it, they can delete it. Here we're defining
+        # the behaviour with a block, rather than using the default
+        # which is the name of the requirement. If we left out the
+        # block, it'd try calling :permission_to_delete? on the
+        # message, as with the :read_message requirement above
+
+        event.requires( :permission_to_delete?,
+                        :message => "You don't have delete permission.") do |t|
+          t.receiver.permission_to_read?( t )
+        end
+
+        e.execute do |t|
+          t.obj.deleted_at = Time.now
+        end
+
+      end
+    end
+
+  end
+end
+
+</code>
+</pre>

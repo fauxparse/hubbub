@@ -1,0 +1,169 @@
+[ ] Refactor every_state and every_event to just yield each existing
+    state / event to a block (each_state, each_event)
+
+BASE EVENTS:
+
+e.before
+s1.exit
+e.during
+s2.enter
+e.execute
+e.after
+
+- each event has a before_*, * and after_* slot
+- the before_* and after_* slots are generally used to add hooks
+  common to multiple states / events without clobbering the
+  individual's behaviour
+
+state :foo do |foo|
+
+  foo.on_exit do |t|
+    # do something
+  end
+
+  foo.event :baa, :to => :am_sheep do |baa|
+    baa.before do |t|
+      # do something
+    end
+
+    baa.during do |t|
+      # do something
+    end
+
+    baa.after do |t|
+      # do something
+    end
+  end
+
+  state :am_sheep do |am_sheep|
+
+    am_sheep.on_entry do |t|
+      puts "*blink*"
+    end
+
+  end
+
+  each_state do |state|
+    state.before :on_exit do |t|
+      # ...
+    end
+  end
+
+  each_event do |event|
+
+    event.before_before do |t|
+      # ...
+    end
+
+    event.after_after do |t|
+      # ...
+    end
+
+  end
+end
+
+
+__________
+
+[_] Specs
+  [_] Restructure: refactor specifications into a coherent structure
+  [_] Refactor for documentation clarity
+  [_] Refactor for spec clarity
+  [_] Include relevant specifications from deprecated specs
+
+[_] Features
+
+  [ ] add tag support to everything
+      - eg
+
+        state :foo, :tags => [:foo, :bar]
+        state :foo do |s|
+          s.tag_with :foo, :bar
+        end
+
+        state.tagged? :foo
+
+  [ ] Event Hooks - refactor / rewrite:
+
+  [ ] Events can transition to a Proc {|receiver|} or a
+      Stateful::EventTarget
+     [ ] It should either return a single state, or a collection
+     [ ] It should know if it's going to return a single or collection
+     [ ] constructor syntax:
+
+         # single state
+         state.event :back, :to => state.target do |obj|
+           obj.stateful.states( obj.previous_state_name )
+         end
+
+         # collection of states
+         state.event :percolate, :to => state.targets do |obj|
+           obj.stateful.states.select { |s| s.meta[:percolated] }
+         end
+
+     [ ] It should define event methods accordingly
+     [ ] It should work sensibly with spec.validate!
+     [ ] It should work sensibly with other methods in Stateful internals
+
+  [ ] Integration with simply_versioned :
+     [ ] Define instance.previous_state
+     [ ] Define instance.previous_state_name
+     [ ] Define instance.previous_states
+     [ ] Define instance.previous_state_names
+     [ ] Define instance.previous_state_names
+
+  [?] It should be possible to change a specification for
+      one instance only - by cloning the Specification to a
+      new SpecInstance.
+  [?] When defining an event you should be able to change the names of the
+      event method(s) generated
+  [x] When defining an event you should be able to specify an array of
+      transitions_to
+  [-] Check the arity of defined methods
+  [x] Events should know where they come from and go to
+  [x] Transition refactoring ?
+  [ ] Prevent event accessor definitions on binding to AR classes
+  [ ] SHould be able to choose whether action methods are defined on
+      the receiver or the Instance
+
+
+order.send_to( customer ) vs
+order.workflow.send_to( customer )
+
+maybe we *should* use method_missing to map event methods to the
+instance
+
+ # TODO - allow the event method on the receiver to take a block, and
+  # yield a Transition object to it ... ? at what point? i suppose after
+  # success ( just after the execute hook ? after the last hook? )
+  # or on halt / failure ..
+  #
+  # This would give you a nice place to check for success /
+  # failure and route appropriately.
+
+  # note - can't do this with define_method in Binding.bind!
+
+  # EG:
+=begin
+
+  controller = self
+
+  @product.mark_paid( :receipt ) do |transition, *args|
+    begin
+
+      transition.execute!
+
+      # state is now the new state
+      # execute has executed
+      # but ... the event's after hook has not yet executed?
+
+      controller.redirect_to '/thanks_for_money'
+    rescue Stateful::TransitionHalted => e
+      @transition = transition  # for view code
+      render :action => 'halted'
+    end
+  end
+
+
+=end
+
