@@ -1,22 +1,22 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :task_lists
-
-  map.resources :companies, :shallow => true do |company|
-    company.resources :users
-    company.resources :projects do |project|
-      project.resources :task_lists
+  map.with_options :conditions => { :subdomain => true } do |account|
+    account.resources :companies, :shallow => true do |company|
+      company.resources :users
+      company.resources :projects do |project|
+        project.resources :task_lists
+      end
     end
-  end
 
-  map.resource :settings, :controller => "users"
-  map.resources :users
+    account.resource :settings, :controller => "users"
+    account.resources :users
   
-  map.login "/login", :controller => "user_sessions", :action => "new"
-  map.logout "/logout", :controller => "user_sessions", :action => "destroy"
+    account.login "/login", :controller => "user_sessions", :action => "new"
+    account.logout "/logout", :controller => "user_sessions", :action => "destroy"
   
-  map.resource :user_session
-  map.resource :dashboard
+    account.resource :user_session
+    account.resource :dashboard
+    account.root :controller => "dashboards", :action => "index"
+  end
   
   map.root :controller => "accounts", :action => "index", :conditions => { :subdomain => false }
-  map.root :controller => "dashboards", :action => "index", :conditions => { :subdomain => true }
 end

@@ -40,7 +40,7 @@ class TaskListsController < ApplicationController
   # POST /task_lists
   # POST /task_lists.xml
   def create
-    @task_list = TaskList.new(params[:task_list])
+    @task_list = TaskList.new(params[:task_list].reverse_merge(:project_id => scope.id))
 
     respond_to do |format|
       if @task_list.save
