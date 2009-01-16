@@ -4,14 +4,13 @@ class Role < ActiveRecord::Base
   validates_presence_of :name
   validates_format_of :name, :with => /[a-z0-9_]+/
   validates_uniqueness_of :name
-  before_validation :normalize_name
 
-  def name
-    (s = super).blank? ? nil : s.to_sym
+  def to_sym
+    name.blank? ? nil : name.to_sym
   end
   
   def name=(value)
-    super(value && value.to_sym)
+    super(value && self.class.normalize_name(value))
   end
   
   class << self
@@ -20,12 +19,7 @@ class Role < ActiveRecord::Base
     end
     
     def normalize_name(name)
-      name.to_s.underscore
+      name.to_s.underscore.gsub /[^a-z0-9]+/, "_"
     end
-  end
-  
-protected
-  def normalize_name
-    self.name = self.class.normalize_name(self.name)
   end
 end
