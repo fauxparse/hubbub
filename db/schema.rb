@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090116033455) do
+ActiveRecord::Schema.define(:version => 20090116041200) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,28 @@ ActiveRecord::Schema.define(:version => 20090116033455) do
   end
 
   add_index "accounts", ["subdomain"], :name => "index_accounts_on_subdomain", :unique => true
+
+  create_table "assignments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "task_id"
+    t.integer  "role_id"
+    t.text     "description"
+    t.string   "current_state"
+    t.integer  "estimated_minutes"
+    t.integer  "billable_minutes"
+    t.integer  "total_minutes"
+    t.datetime "completed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "blockages", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "assignment_id"
+    t.integer  "blocker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -67,6 +89,16 @@ ActiveRecord::Schema.define(:version => 20090116033455) do
     t.text     "description"
     t.string   "current_state"
     t.integer  "open_tasks_count", :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tasks", :force => true do |t|
+    t.integer  "task_list_id"
+    t.string   "name"
+    t.string   "current_state"
+    t.boolean  "billable"
+    t.boolean  "visible_to_client"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
