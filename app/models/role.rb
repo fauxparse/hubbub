@@ -5,6 +5,14 @@ class Role < ActiveRecord::Base
   validates_format_of :name, :with => /[a-z0-9_]+/
   validates_uniqueness_of :name
   before_validation :normalize_name
+
+  def name
+    (s = super).blank? ? nil : s.to_sym
+  end
+  
+  def name=(value)
+    super(value && value.to_sym)
+  end
   
   class << self
     def [](role)
