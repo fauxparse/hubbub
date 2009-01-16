@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   acts_as_authentic :scope => :account_id
   belongs_to :account
+  has_and_belongs_to_many :roles, :uniq => true
   
   alias_attribute :to_s, :name
   alias_attribute :to_param, :login
@@ -10,5 +11,9 @@ class User < ActiveRecord::Base
 
   def display_name
     (s = super).blank? ? name : s
+  end
+  
+  def has_role?(role)
+    roles.include? Role[role]
   end
 end
