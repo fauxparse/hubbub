@@ -15,7 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   
     account.resource :user_session
     account.resource :dashboard
-    account.root :controller => "dashboards", :action => "index"
+    account.root :controller => "dashboards", :action => "show"
   end
   
   map.root :controller => "accounts", :action => "index", :conditions => { :subdomain => false }

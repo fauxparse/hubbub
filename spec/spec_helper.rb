@@ -24,7 +24,9 @@ Spec::Runner.configure do |config|
   # names with your fixtures.
   #
   # config.global_fixtures = :table_a, :table_b
-  #
+  
+  config.global_fixtures = :all
+  
   # If you declare global fixtures, be aware that they will be declared
   # for all of your examples, even those that don't use them.
   #
@@ -44,4 +46,20 @@ Spec::Runner.configure do |config|
   # == Notes
   # 
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
+end
+
+def current_user(stubs = {})
+  @current_user ||= (stubs.is_a?(Symbol) ? users(stubs) : mock_model(User, stubs))
+end
+ 
+def user_session(user_stubs = {}, stubs = {})
+  @current_user ||= mock_model(UserSession, { :user => current_user(user_stubs) }.merge(stubs))
+end
+ 
+def login(user_stubs = {}, session_stubs = {})
+  UserSession.stub!(:find).and_return(user_session(user_stubs, session_stubs))
+end
+ 
+def logout
+  @user_session = nil
 end
