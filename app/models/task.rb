@@ -7,7 +7,7 @@ class Task < ActiveRecord::Base
   validates_presence_of :name, :task_list_id
   validates_numericality_of :assignments_count, :greater_than_or_equal_to => 0
   
-  named_scope :unassigned, :conditions => { :assignments_count => 0 }
+  named_scope :unassigned, :conditions => { :anybody => false, :assignments_count => 0 }
   named_scope :for_user, lambda { |user| { :include => :assignments, :conditions => [ "tasks.anybody = ? OR assignments.user_id = ? OR (assignments.user_id IS NULL AND assignments.role_id IN (?))", true, user.id, user.role_ids ] } }
   
   include Statefulness
