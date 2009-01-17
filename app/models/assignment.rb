@@ -3,7 +3,7 @@ class Assignment < ActiveRecord::Base
   belongs_to :role
   belongs_to :task
   has_many :time_slices, :as => :activity
-  has_many :blockages
+  has_many :blockages, :dependent => :destroy
   has_many :blocked_users, :through => :blockages, :source => :user
   
   default_value_for :billable_minutes, 0
@@ -16,16 +16,22 @@ class Assignment < ActiveRecord::Base
   
   include Statefulness
   
+  # Returns true if this assignment has a specific user.
   def assigned?
     !user_id.blank?
   end
   
+  # Returns true if work on this assignment is billable.
   def billable?
     task.billable?
   end
   
+  def anyone?
+    !assigned? && role_id.blank?
+  end
+  
 protected
-  # Make sure time recorded by a user against a task gets associated with this assignment
+  # Make sure time recorded by a user against a task gets associated with this assignment.
   def assign_time_slices_from_task
     TimeSlice.update_all [ "activity_type = ?, activity_id = ?", self.class.name, self.id ], [ "time_slices.user_id = ? AND time_slices.activity_type = ? AND time_slices.activity_id = ?", user_id, task.class.name, task.id ]
   end

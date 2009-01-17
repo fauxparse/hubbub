@@ -3,8 +3,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Assignment do
   before(:each) do
     @task = mock_model Task
+    @role = mock_model Role
     @valid_attributes = {
-      :task => @task
+      :task => @task,
+      :role => @role
     }
   end
 
@@ -29,6 +31,12 @@ describe Assignment do
     it "should give time slices to the task when destroyed" do
       @assignment.destroy
       @task.time_slices(:reload).should == [ @time_slice ]
+    end
+    
+    it "should be destroyed when the parent is destroyed" do
+      @task.destroy
+      Assignment.count(:all).should be_zero
+      TimeSlice.count(:all).should be_zero
     end
   end
 end
