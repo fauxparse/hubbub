@@ -11,6 +11,9 @@ class Assignment < ActiveRecord::Base
   
   validates_presence_of :task_id
   
+  after_create :assign_time_slices_from_task
+  before_destroy :reassign_time_slices_to_task
+  
   include Statefulness
   
   def assigned?
@@ -19,5 +22,18 @@ class Assignment < ActiveRecord::Base
   
   def billable?
     task.billable?
+  end
+  
+protected
+  # Make sure time recorded by a user against a task gets associated with this assignment
+  def assign_time_slices_from_task
+    TimeSlice.update_all [ "activity_type = ?, activity_id = ?", self.class.name, self.id ], [ "time_slices.user_id = ? AND time_slices.activity_type = ? AND time_slices.activity_id = ?", user_id, task.class.name, task.id ]
+  end
+
+  # Make sure time recorded against a task is not lost when the assignment is destroyed.
+  def reassign_time_slices_to_task
+    time_slices.each do |t|
+      t.update_attribute :activity, task
+    end
   end
 end

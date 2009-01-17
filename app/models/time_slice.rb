@@ -12,6 +12,7 @@ class TimeSlice < ActiveRecord::Base
 protected
   def check_if_billable
     self.billable = activity.respond_to?(:billable?) && activity.billable? if self.billable.nil? && activity
+    true
   end
 
   def update_activity_time
