@@ -1,7 +1,7 @@
 class Assignment < ActiveRecord::Base
   belongs_to :user
   belongs_to :role
-  belongs_to :task
+  belongs_to :task, :counter_cache => true
   has_many :time_slices, :as => :activity
   has_many :blockages, :dependent => :destroy
   has_many :blocked_users, :through => :blockages, :source => :user
@@ -10,6 +10,7 @@ class Assignment < ActiveRecord::Base
   default_value_for :total_minutes, 0
   
   validates_presence_of :task_id
+  validates_presence_of :role_id, :unless => :assigned?
   
   after_create :assign_time_slices_from_task
   before_destroy :reassign_time_slices_to_task
@@ -24,10 +25,6 @@ class Assignment < ActiveRecord::Base
   # Returns true if work on this assignment is billable.
   def billable?
     task.billable?
-  end
-  
-  def anyone?
-    !assigned? && role_id.blank?
   end
   
 protected

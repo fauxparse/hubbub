@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe TimeSlice do
   before(:each) do
-    @task = Task.create :name => "task", :billable => true
+    @task = Task.create :name => "task", :billable => true, :task_list_id => 1
     @user = users(:cookie)
     @assignment = Assignment.create :user => @user, :task => @task
     
