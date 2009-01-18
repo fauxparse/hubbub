@@ -5,6 +5,10 @@ class Role < ActiveRecord::Base
   validates_format_of :name, :with => /[a-z0-9_]+/
   validates_uniqueness_of :name
 
+  def to_s
+    name.titleize
+  end
+
   def to_sym
     name.blank? ? nil : name.to_sym
   end
