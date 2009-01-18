@@ -3,9 +3,12 @@ ActionController::Routing::Routes.draw do |map|
     account.resources :companies, :shallow => true do |company|
       company.resources :users
       company.resources :projects do |project|
-        project.resources :task_lists
+        project.resources :lists, :controller => "task_lists" do |list|
+          list.resources :tasks
+        end
       end
     end
+    map.resources :tasks
 
     account.resource :settings, :controller => "users"
     account.resources :users

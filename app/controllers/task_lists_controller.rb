@@ -45,7 +45,7 @@ class TaskListsController < ApplicationController
     respond_to do |format|
       if @task_list.save
         flash[:notice] = 'TaskList was successfully created.'
-        format.html { redirect_to(@task_list) }
+        format.html { redirect_to list_path(@task_list) }
         format.xml  { render :xml => @task_list, :status => :created, :location => @task_list }
       else
         format.html { render :action => "new" }
@@ -60,7 +60,7 @@ class TaskListsController < ApplicationController
     respond_to do |format|
       if @task_list.update_attributes(params[:task_list])
         flash[:notice] = 'TaskList was successfully updated.'
-        format.html { redirect_to(@task_list) }
+        format.html { redirect_to list_path(@task_list) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -75,7 +75,7 @@ class TaskListsController < ApplicationController
     @task_list.destroy
 
     respond_to do |format|
-      format.html { redirect_to(task_lists_url) }
+      format.html { redirect_to project_lists_path(@task_list.project) }
       format.xml  { head :ok }
     end
   end
