@@ -4,6 +4,8 @@ class Task < ActiveRecord::Base
   has_many :blockages, :through => :assignments
   has_many :time_slices, :as => :activity, :dependent => :destroy
   
+  accepts_nested_attributes_for :assignments
+  
   validates_presence_of :name, :task_list_id
   validates_numericality_of :assignments_count, :greater_than_or_equal_to => 0
   

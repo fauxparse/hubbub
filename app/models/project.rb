@@ -1,6 +1,7 @@
 class Project < ActiveRecord::Base
   belongs_to :company
   has_many :task_lists
+  delegate :agency, :to => :company
 
   validates_presence_of :name
   include Statefulness

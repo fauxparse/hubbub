@@ -1,3 +1,7 @@
+<% content_tag :div, :id => dom_id(@project, :lists), :class => :lists do -%>
+	<%= render :partial => @project.task_lists %>
+<% end -%>
 
+<%= link_to "New task list", new_project_list_path(@project) %> | 
 <%= link_to "Edit", edit_project_path(@project) %> |
 <%= link_to "Projects for #{@project.company}", company_projects_path(@project.company) %>

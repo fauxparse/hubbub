@@ -1,0 +1,3 @@
+[submodule "public/facebox"]
+	path = public/facebox
+	url = git://github.com/defunkt/facebox.git

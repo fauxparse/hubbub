@@ -1,0 +1,11 @@
+<% content_tag :div, :id => dom_id(task_list) do -%>
+	<% content_tag :div, :id => dom_id(task_list, :header), :class => :header do -%>
+		<%= content_tag :h2, task_list %>
+	<% end -%>
+	
+	<% content_tag :ul, dom_id(task_list, :tasks), :class => :tasks do -%>
+		<%= render :partial => task_list.tasks %>
+	<% end -%>
+	
+	<%= link_to "Add task", new_list_task_path(task_list), :rel => :facebox, :class => "task-new" %>
+<% end -%>

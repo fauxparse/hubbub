@@ -1,5 +1,19 @@
 <%= form.error_messages %>
 <ol class="form">
 	<li class="text"><%= form.label :name %> <%= form.text_field :name, :class => "text" %></li>
+	<li class="users">
+		<%= label_tag "Assign to" %>
+		<% [ form.object.task_list.project.company, current_agency ].uniq.each do |company| -%>
+			<strong><%= company %></strong>
+			<dl>
+				<% (company.users.collect(&:roles).flatten.uniq.sort_by(&:to_s) + [ nil ]).each do |role| -%>
+					<dt><%= role || "Others" %></dt>
+					<% company.users.select { |u| role.nil? ? u.roles.empty? : u.has_role?(role) }.each do |u| -%>
+						<dd><%= u %></dd>
+					<% end -%>
+				<% end -%>
+			</dl>
+		<% end -%>
+	</li>
 	<li class="buttons"><%= form.submit button, :class => "button" %></li>
 </ol>

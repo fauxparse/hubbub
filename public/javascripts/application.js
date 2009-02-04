@@ -1,2 +1,25 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
+$(document).ready(function() {
+	$.facebox.settings['opacity'] = 0.5;
+	rebind_handlers();
+
+	$(document).bind('ajaxSuccess', function() {
+	  rebind_handlers();
+	});
+
+	$(document).ajaxSend(function(event, request, settings) {
+	  if (typeof(AUTH_TOKEN) == "undefined") return;
+	  settings.data = settings.data || "";
+		switch (typeof(settings.data)) {
+		case 'string':
+			settings.data += (settings.data ? "&" : "") + "authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
+			break;
+		default:
+			settings.data['authenticity_token'] = AUTH_TOKEN;
+			break;
+		}
+	});
+})
+
+function rebind_handlers() {
+  $('a[rel*=facebox]').unbind('click.facebox').facebox();
+}
