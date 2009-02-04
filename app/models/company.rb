@@ -10,7 +10,11 @@ class Company < ActiveRecord::Base
   alias_attribute :to_s, :name
   alias_attribute :to_param, :slug
 
-  #default_scope :order => "name ASC"
+  default_scope :order => "name ASC"
+  
+  def <=>(another)
+    to_s <=> another.to_s
+  end
 
 protected
   def generate_slug

@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.xml
   def index
-    @projects = scope.projects.all :include => :company
+    @projects = scope.all :include => :company
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   # GET /projects/new.xml
   def new
-    @project = scope.projects.new :company_id => current_company.id
+    @project = scope.new :company_id => current_company.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.xml
   def create
-    @project = scope.projects.new params[:project].reverse_merge(:company_id => current_company.id)
+    @project = scope.new params[:project].reverse_merge(:company_id => current_company.id)
     respond_to do |format|
       if @project.save
         flash[:notice] = 'Project was successfully created.'
@@ -81,10 +81,10 @@ class ProjectsController < ApplicationController
   
 protected
   def scope
-    params[:company_id].blank? ? current_account : current_company
+    params[:company_id].blank? ? (current_user.company.is_a?(Agency) ? Project.for_agency(current_user.company) : current_user.company.projects) : current_company.projects
   end
 
   def get_project
-    @project ||= scope.projects.find(params[:id].to_i, :include => :company) unless params[:id].blank?
+    @project ||= scope.find(params[:id].to_i, :include => :company) unless params[:id].blank?
   end
 end

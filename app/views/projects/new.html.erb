@@ -1,5 +1,9 @@
-<h1>New project</h1>
+<% content_for :page_title, "Projects" -%>
 
-<% form_for @project, :url => company_projects_path(current_company) do |form| %>
+<% content_for :title do -%>
+	<h1>New project <small>for <%= link_to @project.company, company_projects_path(@project.company) %></small></h1>
+<% end -%>
+
+<% form_for @project, :url => company_projects_path(@project.company) do |form| %>
 	<%= render :partial => "form", :object => form, :locals => { :button => "Create" } %>
 <% end %>

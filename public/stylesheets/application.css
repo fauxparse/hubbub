@@ -1,3 +1,235 @@
+/* General {{{ */
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
 body, td, input, select, textarea {
 	font: 14px/1.7 Helvetica, sans-serif;
 }
+
+body {
+	background: #f8f8f8;
+	color: #333;
+}
+
+a {
+	color: #ec008c;
+}
+
+#main ul {
+	margin: 0px 0px 1ex;
+	padding: 0px 0px 0px 2em;
+}
+
+#main ul li {
+	margin: 0px 0px 1ex;
+	padding: 0px;
+	list-style: square;
+}
+
+/*}}}*/
+
+/* Messages {{{ */
+
+.flash {
+	margin: 0px 56px 8px;
+	padding: 8px;
+	background: #ffc;
+}
+
+/*}}}*/
+
+/* Layout {{{ */
+
+#columns {
+	position: relative;
+	margin: 0px 64px;
+}
+
+#main {
+	float: left;
+	width: 100%;
+	margin-right: -336px;	
+}
+
+#main-inner {
+	margin-right: 336px;
+	padding-bottom: 64px;
+}
+
+#sidebar {
+	float: right;
+	width: 320px;
+}
+
+#sidebar-inner {
+	padding-bottom: 64px;
+}
+
+/*}}}*/
+
+/* Header {{{ */
+
+#header {
+	height: 5em;
+	background: #ddd;
+	position: relative;
+	overflow: none;
+	margin: 0px 0px 16px;
+}
+
+#header #logo {
+	color: #f8f8f8;
+	position: absolute;
+	left: 64px;
+	top: -0.05ex;
+	font-size: 800%;
+	font-weight: bold;
+	line-height: 0.8em;
+	text-transform: lowercase;
+	text-decoration: none;
+	letter-spacing: -0.15em;
+}
+
+#header #account {
+	position: absolute;
+	right: 64px;
+	top: 0.5em;
+	text-align: right;
+	color: #999;
+}
+
+#header #account .agency,
+#header #account .user {
+	font-size: 150%;
+	letter-spacing: -0.2ex;
+	font-weight: bold;
+}
+
+#header #account .user {
+	text-decoration: none;
+	color: #00aeef;
+	margin-right: 0.5em;
+}
+
+#header #tabs {
+	position: absolute;
+	right: 64px;
+	bottom: 0px;
+	font-size: 150%;
+}
+
+#header #tabs li {
+	display: inline;
+	list-style: none;
+}
+
+#header #tabs li a {
+	display: block;
+	float: right;
+	margin-left: 0.5em;
+	padding: 0.25em 0.5em;
+	line-height: 1em;
+	letter-spacing: -0.2ex;
+	font-weight: bold;
+	text-decoration: none;
+	text-transform: lowercase;
+	background: #ccc;
+	color: #aaa;
+}
+
+#header #tabs li a.active {
+	background: #f8f8f8;
+	color: #8cc63f;
+}
+
+/*}}}*/
+
+/* Title Block {{{ */
+
+#title {
+	margin: 0px 0px 16px;
+}
+
+#title h1 {
+	color: #00aeef;
+	font-size: 400%;
+	font-weight: bold;
+	line-height: 1em;
+	text-transform: lowercase;
+	text-decoration: none;
+	letter-spacing: -0.15em;
+}
+
+#title h1 small {
+	font-size: 50%;
+	color: #999;
+	letter-spacing: -0.1em;
+	text-transform: none;
+	margin-left: 0.5em;
+}
+
+/*}}}*/
+
+/* Forms {{{ */
+
+form {
+	display: block;
+	border-top: 4px solid #ccc;
+}
+
+ol.form {
+	padding: 0px 0px 16px;
+}
+
+ol.form li {
+	display: block;
+	list-style: none;
+	border-bottom: 1px solid #ccc;
+	padding: 8px 0px;
+}
+
+ol.form li.text label {
+	display: block;
+	text-transform: uppercase;
+	font-size: 85%;
+	color: #999;
+	float: left;
+	width: 30%;
+}
+
+ol.form li.text input.text,
+ol.form li.text textarea,
+ol.form li.text select {
+	width: 65%;
+}
+
+ol.form li.buttons {
+	border-bottom: none;
+	padding-left: 30%;
+	text-align: right;
+}
+
+input.button {
+	font-size: 200%;
+	font-weight: bold;
+	letter-spacing: -0.1ex;
+	text-transform: lowercase;
+	background: #00aeef;
+	color: white;
+	cursor: pointer;
+	padding: 4px 16px;
+	border: none;
+	line-height: normal;
+}
+
+.errorExplanation {
+	background: #ffc;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-top: none;
+}
+
+/*}}}*/

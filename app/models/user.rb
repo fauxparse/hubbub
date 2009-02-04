@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   acts_as_authentic :scope => :account_id
   belongs_to :account
+  belongs_to :company
   has_and_belongs_to_many :roles, :uniq => true
   has_many :assignments
   has_many :blockages

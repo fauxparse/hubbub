@@ -1,9 +1,16 @@
-<h1>Listing projects</h1>
+<% content_for :page_title, "Projects" -%>
 
-<ul class="projects">
-	<% for project in @projects %>
-		<%= link_to project, project %>
-	<% end %>
-</ul>
+<% content_for :title do -%>
+	<h1>Projects</h1>
+<% end -%>
 
-<%= link_to 'New project', new_company_project_path(current_company) %>
+<% @projects.group_by(&:company).sort_by(&:first).each do |company, projects| -%>
+	<% content_tag :div, :class => "company-projects", :id => dom_id(company, :projects) do -%>
+		<h2><%= link_to company, company_projects_path(company) %></h2>
+		<% content_tag :ul, :class => :projects do -%>
+			<%= render :partial => projects %>
+		<% end -%>
+		<%= link_to "New project for #{company}", new_company_project_path(company) %>
+	<% end -%>
+<% end -%>
+

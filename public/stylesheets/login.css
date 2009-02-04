@@ -1,0 +1,104 @@
+/* General {{{ */
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body, td, input, select, textarea {
+	font: 14px/1.7 Helvetica, sans-serif;
+}
+
+body {
+	background: #eee;
+	color: #333;
+}
+
+/*}}}*/
+
+/* Layout {{{ */
+
+#container {
+	margin: 64px auto;
+	border: 8px solid #999;
+	background: #f8f8f8;
+	width: 400px;
+}
+
+/*}}}*/
+
+/* Header {{{ */
+
+#header {
+	height: 5em;
+	background: #999;
+	position: relative;
+	overflow: none;
+}
+
+#header #logo {
+	color: #f8f8f8;
+	position: absolute;
+	left: 16px;
+	top: -0.05ex;
+	font-size: 600%;
+	font-weight: bold;
+	line-height: 0.8em;
+	text-transform: lowercase;
+	text-decoration: none;
+	letter-spacing: -0.25ex;
+}
+
+#header #user-links {
+	position: absolute;
+	right: 64px;
+	bottom: 0px;
+	background: #ccc;
+}
+
+/*}}}*/
+
+/* Errors {{{ */
+
+.flash {
+	background: #ffc;
+	padding: 8px;
+	margin: 8px;
+}
+
+/*}}}*/
+
+/* Form {{{ */
+
+#login-form {
+	padding: 8px 16px 16px;
+}
+
+#login-form li {
+	display: block;
+	list-style: none;
+	margin: 0px 0px 1ex;
+}
+
+#login-form li.text label {
+	display: block;
+	font-size: 150%;
+	font-weight: bold;
+	letter-spacing: -0.2ex;
+	text-transform: lowercase;
+	color: #999;
+}
+
+input.button {
+	font-size: 150%;
+	font-weight: bold;
+	letter-spacing: -0.2ex;
+	text-transform: lowercase;
+	background: #00aeef;
+	color: white;
+	cursor: pointer;
+	padding: 4px 16px;
+	border: none;
+}
+
+/*}}}*/

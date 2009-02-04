@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
       end
     end
     map.resources :tasks
+    map.resources :projects
 
     account.resource :settings, :controller => "users"
     account.resources :users
