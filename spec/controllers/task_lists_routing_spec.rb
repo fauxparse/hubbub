@@ -3,27 +3,27 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe TaskListsController do
   describe "route generation" do
     it "should map #index" do
-      route_for(:controller => "task_lists", :action => "index", :project_id => 1).should == "/projects/1/task_lists"
+      route_for(:controller => "task_lists", :action => "index", :project_id => 1).should == "/projects/1/lists"
     end
   
     it "should map #new" do
-      route_for(:controller => "task_lists", :action => "new", :project_id => 1).should == "/projects/1/task_lists/new"
+      route_for(:controller => "task_lists", :action => "new", :project_id => 1).should == "/projects/1/lists/new"
     end
   
     it "should map #show" do
-      route_for(:controller => "task_lists", :action => "show", :id => 1).should == "/task_lists/1"
+      route_for(:controller => "task_lists", :action => "show", :id => 1).should == "/lists/1"
     end
   
     it "should map #edit" do
-      route_for(:controller => "task_lists", :action => "edit", :id => 1).should == "/task_lists/1/edit"
+      route_for(:controller => "task_lists", :action => "edit", :id => 1).should == "/lists/1/edit"
     end
   
     it "should map #update" do
-      route_for(:controller => "task_lists", :action => "update", :id => 1).should == "/task_lists/1"
+      route_for(:controller => "task_lists", :action => "update", :id => 1).should == "/lists/1"
     end
   
     it "should map #destroy" do
-      route_for(:controller => "task_lists", :action => "destroy", :id => 1).should == "/task_lists/1"
+      route_for(:controller => "task_lists", :action => "destroy", :id => 1).should == "/lists/1"
     end
   end
 
