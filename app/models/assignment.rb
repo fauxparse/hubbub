@@ -9,7 +9,6 @@ class Assignment < ActiveRecord::Base
   default_value_for :billable_minutes, 0
   default_value_for :total_minutes, 0
   
-  validates_presence_of :task_id
   validates_presence_of :role_id, :unless => :assigned?
   
   after_create :assign_time_slices_from_task
@@ -25,6 +24,11 @@ class Assignment < ActiveRecord::Base
   # Returns true if work on this assignment is billable.
   def billable?
     task.billable?
+  end
+  
+  # Lets the assignment work with nested_attributes. Hopefully this won't
+  # be needed anymore after Rails 2.3 final!
+  def _delete=(value)
   end
   
 protected

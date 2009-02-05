@@ -3,7 +3,7 @@
 		<%= content_tag :h2, task_list %>
 	<% end -%>
 	
-	<% content_tag :ul, dom_id(task_list, :tasks), :class => :tasks do -%>
+	<% content_tag :ul, :id => dom_id(task_list, :tasks), :class => :tasks do -%>
 		<%= render :partial => task_list.tasks %>
 	<% end -%>
 	

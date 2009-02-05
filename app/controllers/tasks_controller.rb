@@ -15,10 +15,16 @@ class TasksController < ApplicationController
   end
   
   def create
-    # TODO error checking
     @task = @task_list.tasks.build params[:task]
-    @task.save
-    redirect_to @task.project
+    respond_to do |format|
+      if @task.save
+        format.js
+        format.html { redirect_to @task.project }
+      else
+        format.js
+        format.html { render :action => "new" }
+      end
+    end
   end
   
   def edit
@@ -39,6 +45,5 @@ protected
   
   def clean_assignments
     params[:task][:assignments_attributes].reject! { |k, v| k =~ /^new_/ && v["_delete"] == "1" } unless params[:task].blank? || params[:task][:assignments_attributes].blank?
-    logger.info params[:task][:assignments_attributes].inspect
   end
 end

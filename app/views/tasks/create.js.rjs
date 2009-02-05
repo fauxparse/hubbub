@@ -1,0 +1,6 @@
+if @task.valid?
+  page.call "$.facebox.close"
+  page.insert_html :bottom, dom_id(@task.task_list, :tasks), :partial => "task", :object => @task
+else
+  page.replace_html "#facebox .content", :file => "tasks/new.html.erb"
+end
