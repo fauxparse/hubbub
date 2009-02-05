@@ -1,19 +1,32 @@
 <%= form.error_messages %>
 <ol class="form">
 	<li class="text"><%= form.label :name %> <%= form.text_field :name, :class => "text" %></li>
-	<li class="users">
+	<li class="text">
 		<%= label_tag "Assign to" %>
-		<% [ form.object.task_list.project.company, current_agency ].uniq.each do |company| -%>
-			<strong><%= company %></strong>
+		
+		<div class="assignments">
+			<%= form.check_box :anybody %> <%= form.label :anybody %>
 			<dl>
-				<% (company.users.collect(&:roles).flatten.uniq.sort_by(&:to_s) + [ nil ]).each do |role| -%>
-					<dt><%= role || "Others" %></dt>
-					<% company.users.select { |u| role.nil? ? u.roles.empty? : u.has_role?(role) }.each do |u| -%>
-						<dd><%= u %></dd>
-					<% end -%>
+				<% current_users.group_by(&:company).each do |company, users| -%>
+					<dt><%= company %></dt>
+					<%= task_assignment_fields_for form, users %>
 				<% end -%>
 			</dl>
-		<% end -%>
+			<%= clear_floats %>
+			<% javascript_tag do -%>
+				$('#task_anybody').click(function() { $('#task_anybody').siblings('dl').slideToggle(); })
+				function show_or_hide_assignments() {
+					if ($('#task_anybody')[0].checked) {
+						$('#task_anybody').siblings('dl').hide();
+					} else {
+						$('#task_anybody').siblings('dl').show();
+					}
+				}
+			<% end -%>
+		</div>
 	</li>
-	<li class="buttons"><%= form.submit button, :class => "button" %></li>
+	<li class="buttons">
+		<%= link_to_function "Cancel", "$.facebox.close()", :class => "cancel button" %>
+		<%= form.submit button, :class => "ok button" %>
+	</li>
 </ol>

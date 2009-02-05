@@ -5,6 +5,14 @@ $(document).ready(function() {
 	$(document).bind('ajaxSuccess', function() {
 	  rebind_handlers();
 	});
+	
+	$(document).bind('reveal.facebox', function() {
+		if ($('#facebox').find('ol.form li.buttons').length > 0) {
+			$('#facebox .footer').hide();
+		} else {
+			$('#facebox .footer').show();
+		}
+	});
 
 	$(document).ajaxSend(function(event, request, settings) {
 	  if (typeof(AUTH_TOKEN) == "undefined") return;

@@ -1,3 +1,5 @@
-<% form_for @task do |form| %>
+<h1>New Task</h1>
+
+<% form_for @task, :url => list_tasks_path(@task_list) do |form| %>
 	<%= render :partial => "form", :object => form, :locals => { :button => "Create" } %>
 <% end %>

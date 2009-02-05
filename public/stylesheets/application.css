@@ -18,6 +18,12 @@ a {
 	color: #ec008c;
 }
 
+.cleaner {
+	clear: both;
+	height: 0px;
+	overflow: none;
+}
+
 #main ul {
 	margin: 0px 0px 1ex;
 	padding: 0px 0px 0px 2em;
@@ -153,7 +159,8 @@ a {
 	margin: 0px 0px 8px;
 }
 
-#title h1 {
+#title h1,
+#facebox h1 {
 	color: #00aeef;
 	font-size: 400%;
 	font-weight: bold;
@@ -247,6 +254,30 @@ a.inline {
 	font-size: 100%;
 	padding: 0px 0.5em;
 	margin: 0px;
+}
+
+ol.form li .assignments {
+	margin-left: 30%;
+}
+
+ol.form li .assignments label {
+	display: inline;
+	float: none;
+	text-transform: none;
+	font-size: 100%;
+	color: #333;
+}
+
+ol.form li .assignments dt {
+	clear: left;
+	font-weight: bold;
+	display: none;
+}
+
+ol.form li .assignments dd {
+	padding-left: 1.5em;
+	width: 6em;
+	float: left;
 }
 
 /*}}}*/

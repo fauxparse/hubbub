@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   validates_presence_of :name, :email
   validates_uniqueness_of :display_name, :scope => :account_id
   
+  def <=>(another)
+    display_name <=> another.display_name
+  end
+  
   def display_name
     (s = super).blank? ? name : s
   end

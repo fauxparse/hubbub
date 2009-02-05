@@ -1,10 +1,11 @@
 class Task < ActiveRecord::Base
   belongs_to :task_list
+  delegate :project, :to => :task_list
   has_many :assignments, :dependent => :destroy
   has_many :blockages, :through => :assignments
   has_many :time_slices, :as => :activity, :dependent => :destroy
   
-  accepts_nested_attributes_for :assignments
+  accepts_nested_attributes_for :assignments, :allow_destroy => true
   
   validates_presence_of :name, :task_list_id
   validates_numericality_of :assignments_count, :greater_than_or_equal_to => 0
@@ -13,6 +14,8 @@ class Task < ActiveRecord::Base
   named_scope :for_user, lambda { |user| { :include => :assignments, :conditions => user.nil? ? "1" : [ "tasks.anybody = ? OR assignments.user_id = ? OR (assignments.user_id IS NULL AND assignments.role_id IN (?))", true, user.id, user.role_ids ] } }
   
   include Statefulness
+  
+  alias_attribute :to_s, :name
   
   def can_complete?
     assignments.inject(true) { |t, a| t && (a.completed? || !a.blocked?) }

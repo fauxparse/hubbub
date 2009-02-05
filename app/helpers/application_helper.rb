@@ -4,4 +4,8 @@ module ApplicationHelper
     specials = { "people" => "users" }
     content_tag :ul, tabs.reverse.collect { |tab| content_tag :li, link_to(Array(tab).first.humanize, send(:"#{Array(tab).last.underscore}_path"), :class => "#{:active if [Array(tab).last.underscore, specials[Array(tab).last.underscore]].include?(controller.controller_name)}") }.join, :id => "tabs"
   end
+  
+  def clear_floats
+    content_tag :div, "", :class => :cleaner
+  end
 end
