@@ -7,8 +7,19 @@
 	<li class="text"><%= form.label :password, form.object.new_record? ? nil : "Change password" %> <%= form.password_field :password %></li>
 	<li class="text"><%= form.label :password_confirmation, "Confirm password" %> <%= form.password_field :password_confirmation %></li>
 	<li class="text"><%= form.label :company_id %> <%= form.select :company_id, current_account.companies.collect { |c| [ c.name, c.id ] } %></li>
-	<% if current_user.admin? -%>
-		<li class="checkbox"><%= form.check_box :admin %> <%= form.label :admin, "Administrator?" %></li>
-	<% end -%>
-	<li class="buttons"><%= form.submit button, :class => "button" %></li>
+	<li class="text">
+		<%= form.label :roles %>
+		<ul class="roles">
+			<% if current_user.admin? -%>
+				<li class="checkbox"><%= form.check_box :admin %> <%= form.label :admin, "Administrator" %></li>
+			<% end -%>
+			<% Role.all.each do |role| -%>
+				<li class="checkbox"><%= check_box_tag "user[role_ids][]", role.id, form.object.has_role?(role), :id => "user_role_#{role.id}" %> <%= form.label "user_role_#{role.id}", role %></li>
+			<% end -%>	
+		</ul>
+	</li>
+	<li class="buttons">
+		<%= link_to "Back to People", people_path, :class => "cancel button" %>
+		<%= form.submit button, :class => "ok button" %>
+	</li>
 </ol>

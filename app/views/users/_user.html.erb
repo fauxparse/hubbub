@@ -1,3 +1,4 @@
-<% content_tag :div, :class => "user", :id => dom_id(user) do -%>
-	<%= link_to user, user %>
+<% content_tag :div, :class => :user, :id => dom_id(user) do -%>
+	<%= link_to user.to_s, person_path(user) %>
+	<%= content_tag :small, user.roles.to_sentence, :class => :roles %>
 <% end -%>

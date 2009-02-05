@@ -10,7 +10,7 @@
 		<% content_tag :ul, :class => :projects do -%>
 			<%= render :partial => projects %>
 		<% end -%>
-		<%= link_to "New project for #{company}", new_company_project_path(company) %>
+		<%= link_to "New project for #{company}", new_company_project_path(company), :class => "inline button" %>
 	<% end -%>
 <% end -%>
 

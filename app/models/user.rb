@@ -11,11 +11,15 @@ class User < ActiveRecord::Base
   alias_attribute :to_s, :display_name
   alias_attribute :to_param, :login
 
-  validates_presence_of :name
+  validates_presence_of :name, :email
   validates_uniqueness_of :display_name, :scope => :account_id
-
+  
   def display_name
     (s = super).blank? ? name : s
+  end
+  
+  def name
+    (s = super).blank? ? login.titleize : s
   end
   
   def has_role?(role)

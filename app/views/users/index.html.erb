@@ -1,4 +1,8 @@
-<h1>Users</h1>
+<% content_for :page_title, "Users" -%>
+
+<% content_for :title do -%>
+	<h1>Users</h1>
+<% end -%>
 
 <% @companies.each do |company| -%>
 	<%= render :partial => company.class.name.underscore, :object => company %>

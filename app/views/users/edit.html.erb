@@ -4,7 +4,7 @@
 	<h1>Account Settings</h1>
 <% end -%>
  
-<% form_for @user, :url => @user do |form| %>
+<% form_for @user, :url => person_path(@user) do |form| %>
   <%= render :partial => "form", :object => form, :locals => { :button => "Save" } %>
 <% end %>
  

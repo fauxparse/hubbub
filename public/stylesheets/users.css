@@ -1,0 +1,23 @@
+.company-users {
+	border-top: 4px solid #ccc;
+	padding-bottom: 16px;
+}
+
+#main ol.form ul.roles {
+	margin-left: 30%;
+	padding: 0px;
+}
+
+#main ol.form li ul.roles li {
+	border: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#main ol.form li ul.roles li label {
+	float: none;
+	display: inline;
+	text-transform: none;
+	font-size: 100%;
+	color: #333;
+}

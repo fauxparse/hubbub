@@ -1,5 +1,9 @@
-<h1>Register</h1>
- 
-<% form_for @user, :url => company_users_path(current_company) do |form| %>
+<% content_for :page_title, "Register" -%>
+
+<% content_for :title do -%>
+	<h1>Register</h1>
+<% end -%>
+
+<% form_for @user, :url => company_people_path(current_company) do |form| %>
   <%= render :partial => "form", :object => form, :locals => { :button => "Create" } %>
 <% end %>

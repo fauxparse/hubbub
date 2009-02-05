@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     @user = current_account.users.build(params[:user])
     if @user.save
       flash[:notice] = "Account registered!"
-      redirect_back_or_default @user
+      redirect_back_or_default person_path(@user)
     else
       render :action => :new
     end
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(params[:user])
       flash[:notice] = "Account updated"
-      redirect_to(params[:id] ? @user : settings_path)
+      redirect_to(params[:id] ? person_path(@user) : settings_path)
     else
       render :action => :edit
     end
