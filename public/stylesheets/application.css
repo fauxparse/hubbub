@@ -281,3 +281,57 @@ ol.form li .assignments dd {
 }
 
 /*}}}*/
+
+/* Projects {{{ */
+
+.company-projects {
+	border-top: 4px solid #ccc;
+	padding-bottom: 16px;
+}
+
+.project-roles {
+	margin-left: 30%;
+}
+
+ol.form .project-roles li {
+	padding: 0px;
+	border: none;
+}
+
+ol.form .project-roles ul {
+	padding: 0px !important;
+}
+
+.project-roles select {
+	width: 8em !important;
+}
+
+/* }}} */
+
+/* Users {{{ */
+
+.company-users {
+	border-top: 4px solid #ccc;
+	padding-bottom: 16px;
+}
+
+#main ol.form ul.roles {
+	margin-left: 30%;
+	padding: 0px;
+}
+
+#main ol.form li ul.roles li {
+	border: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#main ol.form li ul.roles li label {
+	float: none;
+	display: inline;
+	text-transform: none;
+	font-size: 100%;
+	color: #333;
+}
+
+/* }}} */
