@@ -217,7 +217,7 @@ ol.form li.checkbox {
 	padding-left: 30%;
 }
 
-input.button {
+.button {
 	font-size: 200%;
 	font-weight: bold;
 	letter-spacing: -0.1ex;
@@ -228,6 +228,12 @@ input.button {
 	padding: 4px 16px;
 	border: none;
 	line-height: normal;
+	margin-left: 0.25em;
+	text-decoration: none;
+}
+
+.cancel {
+	background: #ed1c24;
 }
 
 .errorExplanation {
@@ -235,6 +241,11 @@ input.button {
 	padding: 8px;
 	border: 1px solid #ccc;
 	border-top: none;
+}
+
+a.inline {
+	font-size: 100%;
+	padding: 0px 0.5em;
 }
 
 /*}}}*/

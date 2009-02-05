@@ -3,7 +3,20 @@
 	padding-bottom: 16px;
 }
 
-.company-projects h2 {
-	
+.project-roles {
+	margin-left: 30%;
+}
+
+ol.form .project-roles li {
+	padding: 0px;
+	border: none;
+}
+
+ol.form .project-roles ul {
+	padding: 0px !important;
+}
+
+.project-roles select {
+	width: 8em !important;
 }
 

@@ -3,5 +3,39 @@
 	<li class="text"><%= form.label :name %> <%= form.text_field :name, :class => "text" %></li>
 	<li class="text"><%= form.label :description %> <%= form.text_area :description, :rows => 4 %></li>
 	<li class="text"><%= form.label :company_id %> <%= form.select :company_id, current_account.companies.collect { |c| [ c.name, c.id ] }, {}, :disabled => (!viewing_multiple_companies? || !form.object.new_record?) %></li>
-	<li class="buttons"><%= form.submit button, :class => "button" %></li>
+	<li class="text">
+		<%= label_tag "Project Roles" %>
+		<% content_tag :div, :class => "project-roles" do -%>
+			<ul id="existing-project-roles">
+				<% form.fields_for :project_roles do |role| %>
+					<li><%= role.select :role_id, Role.all.collect { |r| [ r.name, r.id ] } %> <%= role.select :user_id, current_users.collect { |u| [ u.to_s, u.id ] }, :include_blank => "[unassigned]" %> <%= link_to_function "Remove", "delete_project_role('#{role.object.id}')", :class => "inline button roles-delete" %></li>
+				<% end -%>
+			</ul>
+			<% form.fields_for @project.project_roles.build do |role| %>
+				<%= role.select :role_id, Role.all.collect { |r| [ r.name, r.id ] } %> <%= role.select :user_id, current_users.collect { |u| [ u.to_s, u.id ] }, :include_blank => "[unassigned]" %> <%= link_to_function "Add", "add_new_project_role()", :class => "inline button roles-add" %>
+			<% end -%>
+		<% end -%>
+	</li>
+	<li class="buttons">
+		<%= link_to "Back to project", form.object, :class => "cancel button" unless form.object.new_record? %>
+		<%= form.submit button, :class => "button" %>
+	</li>
 </ol>
+
+<% javascript_tag do -%>
+	var new_counter = 0;
+
+	function add_new_project_role() {
+		id = 'new_' + (new_counter++);
+		$('#existing-project-roles').append('<li><select id="project_project_roles_attributes_' + id + '_role_id" name="project[project_roles_attributes][' + id + '][role_id]"></select> <select id="project_project_roles_attributes_' + id + '_user_id" name="project[project_roles_attributes][' + id + '][user_id]"></select> <a href="#" onclick="delete_project_role(\'' + id + '\')" class="inline button roles-delete">Remove</a></li>');
+		$('#project_project_roles_attributes_' + id + '_role_id').html($('#project_project_role_role_id').html()).val($('#project_project_role_role_id').val());
+		$('#project_project_roles_attributes_' + id + '_user_id').html($('#project_project_role_user_id').html()).val($('#project_project_role_user_id').val());
+	}
+
+	function delete_project_role(id) {
+		if (!id.match(/^new_/)) {
+			$('.project-roles').append('<input type="hidden" name="project[project_roles_attributes][' + id + '][_delete]" value="1" />');
+		}
+		$('#project_project_roles_attributes_' + id + '_user_id').parent().remove();
+	}
+<% end -%>

@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_user_session, :current_user, :current_company, :current_agency
+  helper_method :current_user_session, :current_user, :current_company, :current_agency, :current_users
   
   before_filter :check_account_status
   before_filter :login_required
@@ -71,6 +71,14 @@ protected
   
   def current_agency
     @agency ||= Company.find(current_account.agency_id)
+  end
+  
+  def current_companies
+    @companies ||= [ current_company, current_agency ].uniq
+  end
+  
+  def current_users
+    @users ||= current_companies.collect(&:users).flatten
   end
   
   def render(options = nil, extra_options = {}, &block)
