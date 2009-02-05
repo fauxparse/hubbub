@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_filter :get_project, :except => [ :index, :new, :create ]
-  helper_method :scope
+  helper_method :scope, :viewing_multiple_companies?
   
   # GET /projects
   # GET /projects.xml
@@ -83,7 +83,11 @@ protected
   def scope
     params[:company_id].blank? ? (current_user.company.is_a?(Agency) ? Project.for_agency(current_user.company) : current_user.company.projects) : current_company.projects
   end
-
+  
+  def viewing_multiple_companies?
+    params[:company_id].blank? && current_user.company.is_a?(Agency)
+  end
+  
   def get_project
     @project ||= scope.find(params[:id].to_i, :include => :company) unless params[:id].blank?
   end

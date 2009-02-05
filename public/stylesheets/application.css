@@ -150,7 +150,7 @@ a {
 /* Title Block {{{ */
 
 #title {
-	margin: 0px 0px 16px;
+	margin: 0px 0px 8px;
 }
 
 #title h1 {
@@ -169,6 +169,7 @@ a {
 	letter-spacing: -0.1em;
 	text-transform: none;
 	margin-left: 0.5em;
+	line-height: 1em;
 }
 
 /*}}}*/
@@ -210,6 +211,10 @@ ol.form li.buttons {
 	border-bottom: none;
 	padding-left: 30%;
 	text-align: right;
+}
+
+ol.form li.checkbox {
+	padding-left: 30%;
 }
 
 input.button {

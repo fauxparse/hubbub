@@ -1,4 +1,8 @@
-<h1>Editing project</h1>
+<% content_for :page_title, @project -%>
+
+<% content_for :title do -%>
+	<h1>Edit Project <small>for <%= link_to @project.company, company_projects_path(@project.company) %></small></h1>
+<% end -%>
 
 <% form_for @project do |form| %>
 	<%= render :partial => "form", :object => form, :locals => { :button =>  "Save" } %>

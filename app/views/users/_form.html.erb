@@ -8,7 +8,7 @@
 	<li class="text"><%= form.label :password_confirmation, "Confirm password" %> <%= form.password_field :password_confirmation %></li>
 	<li class="text"><%= form.label :company_id %> <%= form.select :company_id, current_account.companies.collect { |c| [ c.name, c.id ] } %></li>
 	<% if current_user.admin? -%>
-		<li class="text"><%= form.check_box :admin %> <%= form.label :admin, "Administrator?" %></li>
+		<li class="checkbox"><%= form.check_box :admin %> <%= form.label :admin, "Administrator?" %></li>
 	<% end -%>
 	<li class="buttons"><%= form.submit button, :class => "button" %></li>
 </ol>
