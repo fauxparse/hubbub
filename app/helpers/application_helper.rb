@@ -1,8 +1,9 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  def tabs(tabs)
-    specials = { "people" => "users" }
-    content_tag :ul, tabs.reverse.collect { |tab| content_tag :li, link_to(Array(tab).first.humanize, send(:"#{Array(tab).last.underscore}_path"), :class => "#{:active if [Array(tab).last.underscore, specials[Array(tab).last.underscore]].include?(controller.controller_name)}") }.join, :id => "tabs"
+  def tabs(tabs, options = {})
+    options[:aliases] ||= {}
+    tabs.unshift %w(home root) unless options[:home] == false
+    content_tag :ul, tabs.reverse.collect { |tab| title, dest = Array(tab).first.humanize, Array(tab).last.underscore; content_tag :li, link_to(title, send(:"#{dest}_path"), :class => "#{:active if [dest, options[:aliases][dest]].flatten.include?(controller.controller_name)}") }.join, :id => "tabs"
   end
   
   def clear_floats
