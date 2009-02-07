@@ -25,7 +25,7 @@ module DefaultValueForPlugin
 		end
 	
 		def evaluate(instance)
-			return @value
+			return @value.dup
 		end
 	end
 	
