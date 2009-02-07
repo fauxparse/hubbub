@@ -7,7 +7,7 @@ class TasksController < ApplicationController
   end
   
   def show
-    @task = Task.find params[:id], :include => { :assignments => :users }
+    @task = Task.find params[:id], :include => { :assignments => :user }
   end
   
   def new
@@ -28,14 +28,20 @@ class TasksController < ApplicationController
   end
   
   def edit
-    @task = Task.find params[:id], :include => { :assignments => :users }
+    @task = Task.find params[:id], :include => { :assignments => :user }
   end
   
   def update
-    # TODO error checking
-    @task = Task.find params[:id], :include => { :assignments => :users }
-    @task.update_attributes params[:task]
-    redirect_to @task.project
+    @task = Task.find params[:id], :include => { :assignments => :user }
+    respond_to do |format|
+      if @task.update_attributes params[:task]
+        format.js
+        format.html { redirect_to @task.project }
+      else
+        format.js
+        format.html { render :action => "new" }
+      end
+    end
   end
 
 protected
