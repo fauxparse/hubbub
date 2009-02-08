@@ -1,11 +1,12 @@
 class Task < ActiveRecord::Base
   belongs_to :task_list
   delegate :project, :to => :task_list
-  has_many :assignments, :dependent => :destroy
+  has_many :assignments, :dependent => :destroy, :include => [ :user, :role ]
   has_many :blockages, :through => :assignments
   has_many :time_slices, :as => :activity, :dependent => :destroy
   
   accepts_nested_attributes_for :assignments, :allow_destroy => true
+  default_value_for :billable, true
   
   validates_presence_of :name, :task_list_id
   validates_numericality_of :assignments_count, :greater_than_or_equal_to => 0
@@ -33,7 +34,20 @@ class Task < ActiveRecord::Base
     anybody? || assignments_count > 0
   end
   
+  def unassigned?
+    !assigned?
+  end
+  
   def blocked?
     assignments.any? { |a| a.blocked? }
+  end
+  
+  def has_due_date?
+    !due_on.nil?
+  end
+  alias :has_due_date :has_due_date?
+    
+  def has_due_date=(value)
+    self.due_on = nil if !value || value.to_i.zero?
   end
 end

@@ -10,4 +10,15 @@ module TasksHelper
       end
     end
   end
+  
+  def task_users(task)
+    result = if task.anybody?
+      "(anybody)"
+    else
+      task.unassigned? ? link_to("(unassigned)", edit_task_path(task, :format => :js), :rel => :facebox) : task.assignments.collect { |a|
+        a.user.blank? ? "(any #{a.role})" : link_to(a.user, person_path(a.user))
+      }.to_sentence
+    end
+    content_tag :span, result, :class => :users
+  end
 end

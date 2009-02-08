@@ -35,6 +35,7 @@ class TasksController < ApplicationController
     @task = Task.find params[:id], :include => { :assignments => :user }
     respond_to do |format|
       if @task.update_attributes params[:task]
+        @task.reload
         format.js
         format.html { redirect_to @task.project }
       else

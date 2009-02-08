@@ -199,6 +199,16 @@ ol.form li {
 	padding: 8px 0px;
 }
 
+ol.form ol.form {
+  margin-left: 30%;
+  padding: 0px;
+}
+
+ol.form ol.form li {
+  border: none;
+  padding: 0px;
+}
+
 ol.form li.text label {
 	display: block;
 	text-transform: uppercase;
@@ -208,10 +218,23 @@ ol.form li.text label {
 	width: 30%;
 }
 
+ol.form li.checkbox label {
+	display: inline;
+	text-transform: none;
+	font-size: 100%;
+	color: #333;
+	float: none;
+	width: auto;
+}
+
 ol.form li.text input.text,
 ol.form li.text textarea,
 ol.form li.text select {
 	width: 65%;
+}
+
+ol.form li input.date {
+  width: 10em;
 }
 
 ol.form li.buttons {

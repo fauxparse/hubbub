@@ -25,7 +25,11 @@ module DefaultValueForPlugin
 		end
 	
 		def evaluate(instance)
-			return @value.dup
+		  begin
+		    @value.dup
+		  rescue TypeError
+		    @value
+		  end
 		end
 	end
 	

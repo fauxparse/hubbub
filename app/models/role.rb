@@ -22,7 +22,8 @@ class Role < ActiveRecord::Base
   
   class << self
     def [](role)
-      role.is_a?(Role) ? role : find_or_initialize_by_name(normalize_name(role))
+      @roles ||= {}
+      @roles[role] ||= (role.is_a?(Role) ? role : find_or_initialize_by_name(normalize_name(role)))
     end
     
     def normalize_name(name)

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090205000300) do
+ActiveRecord::Schema.define(:version => 20090208010208) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(:version => 20090205000300) do
     t.datetime "updated_at"
     t.integer  "assignments_count", :default => 0
     t.boolean  "anybody",           :default => false
+    t.date     "due_on"
   end
 
   create_table "time_slices", :force => true do |t|

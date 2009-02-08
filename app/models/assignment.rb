@@ -9,6 +9,7 @@ class Assignment < ActiveRecord::Base
   default_value_for :billable_minutes, 0
   default_value_for :total_minutes, 0
   
+  validates_presence_of :task_id, :unless => :assigning_from_nested_attributes?
   validates_presence_of :role_id, :unless => :assigned?
   
   after_create :assign_time_slices_from_task
@@ -29,6 +30,7 @@ class Assignment < ActiveRecord::Base
   # Lets the assignment work with nested_attributes. Hopefully this won't
   # be needed anymore after Rails 2.3 final!
   def _delete=(value)
+    @assigning_from_nested_attributes = true
   end
   
 protected
@@ -42,5 +44,9 @@ protected
     time_slices.each do |t|
       t.update_attribute :activity, task
     end
+  end
+  
+  def assigning_from_nested_attributes?
+    @assigning_from_nested_attributes
   end
 end

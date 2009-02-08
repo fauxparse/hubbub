@@ -1,6 +1,6 @@
 <% content_tag :li, :class => "task", :id => dom_id(task) do -%>
 	<%= link_to task, task_path(task, :format => nil) %> <%= link_to "Edit", edit_task_path(task, :format => nil), :rel => :facebox, :class => "inline task-edit" %>
 	<% content_tag :span, :class => :users do -%>
-		<%= task.anybody? ? "Anybody" : task.assignments.collect(&:user).sort.to_sentence %>
+		<%= task_users(task) %>
 	<% end -%>
 <% end -%>

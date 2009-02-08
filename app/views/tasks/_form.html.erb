@@ -14,20 +14,35 @@
 				<% end -%>
 			</dl>
 			<%= clear_floats %>
-			<% javascript_tag do -%>
-				$('#task_anybody').click(function() { $('#task_anybody').siblings('dl').slideToggle(); })
-				function show_or_hide_assignments() {
-					if ($('#task_anybody')[0].checked) {
-						$('#task_anybody').siblings('dl').hide();
-					} else {
-						$('#task_anybody').siblings('dl').show();
-					}
-				}
-			<% end -%>
 		</div>
+	</li>
+	<li class="text">
+	  <%= form.label :billable, "More options" %>
+	  <ol class="form">
+	    <li class="checkbox"><%= form.check_box :billable %> <%= form.label :billable %></li>
+	    <li class="checkbox"><%= form.check_box :has_due_date %> <%= form.label :has_due_date, "Due on" %> <%= form.text_field :due_on, :class => "date", :value => form.object.has_due_date? && form.object.due_on.readable_inspect %></li>
+	  </ol>
 	</li>
 	<li class="buttons">
 		<%= link_to_function "Cancel", "$.facebox.close()", :class => "cancel button" %>
 		<%= form.submit button, :class => "ok button" %>
 	</li>
 </ol>
+
+<% javascript_tag do -%>
+	$('#task_anybody').click(function() { $('#task_anybody').siblings('dl').slideToggle(); })
+	function show_or_hide_assignments() {
+		if ($('#task_anybody')[0].checked) {
+			$('#task_anybody').siblings('dl').hide();
+		} else {
+			$('#task_anybody').siblings('dl').show();
+		}
+	}
+	show_or_hide_assignments();
+	
+	$('#task_has_due_date').click(function() { enable_disable_due_date(); })
+	function enable_disable_due_date() {
+	  $('#task_due_on')[0].disabled = !$('#task_has_due_date')[0].checked;
+	}
+	enable_disable_due_date();
+<% end -%>

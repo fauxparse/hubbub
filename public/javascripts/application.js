@@ -12,6 +12,11 @@ $(document).ready(function() {
 		} else {
 			$('#facebox .footer').show();
 		}
+		
+		controls = $('#facebox input:visible, #facebox textarea:visible');
+		if (controls.length > 0) {
+		  controls[0].focus();
+		}
 	});
 
 	$(document).ajaxSend(function(event, request, settings) {
@@ -30,4 +35,5 @@ $(document).ready(function() {
 
 function rebind_handlers() {
   $('a[rel*=facebox]').unbind('click.facebox').facebox();
+  $('input.date').datepicker({ dateFormat:'D, d M yy' });
 }
