@@ -9,4 +9,12 @@ module ApplicationHelper
   def clear_floats
     content_tag :div, "", :class => :cleaner
   end
+  
+  def facebox_dialog_buttons(buttons)
+    content_tag :ol, content_tag(:li, buttons.collect { |b| button_to_function b.first.humanize, b.last, :class => "#{b.first} button" }, :class => :buttons), :class => :form
+  end
+  
+  def facebox_close_button
+    facebox_dialog_buttons [[ "Close", "$.facebox.close()" ]]
+  end
 end

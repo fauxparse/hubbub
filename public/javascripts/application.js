@@ -7,11 +7,7 @@ $(document).ready(function() {
 	});
 	
 	$(document).bind('reveal.facebox', function() {
-		if ($('#facebox').find('ol.form li.buttons').length > 0) {
-			$('#facebox .footer').hide();
-		} else {
-			$('#facebox .footer').show();
-		}
+		$('#facebox .footer').toggle($('#facebox ol.form li.buttons').length == 0);
 		
 		controls = $('#facebox input:visible, #facebox textarea:visible');
 		if (controls.length > 0) {

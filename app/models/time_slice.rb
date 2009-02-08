@@ -2,12 +2,11 @@ class TimeSlice < ActiveRecord::Base
   belongs_to :user
   belongs_to :activity, :polymorphic => true
 
-  default_value_for :minutes, 0
+  composed_of :elapsed_time, :mapping => %w(minutes minutes)
+  default_value_for :hours, 1
   default_value_for(:date) { |record| Date.today }
   validates_presence_of :user_id, :activity_id, :minutes, :date
 
-  composed_of :elapsed_time, :mapping => %w(minutes minutes)
-  
   before_validation :check_if_billable
   before_save :update_activity_time, :if => :caches_minutes_on_activity?
   before_destroy :remove_activity_time, :if => :caches_minutes_on_activity?

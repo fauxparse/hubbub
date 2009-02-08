@@ -32,11 +32,7 @@
 <% javascript_tag do -%>
 	$('#task_anybody').click(function() { $('#task_anybody').siblings('dl').slideToggle(); })
 	function show_or_hide_assignments() {
-		if ($('#task_anybody')[0].checked) {
-			$('#task_anybody').siblings('dl').hide();
-		} else {
-			$('#task_anybody').siblings('dl').show();
-		}
+		$('#task_anybody').siblings('dl').toggle(!$('#task_anybody')[0].checked);
 	}
 	show_or_hide_assignments();
 	

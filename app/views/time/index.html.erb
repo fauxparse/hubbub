@@ -17,5 +17,19 @@
     <tbody>
       <%= render :partial => "time/time_slice", :collection => @times %>
     </tbody>
+    <tfoot>
+      <tr class="empty">
+        <td colspan="5">Nothing to display here right now.</td>
+      </tr>
+    </tfoot>
   <% end -%>  
+<% end -%>
+
+<%= facebox_close_button if request.xhr? %>
+
+<% javascript_tag do -%>
+  function empty_time_table_message() {
+    $('#time-table tr.empty').toggle($('#time-table tbody tr').length == 0);
+  }
+  empty_time_table_message();
 <% end -%>
