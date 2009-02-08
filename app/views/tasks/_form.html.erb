@@ -20,7 +20,7 @@
 	  <%= form.label :billable, "More options" %>
 	  <ol class="form">
 	    <li class="checkbox"><%= form.check_box :billable %> <%= form.label :billable %></li>
-	    <li class="checkbox"><%= form.check_box :has_due_date %> <%= form.label :has_due_date, "Due on" %> <%= form.text_field :due_on, :class => "date", :value => form.object.has_due_date? && form.object.due_on.readable_inspect %></li>
+	    <li class="checkbox"><%= form.check_box :has_due_date %> <%= form.label :has_due_date, "Due on" %> <%= form.text_field :due_on, :class => "date", :value => (form.object.has_due_date? ? form.object.due_on : Date.today).readable_inspect %></li>
 	  </ol>
 	</li>
 	<li class="buttons">
@@ -36,7 +36,12 @@
 	}
 	show_or_hide_assignments();
 	
-	$('#task_has_due_date').click(function() { enable_disable_due_date(); })
+	$('#task_has_due_date').click(function() {
+	  enable_disable_due_date();
+	  if (this.checked) {
+	    $('#task_due_on')[0].focus();
+	  }
+	})
 	function enable_disable_due_date() {
 	  $('#task_due_on')[0].disabled = !$('#task_has_due_date')[0].checked;
 	}
