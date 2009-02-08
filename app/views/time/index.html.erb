@@ -1,0 +1,21 @@
+<h1>Time for <%= @user || "Anyone" %></h1>
+
+<% remote_form_for TimeSlice.new(:activity => @task, :user => @user), :url => time_path(:user_id => @user, :format => :js) do |form| -%>
+  <% content_tag :table, :id => "time-table" do -%>
+    <thead>
+      <tr><th>Hours</th><th>Date</th><th>User</th><th>Summary</th><th></th></tr>
+      <% unless @task.blank? -%>
+        <tr id="new_task_row">
+          <td><%= form.text_field :hours, :class => :hours %></td>
+          <td><%= form.text_field :date, :class => :date, :value => form.object.date.readable_inspect %></td>
+          <td><%= form.object.user %><%= form.hidden_field :user_id %><%= form.hidden_field :activity_type %><%= form.hidden_field :activity_id %></td>
+          <td><%= form.text_field :summary %></td>
+          <td><%= form.submit "Add", :class => "inline button" %>
+        </tr>
+      <% end -%>
+    </thead>
+    <tbody>
+      <%= render :partial => "time/time_slice", :collection => @times %>
+    </tbody>
+  <% end -%>  
+<% end -%>

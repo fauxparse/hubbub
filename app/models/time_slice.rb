@@ -3,11 +3,26 @@ class TimeSlice < ActiveRecord::Base
   belongs_to :activity, :polymorphic => true
 
   default_value_for :minutes, 0
-  validates_presence_of :user_id, :activity_id, :minutes
+  default_value_for(:date) { |record| Date.today }
+  validates_presence_of :user_id, :activity_id, :minutes, :date
+
+  composed_of :elapsed_time, :mapping => %w(minutes minutes)
   
   before_validation :check_if_billable
   before_save :update_activity_time, :if => :caches_minutes_on_activity?
   before_destroy :remove_activity_time, :if => :caches_minutes_on_activity?
+  
+  named_scope :for_user, lambda { |user| user.nil? ? {} : { :conditions => { :user_id => user.id } } }
+  named_scope :for_task, lambda { |task| task.nil? ? {} : { :conditions => [ "(time_slices.activity_type = 'Task' AND time_slices.activity_id = ?) OR (time_slices.activity_type = 'Assignment' AND time_slices.activity_id IN (?))", task.id, task.assignment_ids ] } }
+  named_scope :reverse_order, :order => "time_slices.date DESC, time_slices.id DESC"
+  
+  def hours
+    elapsed_time.to_s(:hours)
+  end
+  
+  def hours=(value)
+    self.elapsed_time = ElapsedTime.hours(value)
+  end
   
 protected
   def check_if_billable
@@ -37,5 +52,11 @@ protected
   
   def caches_minutes_on_activity?
     activity_type == "Assignment"
+  end
+  
+  def before_create
+    if activity.is_a?(Task) && (assignment = activity.assignments.detect { |a| a.user_id == user_id })
+      activity = assignment
+    end
   end
 end

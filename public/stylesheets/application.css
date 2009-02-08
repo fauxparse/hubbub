@@ -273,9 +273,10 @@ ol.form li.checkbox {
 	border-top: none;
 }
 
-a.inline {
+a.inline,
+input.inline {
 	font-size: 100%;
-	padding: 0px 0.5em;
+	padding: 1px 0.5em;
 	margin: 0px;
 }
 
@@ -356,5 +357,100 @@ ol.form .project-roles ul {
 	font-size: 100%;
 	color: #333;
 }
+
+/* }}} */
+
+/* Tasks {{{ */
+
+.task-list {
+  
+}
+
+.task-list .header {
+  border-bottom: 4px solid #ccc;
+}
+
+#main .task-list .tasks {
+  margin: 0px;
+  padding: 0px;
+}
+
+#main .task {
+  position: relative;
+  display: block;
+  list-style: none;
+  border-bottom: 1px solid #ccc;
+  margin: 0px;
+  padding: 0px 0px 0px 2em;
+}
+
+#main .task .task-id {
+	font-weight: bold;
+	letter-spacing: -0.1ex;
+	text-transform: lowercase;
+	background: #8cc63f;
+	color: white;
+	cursor: pointer;
+	border: none;
+	text-decoration: none;
+	font-size: 100%;
+	padding: 1px 0.5em;
+	margin: 0px;
+}
+
+#main .overdue .task-id { background: #ed1c24; }
+#main .blocked .task-id { background: #ff6600; }
+
+.task .task-edit {
+  visibility: hidden;
+}
+
+.task:hover .task-edit {
+  visibility: visible;
+}
+
+.task .users {
+  display: block;
+  color: #999;
+  font-size: 95%;
+}
+
+/* }}} */
+
+/* Time {{{ */
+
+#time-table {
+  margin: 0px;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+#time-table tbody th,
+#time-table tbody td,
+#time-table thead td {
+  padding: 0.5ex 0.5em;
+  border-bottom: 1px solid #ccc;
+  line-height: normal;
+}
+
+#time-table thead th {
+  padding: 0ex 0.33em;
+  background: #ccc;
+  text-align: left;
+  color: #999;
+  letter-spacing: -0.1em;
+  text-transform: lowercase;
+  font-weight: bold;
+  font-size: 150%;
+  line-height: normal;
+}
+
+#time-table thead td {
+  background: #eee;
+}
+
+#time-table #time_slice_hours { width: 3em; }
+#time-table #time_slice_date { width: 6em; }
+#time-table #time_slice_summary { width: 20em; }
 
 /* }}} */

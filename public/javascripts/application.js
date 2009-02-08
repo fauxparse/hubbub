@@ -17,6 +17,7 @@ $(document).ready(function() {
 		if (controls.length > 0) {
 		  controls[0].focus();
 		}
+		rebind_handlers();
 	});
 
 	$(document).ajaxSend(function(event, request, settings) {
@@ -35,5 +36,5 @@ $(document).ready(function() {
 
 function rebind_handlers() {
   $('a[rel*=facebox]').unbind('click.facebox').facebox();
-  $('input.date').datepicker({ dateFormat:'D, d M yy' });
+  $('input.date').datepicker('destroy').datepicker({ dateFormat:'D, d M yy' });
 }

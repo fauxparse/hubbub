@@ -1,0 +1,4 @@
+if @user.blank? || @user == @time_slice.user
+  page.insert_html :top, "#time-table tbody", :partial => "time/time_slice", :object => @time_slice
+  page.visual_effect :highlight, "##{dom_id(@time_slice)} td"
+end

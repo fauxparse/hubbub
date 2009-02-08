@@ -13,12 +13,26 @@ module TasksHelper
   
   def task_users(task)
     result = if task.anybody?
-      "(anybody)"
+      link_to "(anybody)", task_time_path(task, :user_id => current_user), :rel => :facebox
     else
-      task.unassigned? ? link_to("(unassigned)", edit_task_path(task, :format => :js), :rel => :facebox) : task.assignments.collect { |a|
-        a.user.blank? ? "(any #{a.role})" : link_to(a.user, person_path(a.user))
-      }.to_sentence
+      task.unassigned? ? link_to("(unassigned)", edit_task_path(task, :format => :js), :rel => :facebox) : task.assignments.sort.collect { |a| assignment_link(a) }.to_sentence
     end
     content_tag :span, result, :class => :users
+  end
+  
+  def task_classes(task)
+    classes = returning %w(task) do |c|
+      c << "overdue" if task.due_on && task.due_on <= Date.today
+      c << "blocked" if task.blocked?
+      c << task.current.state.name
+    end
+    classes * " "
+  end
+  
+  def assignment_link(assignment)
+    classes = %w(assignment)
+    classes << "blocked" if assignment.blocked?
+    classes << "completed" if assignment.completed?
+    link_to assignment, task_time_path(assignment.task, :user_id => assignment.user || current_user), :rel => :facebox
   end
 end

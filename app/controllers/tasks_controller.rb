@@ -7,6 +7,7 @@ class TasksController < ApplicationController
   end
   
   def show
+    # TODO: scope to account
     @task = Task.find params[:id], :include => { :assignments => :user }
   end
   
@@ -28,10 +29,12 @@ class TasksController < ApplicationController
   end
   
   def edit
+    # TODO: scope to account
     @task = Task.find params[:id], :include => { :assignments => :user }
   end
   
   def update
+    # TODO: scope to account
     @task = Task.find params[:id], :include => { :assignments => :user }
     respond_to do |format|
       if @task.update_attributes params[:task]
@@ -47,6 +50,7 @@ class TasksController < ApplicationController
 
 protected
   def get_task_list
+    # TODO: scope to account
     @task_list = params[:list_id] && TaskList.find(params[:list_id])
   end
   

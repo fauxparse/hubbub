@@ -1,6 +1,7 @@
 if @task.valid?
   page.call "$.facebox.close"
   page.replace dom_id(@task), :partial => "task", :object => @task
+  page.visual_effect :highlight, dom_id(@task), :duration => 1
 else
   page.replace_html "#facebox .content", :file => "tasks/edit.html.erb"
 end

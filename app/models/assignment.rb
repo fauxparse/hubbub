@@ -27,10 +27,26 @@ class Assignment < ActiveRecord::Base
     task.billable?
   end
   
+  def blocked?
+    blockages_count > 0
+  end
+  
   # Lets the assignment work with nested_attributes. Hopefully this won't
   # be needed anymore after Rails 2.3 final!
   def _delete=(value)
     @assigning_from_nested_attributes = true
+  end
+  
+  def <=>(another)
+    if assigned?
+      another.assigned? ? to_s <=> another.to_s : -1
+    else
+      another.assigned? ? 1 : 0
+    end
+  end
+  
+  def to_s
+    assigned? ? user.display_name : "(any #{role})"
   end
   
 protected
