@@ -110,7 +110,7 @@ a {
 #header #account .agency,
 #header #account .user {
 	font-size: 150%;
-	letter-spacing: -0.2ex;
+	letter-spacing: -0.1em;
 	font-weight: bold;
 }
 
@@ -138,7 +138,7 @@ a {
 	margin-left: 0.5em;
 	padding: 0.25em 0.5em;
 	line-height: 1em;
-	letter-spacing: -0.2ex;
+	letter-spacing: -0.1em;
 	font-weight: bold;
 	text-decoration: none;
 	text-transform: lowercase;
@@ -167,7 +167,7 @@ a {
 	line-height: 1em;
 	text-transform: lowercase;
 	text-decoration: none;
-	letter-spacing: -0.15em;
+	letter-spacing: -0.1em;
 }
 
 #title h1 small {
@@ -214,19 +214,13 @@ ol.form ol.form li {
   padding: 0px;
 }
 
-ol.form li.text label,
-ol.form li.textarea label {
+ol.form li.text label {
 	display: block;
 	text-transform: uppercase;
 	font-size: 85%;
 	color: #999;
 	float: left;
 	width: 30%;
-}
-
-ol.form li.textarea label {
-	float: none;
-	width: auto;
 }
 
 ol.form li.checkbox label {
@@ -240,16 +234,9 @@ ol.form li.checkbox label {
 
 ol.form li.text input.text,
 ol.form li.text textarea,
-ol.form li.textarea textarea,
 ol.form li.text select {
 	width: 65%;
-	line-height: normal;
 }
-
-ol.form li.textarea textarea {
-	width: 100%;
-}
-
 
 ol.form li input.date {
   width: 10em;
@@ -268,7 +255,7 @@ ol.form li.checkbox {
 .button {
 	font-size: 200%;
 	font-weight: bold;
-	letter-spacing: -0.1ex;
+	letter-spacing: -0.1em;
 	text-transform: lowercase;
 	background: #00aeef;
 	color: white;
@@ -280,12 +267,9 @@ ol.form li.checkbox {
 	text-decoration: none;
 }
 
-input.small {
-	font-size: 125%;
-	padding: 2px 8px;
+.cancel {
+	background: #ed1c24;
 }
-
-.cancel, .delete {	background: #ed1c24; }
 
 .errorExplanation {
 	background: #ffc;
@@ -324,40 +308,6 @@ ol.form li .assignments dd {
 	width: 6em;
 	float: left;
 }
-
-/* Time Picker {{{ */
-
-.time-picker-select {
-	border: 1px solid #999;
-	background: white;
-	color: #333;
-	line-height: 1.5;
-	height: 7.5em;
-	overflow-y: scroll;
-	text-align: left;
-	z-index: 2000;
-}
-
-.time-picker-select li {
-	list-style: none;
-	display: inline;
-	padding: 0px;
-}
-
-.time-picker-select li a {
-	display: block;
-	padding: 0px 8px;
-	color: #333;
-	outline: none;
-	text-decoration: none;
-}
-
-.time-picker-select li a:hover,
-.time-picker-select li a.selected {
-	background: #ccc;
-}
-
-/*}}}*/
 
 /*}}}*/
 
@@ -441,7 +391,7 @@ ol.form .project-roles ul {
 
 #main .task .task-id {
 	font-weight: bold;
-	letter-spacing: -0.1ex;
+	letter-spacing: -0.1em;
 	text-transform: lowercase;
 	background: #8cc63f;
 	color: white;
@@ -495,7 +445,7 @@ ol.form .project-roles ul {
   background: #ccc;
   text-align: left;
   color: #999;
-  letter-spacing: -0.1em;
+	letter-spacing: -0.1em;
   text-transform: lowercase;
   font-weight: bold;
   font-size: 150%;
@@ -512,11 +462,8 @@ ol.form .project-roles ul {
   color: #999;
 }
 
-#time-table #time_slice_hours { width: 5em; }
+#time-table #time_slice_hours { width: 3em; }
 #time-table #time_slice_date { width: 6em; }
 #time-table #time_slice_summary { width: 20em; }
-
-#time-table tbody tr .delete { visibility: hidden; }
-#time-table tbody tr:hover .delete { visibility: visible; }
 
 /* }}} */
