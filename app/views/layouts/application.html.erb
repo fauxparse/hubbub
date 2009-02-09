@@ -7,7 +7,7 @@
   <title><%= [ yield(:page_title), "hubbub" ].compact * " | " %></title>
 	<%= stylesheet_link_tag "application", "/facebox/facebox", "theme/ui.all" %>
 	<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
-  <%= javascript_include_tag :defaults, "/facebox/facebox" %>
+  <%= javascript_include_tag :defaults, "/facebox/facebox", "timepicker" %>
 </head>
 <body>
 	<div id="container">
@@ -15,7 +15,7 @@
 			<div id="header-inner">
 				<a id="logo" href="/">Hubbub</a>
 				
-				<%= tabs %w(projects people), :aliases => { "people" => "users", "root" => "dashboards" } %>
+				<%= tabs %w(projects time people), :aliases => { "people" => "users", "root" => "dashboards" } %>
 				
 				<div id="account">
 					<%= content_tag :span, current_agency, :class => :agency %>

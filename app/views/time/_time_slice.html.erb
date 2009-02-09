@@ -1,3 +1,3 @@
 <% content_tag :tr, :id => dom_id(time_slice) do -%>
-  <%= content_tag :td, time_slice.hours %><%= content_tag :td, time_slice.date.to_formatted_s(:short) %><%= content_tag :td, time_slice.user %><%= content_tag :td, time_slice.summary %><%= content_tag :td, "", :class => "controls" %>
+  <%= content_tag :td, time_slice.hours %><%= content_tag :td, time_slice.date.to_formatted_s(:short) %><%= content_tag :td, time_slice.user %><%= content_tag :td, time_slice.summary %><%= content_tag :td, link_to_function("Delete", "delete_time('#{time_slice.id}')", :class => "inline delete button"), :class => "controls" %>
 <% end -%>

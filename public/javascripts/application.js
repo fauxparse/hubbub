@@ -9,7 +9,7 @@ $(document).ready(function() {
 	$(document).bind('reveal.facebox', function() {
 		$('#facebox .footer').toggle($('#facebox ol.form li.buttons').length == 0);
 		
-		controls = $('#facebox input:visible, #facebox textarea:visible');
+		controls = $('#facebox :input:visible');
 		if (controls.length > 0) {
 		  controls[0].focus();
 		}

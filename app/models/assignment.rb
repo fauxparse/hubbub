@@ -49,6 +49,10 @@ class Assignment < ActiveRecord::Base
     assigned? ? user.display_name : "(any #{role})"
   end
   
+  def description
+    super || role
+  end
+  
 protected
   # Make sure time recorded by a user against a task gets associated with this assignment.
   def assign_time_slices_from_task
