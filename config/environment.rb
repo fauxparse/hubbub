@@ -29,6 +29,8 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   
   config.gem "authlogic"
+  config.gem "grit"
+  config.gem "RedCloth", :lib => 'redcloth', :version => ">= 4.0"
 
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.

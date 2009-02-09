@@ -18,6 +18,10 @@ ActionController::Routing::Routes.draw do |map|
     account.resource :settings, :controller => "users"
     account.resources :people, :controller => "users"
     account.resources :time, :singular => "time_slice"
+    account.resources :wiki, :singular => "wiki_page"
+    account.edit_full_wiki_page "/wiki/*id/edit", :controller => "wiki", :action => "edit", :format => :html, :conditions => { :method => :get }
+    account.update_full_wiki_page "/wiki/*id", :controller => "wiki", :action => "update", :format => :html, :conditions => { :method => :put }
+    account.full_wiki_page "/wiki/*id", :controller => "wiki", :action => "show", :format => :html, :conditions => { :method => :get }
   
     account.login "/login", :controller => "user_sessions", :action => "new"
     account.logout "/logout", :controller => "user_sessions", :action => "destroy"

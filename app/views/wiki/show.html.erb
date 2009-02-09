@@ -1,0 +1,10 @@
+<% content_for :page_title, @wiki_page.page_title -%>
+
+<% content_for :title do -%>
+	<% content_tag :h1 do -%>
+		<%= @wiki_page.page_title %>
+		<%= link_to "Edit", edit_full_wiki_page_path(@wiki_page), :class => "inline edit button" %>
+	<% end -%>
+<% end -%>
+
+<%= @wiki_page.body %>

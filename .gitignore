@@ -6,3 +6,4 @@ db/*.sqlite3
 coverage
 doc/plugins
 public/system/avatars
+wiki.git

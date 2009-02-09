@@ -1,3 +1,6 @@
 [submodule "public/facebox"]
 	path = public/facebox
 	url = git://github.com/defunkt/facebox.git
+[submodule "vendor/plugins/acts_as_textiled"]
+	path = vendor/plugins/acts_as_textiled
+	url = git@github.com:fauxparse/acts_as_textiled.git

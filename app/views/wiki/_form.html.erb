@@ -1,0 +1,9 @@
+	<%= form.error_messages %>
+	<ol class="form">
+		<li class="textarea"><%= form.label :title %> <%= form.text_field :title, :class => :text %> <small>Use a forward slash (<tt>/</tt>) to create categories</small></li>
+		<li class="textarea"><%= form.label :body %> <%= form.text_area :body, :rows => 12 %></li>
+		<li class="buttons">
+			<%= link_to "Cancel", form.object.new_record? ? wiki_path : full_wiki_page_path(form.object), :class => "cancel button" %>
+			<%= form.submit "Save", :class => "ok button" %>
+		</li>
+	</ol>

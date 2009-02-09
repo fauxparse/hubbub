@@ -36,4 +36,8 @@ class User < ActiveRecord::Base
     roles << Role[role]
     save(false)
   end
+  
+  def agency_user?
+    company.is_a?(Agency)
+  end
 end

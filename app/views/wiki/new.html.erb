@@ -1,0 +1,9 @@
+<% content_for :page_title, @wiki_page.page_title || "New wiki page" -%>
+
+<% content_for :title do -%>
+	<h1>New page</h1>
+<% end -%>
+
+<% form_for @wiki_page, :url => wiki_path do |form| -%>
+	<%= render :partial => "form", :object => form %>
+<% end -%>

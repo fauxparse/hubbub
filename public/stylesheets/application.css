@@ -184,6 +184,16 @@ a {
 	line-height: 1em;
 }
 
+#title h1 .inline {
+  font-size: 40%;
+	visibility: hidden;
+	vertical-align: middle;
+}
+
+#title h1:hover .inline {
+	visibility: visible;
+}
+
 /*}}}*/
 
 /* Forms {{{ */
@@ -249,8 +259,14 @@ ol.form li.text select {
 	width: 65%;
 }
 
-ol.form li.textarea textarea {
+ol.form li.textarea textarea,
+ol.form li.textarea input.text {
 	width: 100%;
+	line-height: 1.4;
+}
+
+ol.form li.textarea input.text {
+	font-size: 125%;
 }
 
 ol.form li input.date {
@@ -282,9 +298,8 @@ ol.form li.checkbox {
 	text-decoration: none;
 }
 
-.cancel {
-	background: #ed1c24;
-}
+.cancel {	background: #ed1c24; }
+.ok {	background: #8cc63f; }
 
 .errorExplanation {
 	background: #ffc;
@@ -545,3 +560,16 @@ ol.form .project-roles ul {
 #time-table #time_slice_summary { width: 20em; }
 
 /* }}} */
+
+/* Wiki {{{ */
+
+a.wiki {
+	
+}
+
+a.wiki.missing {
+	padding-right: 16px;
+	background: url(/images/wiki-link-missing.png) no-repeat 100% 50%;
+}
+
+/*}}}*/
