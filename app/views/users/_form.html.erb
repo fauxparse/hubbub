@@ -6,6 +6,10 @@
 	<li class="text"><%= form.label :login %> <%= form.text_field :login %></li>
 	<li class="text"><%= form.label :password, form.object.new_record? ? nil : "Change password" %> <%= form.password_field :password %></li>
 	<li class="text"><%= form.label :password_confirmation, "Confirm password" %> <%= form.password_field :password_confirmation %></li>
+	<li class="text"><%= form.label :phone %> <%= form.text_field :phone %></li>
+	<li class="text"><%= form.label :extension %> <%= form.text_field :extension %></li>
+	<li class="text"><%= form.label :mobile %> <%= form.text_field :mobile %></li>
+	<li class="text"><%= form.label :avatar, "Choose a picture" %> <%= form.file_field :avatar %></li>
 	<li class="text"><%= form.label :company_id %> <%= form.select :company_id, current_account.companies.collect { |c| [ c.name, c.id ] } %></li>
 	<li class="text">
 		<%= form.label :roles %>
