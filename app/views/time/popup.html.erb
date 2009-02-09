@@ -1,6 +1,14 @@
 <h1>Time for <%= @user || "Anyone" %></h1>
 
-<% remote_form_for TimeSlice.new(:activity => @task, :user => @user), :url => time_path(:user_id => @user, :format => :js) do |form| -%>
+<% if @assignment -%>
+	<% remote_form_for @assignment, :url => assignment_path(@assignment, :format => :js) do |form| -%>
+		<ol class="form">
+			<li class="textarea"><%= form.label :description, "#{@assignment.user}'s responsibilities on this task:" %><%= form.text_area :description, :rows => 2, :onchange => "$(this).parents('form')[0].onsubmit();" %></li>
+		</ol>
+	<% end -%>
+<% end -%>
+
+<% remote_form_for TimeSlice.new(:activity => @task, :user => @user), :url => time_path(:user_id => @user, :format => :js), :success => "$('#time-entry-form')[0].reset();", :html => { :id => "time-entry-form" } do |form| -%>
   <% content_tag :table, :id => "time-table" do -%>
     <thead>
       <tr><th>Hours</th><th>Date</th><th>User</th><th>Summary</th><th></th></tr>
@@ -28,8 +36,18 @@
 <%= facebox_close_button if request.xhr? %>
 
 <% javascript_tag do -%>
+	$(document).ready(function() {
+		$('#time_slice_hours').time_picker();
+	});
+
   function empty_time_table_message() {
     $('#time-table tr.empty').toggle($('#time-table tbody tr').length == 0);
   }
   empty_time_table_message();
+
+	function delete_time(id) {
+		$('#time_slice_' + id).fadeOut('normal', function() { $(this).remove(); empty_time_table_message(); });
+		$.ajax({ data:{ _method:'delete' }, dataType:'script', type:'post', url:'/time/'+id+'.js' });
+		return false;
+	}
 <% end -%>

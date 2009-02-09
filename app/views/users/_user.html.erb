@@ -1,4 +1,5 @@
 <% content_tag :div, :class => :user, :id => dom_id(user) do -%>
+	<%= image_tag user.avatar.url(:thumbnail) %>
 	<%= link_to user.to_s, person_path(user) %>
 	<%= content_tag :small, user.roles.to_sentence, :class => :roles %>
 <% end -%>

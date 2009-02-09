@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090208010208) do
+ActiveRecord::Schema.define(:version => 20090209035336) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -139,6 +139,11 @@ ActiveRecord::Schema.define(:version => 20090208010208) do
     t.string   "display_name"
     t.string   "email"
     t.string   "phone"
+    t.string   "extension"
+    t.string   "mobile"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
   end
 
   add_index "users", ["company_id"], :name => "index_users_on_company_id"
