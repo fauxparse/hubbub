@@ -14,6 +14,8 @@ class Assignment < ActiveRecord::Base
   
   after_create :assign_time_slices_from_task
   before_destroy :reassign_time_slices_to_task
+
+  composed_of :elapsed_time, :mapping => %w(total_minutes minutes)
   
   include Statefulness
   

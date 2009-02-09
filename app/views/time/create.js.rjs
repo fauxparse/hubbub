@@ -3,3 +3,4 @@ if @user.blank? || @user == @time_slice.user
   page.visual_effect :highlight, "##{dom_id(@time_slice)} td"
 end
 page.call "empty_time_table_message"
+page.replace_html dom_id(@task, :users), task_users(@task)

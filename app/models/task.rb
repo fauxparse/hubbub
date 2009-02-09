@@ -50,4 +50,8 @@ class Task < ActiveRecord::Base
   def has_due_date=(value)
     self.due_on = nil if !value || value.to_i.zero?
   end
+  
+  def task
+    self
+  end
 end

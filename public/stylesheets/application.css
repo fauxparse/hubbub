@@ -144,6 +144,11 @@ a {
 	text-transform: lowercase;
 	background: #ccc;
 	color: #aaa;
+	outline: none;
+}
+
+#header #tabs li a:hover {
+  color: #8cc63f;
 }
 
 #header #tabs li a.active {
@@ -342,6 +347,58 @@ ol.form .project-roles ul {
 .company-users {
 	border-top: 4px solid #ccc;
 	padding-bottom: 16px;
+	clear: left;
+}
+
+.company-users h2 {
+  font-size: 250%;
+}
+
+.company-users h2 .inline {
+  font-size: 40%;
+}
+
+.company-users .user {
+  float: left;
+  width: 24em;
+  line-height: normal;
+  margin: 0px 1em 1em 0px;
+  font-size: 90%;
+}
+
+.company-users .user .thumbnail {
+  display: block;
+  float: left;
+}
+
+.company-users .user .name {
+  margin-left: 72px;
+  display: block;
+  font-size: 150%;
+  font-weight: bold;
+  letter-spacing: -0.1em;
+}
+
+.company-users .user .roles,
+.company-users .user dl {
+  margin: 0px 0px 0px 72px;
+  display: block;
+}
+
+.company-users .user dl {
+  line-height: 1.2em;
+}
+
+.company-users .user dt {
+  height: 1.2em;
+  width: 3em;
+  color: #999;
+  text-transform: lowercase;
+  font-variant: small-caps;
+}
+
+.company-users .user dd {
+  margin: -1.2em 0px 0px 4em;
 }
 
 #main ol.form ul.roles {
@@ -419,6 +476,15 @@ ol.form .project-roles ul {
   color: #999;
   font-size: 95%;
 }
+
+.task .users a {
+  padding: 1px 0px 1px 16px;
+  background: url(/images/assignment-not-started.png) no-repeat 0px 50%;
+}
+
+.task .users a.started { background-image: url(/images/assignment-started.png); }
+.task .users a.blocked, .task .users a.unassigned { background-image: url(/images/assignment-blocked.png); }
+.task .users a.completed { background-image: url(/images/assignment-completed.png); }
 
 /* }}} */
 

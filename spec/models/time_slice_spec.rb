@@ -13,6 +13,12 @@ describe TimeSlice do
     TimeSlice.create! :activity => @assignment, :user => @user
   end
   
+  it "should create successfully with hours instead of minutes" do
+    @time_slice = TimeSlice.create! :activity => @assignment, :user => @user, :hours => "1:45"
+    @time_slice.minutes.should == 105
+    @assignment.reload.total_minutes.should == 105
+  end
+  
   [ true, false ].each do |billable|
     describe "(#{"not " unless billable}billable; " do
       describe "first on a new assignment)" do

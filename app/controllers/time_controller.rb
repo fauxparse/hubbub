@@ -19,13 +19,15 @@ class TimeController < ApplicationController
   def create
     @user = params[:user_id] && User.find_by_login(params[:user_id])
     @time_slice = TimeSlice.create params[:time_slice]
+    @task = @time_slice.task :include => :assignments
     respond_to do |format|
       format.js
     end
   end
   
   def destroy
-    @time_slice = TimeSlice.find params[:id]
+    @time_slice = TimeSlice.find params[:id], :include => :activity
+    @task = @time_slice.task :include => :assignments
     @time_slice.destroy
     respond_to do |format|
       format.js

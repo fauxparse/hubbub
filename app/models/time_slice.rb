@@ -1,14 +1,14 @@
 class TimeSlice < ActiveRecord::Base
   belongs_to :user
   belongs_to :activity, :polymorphic => true
+  delegate :task, :to => :activity
 
   composed_of :elapsed_time, :mapping => %w(minutes minutes)
-  default_value_for :hours, 1
   default_value_for(:date) { |record| Date.today }
   validates_presence_of :user_id, :activity_id, :minutes, :date
 
   before_validation :check_if_billable
-  before_save :update_activity_time, :if => :caches_minutes_on_activity?
+  after_save :update_activity_time, :if => :caches_minutes_on_activity?
   before_destroy :remove_activity_time, :if => :caches_minutes_on_activity?
   
   named_scope :for_user, lambda { |user| user.nil? ? {} : { :conditions => { :user_id => user.id } } }
@@ -32,7 +32,7 @@ protected
   def update_activity_time
     if minutes_changed? || billable_changed? || new_record?
       counters = { :total_minutes => minutes_changed? ? minutes - (minutes_was || 0) : 0 }
-      if billable_changed?
+      if billable_changed? && !new_record?
         counters[:billable_minutes] = billable? ? minutes : (minutes_changed? ? -(minutes_was || 0) : -minutes)
       elsif billable?
         counters[:billable_minutes] = counters[:total_minutes]
@@ -55,7 +55,7 @@ protected
   
   def before_create
     if activity.is_a?(Task) && (assignment = activity.assignments.detect { |a| a.user_id == user_id })
-      activity = assignment
+      self.activity = assignment
     end
   end
 end

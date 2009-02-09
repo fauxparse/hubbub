@@ -5,7 +5,7 @@
     <%= link_to "Edit", edit_task_path(task, :format => nil), :rel => :facebox, :class => "inline button task-edit" %>
 	<% end -%>
   
-	<% content_tag :span, :class => :users do -%>
+	<% content_tag :span, :class => :users, :id => dom_id(task, :users) do -%>
 		<%= task_users(task) %>
 	<% end -%>
 <% end -%>

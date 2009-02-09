@@ -1,0 +1,1 @@
+page.replace_html dom_id(@task, :users), task_users(@task)

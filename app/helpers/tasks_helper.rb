@@ -13,9 +13,10 @@ module TasksHelper
   
   def task_users(task)
     result = if task.anybody?
-      link_to "(anybody)", task_time_path(task, :user_id => current_user), :rel => :facebox
+      # TODO: make 'anybody' link show whether time has been recorded
+      link_to "Anybody", task_time_path(task, :user_id => current_user), :rel => :facebox
     else
-      task.unassigned? ? link_to("(unassigned)", edit_task_path(task, :format => :js), :rel => :facebox) : task.assignments.sort.collect { |a| assignment_link(a) }.to_sentence
+      task.unassigned? ? link_to("(unassigned)", edit_task_path(task, :format => :js), :rel => :facebox, :class => :unassigned) : task.assignments.sort.collect { |a| assignment_link(a) }.to_sentence
     end
     content_tag :span, result, :class => :users
   end
@@ -33,6 +34,7 @@ module TasksHelper
     classes = %w(assignment)
     classes << "blocked" if assignment.blocked?
     classes << "completed" if assignment.completed?
-    link_to assignment, task_time_path(assignment.task, :user_id => assignment.user || current_user), :rel => :facebox
+    classes << "started" if assignment.total_minutes > 0
+    link_to assignment, task_time_path(assignment.task, :user_id => assignment.user || current_user), :rel => :facebox, :title => "#{assignment.elapsed_time} hours", :class => classes * " "
   end
 end
