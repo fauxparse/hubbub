@@ -5,6 +5,8 @@
 <% end -%>
 
 <% content_for :sidebar do -%>
-	<%= content_tag :h2, "People" %>
-	<%= render :partial => @company.users(:include => :roles) %>
+	<% content_tag :div, :class => "company-users" do -%>
+	  <%= content_tag :h2, "People" %>
+	  <%= render :partial => @company.users(:include => :roles) %>
+	<% end -%>
 <% end -%>

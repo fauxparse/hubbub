@@ -1,6 +1,9 @@
 <% content_tag :div, :class => :user, :id => dom_id(user) do -%>
 	<%= image_tag user.avatar.url(:thumbnail), :alt => user.name, :class => :thumbnail %>
-	<%= link_to user, person_path(user), :class => :name, :title => user.name %>
+	<% content_tag :span, :class => :name do -%>
+	  <%= link_to user.name, person_path(user) %>
+	  <%= content_tag :small, "(#{user})" unless user.name.starts_with? user.display_name + " " %>
+	<% end -%>
 	<%= content_tag :span, user.roles.collect { |r| content_tag :strong, r }.to_sentence, :class => :roles %>
 	<% content_tag :dl do -%>
 	 <dt>Email</dt><dd><%= mail_to user.email %></dd>

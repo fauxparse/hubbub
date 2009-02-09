@@ -3,7 +3,7 @@
 	<li class="text"><%= form.label :name %> <%= form.text_field :name %></li>
 	<li class="text"><%= form.label :display_name %> <%= form.text_field :display_name %></li>
 	<li class="text"><%= form.label :email %> <%= form.text_field :email %></li>
-	<li class="text"><%= form.label :login %> <%= form.text_field :login %></li>
+	<li class="text"><%= form.label :login %> <%= form.text_field :login, :disabled => !form.object.new_record? %></li>
 	<li class="text"><%= form.label :password, form.object.new_record? ? nil : "Change password" %> <%= form.password_field :password %></li>
 	<li class="text"><%= form.label :password_confirmation, "Confirm password" %> <%= form.password_field :password_confirmation %></li>
 	<li class="text"><%= form.label :phone %> <%= form.text_field :phone %></li>

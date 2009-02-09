@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   
   alias_attribute :to_s, :display_name
   alias_attribute :to_param, :login
+  validates_format_of :login, :with => /^[a-z0-9_]+$/i, :message => "may only contain letters, numbers and underscores"
 
   validates_presence_of :name, :email
   validates_uniqueness_of :display_name, :scope => :account_id

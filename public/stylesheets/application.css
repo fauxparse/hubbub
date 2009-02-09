@@ -362,13 +362,14 @@ ol.form .project-roles ul {
   float: left;
   width: 24em;
   line-height: normal;
-  margin: 0px 1em 1em 0px;
+  margin: 0px 1em 2ex 0px;
   font-size: 90%;
 }
 
 .company-users .user .thumbnail {
   display: block;
   float: left;
+  margin-bottom: 2ex;
 }
 
 .company-users .user .name {
@@ -377,6 +378,7 @@ ol.form .project-roles ul {
   font-size: 150%;
   font-weight: bold;
   letter-spacing: -0.1em;
+  line-height: 1em;
 }
 
 .company-users .user .roles,

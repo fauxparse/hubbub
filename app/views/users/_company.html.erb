@@ -3,5 +3,5 @@
 	  <%= link_to(company, company_path(company)) %>
   	<%= link_to "New person", new_company_person_path(company), :class => "inline button" %>
   <% end -%>
-  <%= render :partial => company.users %>
+  <%= render :partial => company.users.sort_by(&:display_name) %>
 <% end -%>
