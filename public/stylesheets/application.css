@@ -219,13 +219,19 @@ ol.form ol.form li {
   padding: 0px;
 }
 
-ol.form li.text label {
+ol.form li.text label,
+ol.form li.textarea label {
 	display: block;
 	text-transform: uppercase;
 	font-size: 85%;
 	color: #999;
 	float: left;
 	width: 30%;
+}
+
+ol.form li.textarea label {
+	float: none;
+	width: 100%;
 }
 
 ol.form li.checkbox label {
@@ -241,6 +247,10 @@ ol.form li.text input.text,
 ol.form li.text textarea,
 ol.form li.text select {
 	width: 65%;
+}
+
+ol.form li.textarea textarea {
+	width: 100%;
 }
 
 ol.form li input.date {
