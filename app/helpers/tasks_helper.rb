@@ -14,7 +14,7 @@ module TasksHelper
   def task_users(task)
     result = if task.anybody?
       # TODO: make 'anybody' link show whether time has been recorded
-      link_to "Anybody", task_time_path(task, :user_id => current_user), :rel => :facebox
+      link_to "Anybody", task_time_path(task), :rel => :facebox
     else
       task.unassigned? ? link_to("(unassigned)", edit_task_path(task, :format => :js), :rel => :facebox, :class => :unassigned) : task.assignments.sort.collect { |a| assignment_link(a) }.to_sentence
     end

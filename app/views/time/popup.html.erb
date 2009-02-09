@@ -1,6 +1,5 @@
-<h1>Time for <%= @user || "Anyone" %></h1>
-
-<% if @assignment -%>
+<h1>Record Time</h1>
+<% if @assignment && !@task.anybody? -%>
 	<% remote_form_for @assignment, :url => assignment_path(@assignment, :format => :js) do |form| -%>
 		<ol class="form">
 			<li class="textarea"><%= form.label :description, "#{@assignment.user}'s responsibilities on this task:" %><%= form.text_area :description, :rows => 2, :onchange => "$(this).parents('form')[0].onsubmit();" %></li>
