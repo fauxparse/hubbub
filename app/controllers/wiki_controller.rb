@@ -25,7 +25,7 @@ class WikiController < ApplicationController
     @wiki_page = current_agency.wiki_pages.build params[:wiki_page].merge(:author_id => current_user.id)
     if @wiki_page.save
       flash[:notice] = "Page created successfully"
-      redirect_to "/wiki#{@wiki_page.to_param}"
+      redirect_to "/wiki/#{@wiki_page.to_param}"
     else
       render :action => "new"
     end
@@ -37,7 +37,7 @@ class WikiController < ApplicationController
   def update
     if @wiki_page.update_attributes params[:wiki_page].merge(:author_id => current_user.id)
       flash[:notice] = "Page created successfully"
-      redirect_to "/wiki#{@wiki_page.to_param}"
+      redirect_to "/wiki/#{@wiki_page.to_param}"
     else
       @wiki_page.title = @wiki_page.title_was if @wiki_page.errors.on(:title).any?
       render :action => "edit"
@@ -51,7 +51,7 @@ class WikiController < ApplicationController
   
   def search
     unless (@query = params[:q]).blank?
-      @search = WikiPage.search @query.split
+      @search = WikiPage.search(@terms = @query.split)
       @results = @search.all
     end
   end

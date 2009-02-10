@@ -1,4 +1,4 @@
 <% form_tag search_wiki_url, :id => "search-form", :method => "get" do -%>
-	<%= text_field_tag :q, params[:q], :type => "search" %>
+	<%= text_field_tag :q, params[:q], :type => "search", :class => "text search" %>
 	<%= submit_tag "Search", :class => "inline button" %>
 <% end -%>

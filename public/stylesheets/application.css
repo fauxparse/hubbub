@@ -618,4 +618,45 @@ a.wiki.missing {
 	padding: 8px 0px;
 }
 
+#title #search-form {
+	padding: 8px;
+	background: #eee;
+}
+
+#title #search-form input {
+	font-size: 150%;
+}
+
+.search-results {
+	border-bottom: 1px solid #ccc;
+}
+
+.search-results li {
+	border-top: 1px solid #ccc;
+	padding: 8px 0px;
+}
+
+.search-results li h4 {
+	font-size: 125%;
+}
+
+.search-results li h4 small {
+	font-size: 80%;
+	color: #999;
+}
+
+.search-results li h4 small a {
+	color: #666;
+}
+
+strong.highlight {
+	background: #ffc;
+	color: black;
+}
+
+a strong.highlight {
+	text-decoration: underline;
+	color: inherit;
+}
+
 /*}}}*/

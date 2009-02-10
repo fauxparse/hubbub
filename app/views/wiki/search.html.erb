@@ -5,17 +5,24 @@
 	<%= render :partial => "search" %>
 <% end -%>
 
-<% if @results.empty? -%>
-	<h2>No results found</h2>
-	<p>Try searching for something else, or <%= link_to "start a page yourself", "/wiki/#{WikiPage.escape_page_title(@query.strip)}" %>!</p>
-<% else -%>
-	<h2><%= pluralize @results.size, "result" %></h2>
-	<% content_tag :ol, :class => "search-results" do -%>
-		<% @results.each do |result| -%>
-			<% content_tag :li do -%>
-			 	<%= link_to result.page_title, "/wiki/#{result.to_param}", :class => "result" %>
-				<%= "(in #{link_to result.category, "/wiki/#{result.category}"})" unless result.category.blank? %>
+<% if @results -%>
+	<% if @results.empty? -%>
+		<h2>No results found</h2>
+		<p>Try searching for something else, or <%= link_to "start a page yourself", "/wiki/#{WikiPage.escape_page_title(@query.strip)}" %>!</p>
+	<% else -%>
+		<h2><%= pluralize @results.size, "result" %></h2>
+		<% content_tag :ol, :class => "search-results" do -%>
+			<% @results.each do |result| -%>
+				<% content_tag :li do -%>
+				 	<h4><%= link_to highlight(result.page_title, @terms), "/wiki/#{result.to_param}", :class => "result" %>
+					<%= content_tag :small, "(in #{link_to highlight(result.category, @terms), "/wiki/#{result.category}"})" unless result.category.blank? %></h4>
+					<p><%= highlight_body result, @terms %></p>
+				<% end -%>
 			<% end -%>
 		<% end -%>
 	<% end -%>
+<% end -%>
+
+<% content_for :sidebar do -%>
+	<%= render :partial => "categories" %>
 <% end -%>

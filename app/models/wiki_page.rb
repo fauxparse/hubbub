@@ -33,7 +33,7 @@ class WikiPage < ActiveRecord::Base
   end
   
   def category
-    title.index("/") > 0 ? File.dirname(title) : ""
+    title.index("/") ? File.dirname(title) : ""
   end
   
   def textiled_version_of_with_wiki_linking(raw, options = {})
