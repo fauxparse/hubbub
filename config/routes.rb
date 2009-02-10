@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
     account.resource :settings, :controller => "users"
     account.resources :people, :controller => "users"
     account.resources :time, :singular => "time_slice"
-    account.resources :wiki, :singular => "wiki_page", :member => { :history => :get }
+    account.resources :wiki, :singular => "wiki_page", :member => { :history => :get }, :collection => { :search => :get }
     account.edit_full_wiki_page "/wiki/*id/edit", :controller => "wiki", :action => "edit", :format => :html, :conditions => { :method => :get }
     account.update_full_wiki_page "/wiki/*id", :controller => "wiki", :action => "update", :format => :html, :conditions => { :method => :put }
     account.full_wiki_page "/wiki/*id", :controller => "wiki", :action => "show", :format => :html, :conditions => { :method => :get }

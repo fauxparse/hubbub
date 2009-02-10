@@ -49,6 +49,13 @@ class WikiController < ApplicationController
     render :partial => "history"
   end
   
+  def search
+    unless (@query = params[:q]).blank?
+      @search = WikiPage.search @query.split
+      @results = @search.all
+    end
+  end
+  
 protected
   def internal_login_required_for_wiki
     unless current_user.agency_user?

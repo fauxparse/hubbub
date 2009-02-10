@@ -597,13 +597,14 @@ a.wiki.missing {
 #sidebar .wiki-categories li {
 	display: block;
 	margin: 0px;
-	padding: 0px 0px 0px 1em;
+	padding: 0px;
 	border-bottom: 1px solid #ccc;
 	font-weight: bold;
 	font-size: 125%;
 }
 
 #sidebar .wiki-categories li li {
+	padding: 0px 0px 0px 1em;
 	border-bottom: none;
 	font-weight: normal;
 	font-size: 80%;
@@ -611,6 +612,10 @@ a.wiki.missing {
 
 #sidebar .wiki-categories li li li {
 	font-size: 100%;
+}
+
+#sidebar #search-form {
+	padding: 8px 0px;
 }
 
 /*}}}*/

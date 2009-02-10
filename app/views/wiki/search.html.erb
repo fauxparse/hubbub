@@ -1,0 +1,21 @@
+<% content_for :page_title, "Wiki Search" -%>
+
+<% content_for :title do -%>
+	<%= content_tag :h1, "Search" %>
+	<%= render :partial => "search" %>
+<% end -%>
+
+<% if @results.empty? -%>
+	<h2>No results found</h2>
+	<p>Try searching for something else, or <%= link_to "start a page yourself", new_wiki_page_path %>!</p>
+<% else -%>
+	<h2><%= pluralize @results.size, "result" %></h2>
+	<% content_tag :ol, :class => "search-results" do -%>
+		<% @results.each do |result| -%>
+			<% content_tag :li do -%>
+			 	<%= link_to result.page_title, "/wiki/#{result.to_param}", :class => "result" %>
+				<%= "(in #{link_to result.category, "/wiki/#{result.category}"})" unless result.category.blank? %>
+			<% end -%>
+		<% end -%>
+	<% end -%>
+<% end -%>

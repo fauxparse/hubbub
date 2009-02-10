@@ -19,7 +19,6 @@ class WikiPage < ActiveRecord::Base
         system "cd #{path} && git init --bare"
       end
     end
-    puts version.repository
     version.message = lambda { |page| "Updated at #{Time.now} by #{page.author}" }
   end
 
@@ -31,6 +30,10 @@ class WikiPage < ActiveRecord::Base
   
   def page_title
     File.basename(title)
+  end
+  
+  def category
+    title.index("/") > 0 ? File.dirname(title) : ""
   end
   
   def textiled_version_of_with_wiki_linking(raw, options = {})
@@ -82,6 +85,14 @@ class WikiPage < ActiveRecord::Base
     
     def categories
       build_categories_from_titles(WikiPage.connection.select_all("SELECT title FROM wiki_pages WHERE 1").collect(&:values).flatten)
+    end
+    
+    def search(query)
+      terms = query.split
+      returning new_search do |search|
+        search.conditions.body_like = terms
+        search.conditions.or_title_like = terms
+      end
     end
     
   protected
