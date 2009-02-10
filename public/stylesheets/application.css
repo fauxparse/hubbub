@@ -572,4 +572,13 @@ a.wiki.missing {
 	background: url(/images/wiki-link-missing.png) no-repeat 100% 50%;
 }
 
+#history {
+	margin-top: 4ex;
+	border-top: 4px solid #ccc;
+}
+
+#history h2 .inline {
+	font-size: 85%;
+}
+
 /*}}}*/

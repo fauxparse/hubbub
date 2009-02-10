@@ -1,0 +1,7 @@
+	<% content_tag :ul, :class => :history do -%>
+		<% @wiki_page.change_history.each do |revision| -%>
+			<% content_tag :li do -%>
+				<%= link_to(revision[:date], full_wiki_page_path(@wiki_page, :revision => revision[:id])) + " by #{link_to revision[:data][:author], person_path(revision[:data][:author])}" %>
+			<% end -%>
+		<% end -%>
+	<% end -%>

@@ -12,6 +12,9 @@ class WikiController < ApplicationController
     if @wiki_page.new_record?
       @mode = :new
       flash.now[:notice] = "No page called #{@wiki_page} exists. If you like, you can create it below."
+    elsif params[:revision] && params[:revision] != @wiki_page.latest_revision
+      flash.now[:notice] = "You are viewing an older version of this page. <a href=\"#{full_wiki_page_path(@wiki_page)}\">Click here</a> for the latest version."
+      @wiki_page = @wiki_page.at params[:revision]
     end
     render :action => @mode
   end
@@ -30,13 +33,18 @@ class WikiController < ApplicationController
   end
   
   def update
-    if @wiki_page.update_attributes params[:wiki_page]
+    if @wiki_page.update_attributes params[:wiki_page].merge(:author_id => current_user.id)
       flash[:notice] = "Page created successfully"
       redirect_to full_wiki_page_path @wiki_page
     else
       @wiki_page.title = @wiki_page.title_was if @wiki_page.errors.on(:title).any?
       render :action => "edit"
     end
+  end
+  
+  def history
+    @wiki_page = WikiPage.find(params[:id])
+    render :partial => "history"
   end
   
 protected

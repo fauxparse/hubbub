@@ -10,7 +10,7 @@ class WikiPage < ActiveRecord::Base
   belongs_to :company
   
   alias_attribute :to_s, :title
-
+  
   versioning(:title, :body, :author_id) do |version|
     version.repository = returning File.join(RAILS_ROOT, "wiki.git") do |path|
       unless File.exist? path
@@ -20,7 +20,7 @@ class WikiPage < ActiveRecord::Base
       end
     end
     puts version.repository
-    version.message = lambda { |page| "Updated by #{page.author}" }
+    version.message = lambda { |page| "Updated at #{Time.now} by #{page.author}" }
   end
 
   acts_as_textiled :body
@@ -51,4 +51,31 @@ class WikiPage < ActiveRecord::Base
     textiled_version_of_without_wiki_linking(raw, options)
   end
   alias_method_chain :textiled_version_of, :wiki_linking
+  
+  def at(revision)
+    returning self.dup do |v|
+      v.revert_to revision, false
+    end
+  end
+  
+  def latest_revision
+    log.first
+  end
+  
+  def change_history
+    unless @history
+      history = revisions.collect do |commit|
+        {
+          :id => commit.to_s,
+          :commit => commit,
+          :data => Hash[*self.class.git_settings.versioned_fields.collect { |field| [ field, get_version(field, commit.to_s) ] }.flatten],
+          :date => commit.date
+        }
+      end
+      authors = User.find_all_by_id(history.collect { |h| h[:data][:author_id] }.uniq)
+      history.collect { |h| h[:data][:author] = authors.detect { |a| a.id.to_i == h[:data][:author_id].to_i }; h }
+      @history = history
+    end
+    @history
+  end
 end

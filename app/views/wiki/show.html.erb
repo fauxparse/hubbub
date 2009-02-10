@@ -8,3 +8,19 @@
 <% end -%>
 
 <%= @wiki_page.body %>
+
+<% content_tag :div, :id => "history" do -%>
+	<h2>History <%= link_to_function "<small>View</small>", "toggle_history()", :class => "toggle inline button" %></h2>
+	<% content_tag :div, :class => "collapsible", :style => "display: none" do -%>
+		<%= image_tag "/facebox/loading.gif", :alt => "Loading..." %>
+	<% end -%>
+<% end -%>
+
+<% javascript_tag do -%>
+	function toggle_history() {
+		$('#history').children('.collapsible').toggle();
+		if ($('#history').find('.history').length == 0) {
+			$('#history .collapsible').load('/wiki/<%= @wiki_page.id %>/history');
+		}
+	}
+<% end -%>
