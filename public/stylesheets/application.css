@@ -568,6 +568,12 @@ ol.form .project-roles ul {
 #time-table #time_slice_date { width: 6em; }
 #time-table #time_slice_summary { width: 20em; }
 
+.graph {
+	border-top: 4px solid #ccc;
+	background: white;
+	padding: 0px 8px;
+}
+
 #main .timeline { 
 	font-size: 0.75em; 
 	height: 10em;
@@ -580,8 +586,8 @@ ol.form .project-roles ul {
 	height: 8em;
 	position: relative;
 	float: left;
-	width: 1.5em; 
-	margin: 0 0.1em;
+	width: 1.4em; 
+	margin: 0 0.1em 2em 0.1em;
 }
 
 #main .timeline li a { 
@@ -590,11 +596,16 @@ ol.form .project-roles ul {
 	color: #999;
 }
 
+#main .timeline li.weekend a {
+	color: #ec008c;
+	font-weight: bold;
+}
+
 #main .timeline li .label { 
 	display: block;
 	position: absolute;
-	bottom: -2em;
-	line-height: 2em;
+	bottom: -1.75em;
+	line-height: 1.5em;
 	left: 0;
 	width: 100%;
 	text-align: center;
@@ -617,12 +628,19 @@ ol.form .project-roles ul {
 }
 
 #main .timeline li a:hover {
-	color: #ec008c;
+	color: black;
+	font-weight: bold;
 }
 
 #main .timeline li a:hover .count { 
 	background: #00aeef; 
 }
+
+#main .timeline li a:hover .label { 
+	background: #ec008c;
+	color: white; 
+}
+
 
 /* }}} */
 
