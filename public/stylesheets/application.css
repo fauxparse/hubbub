@@ -643,6 +643,7 @@ a.wiki.missing {
 .search-results li h4 small {
 	font-size: 80%;
 	color: #999;
+	font-weight: normal;
 }
 
 .search-results li h4 small a {
