@@ -7,7 +7,7 @@
 
 <% if @results.empty? -%>
 	<h2>No results found</h2>
-	<p>Try searching for something else, or <%= link_to "start a page yourself", new_wiki_page_path %>!</p>
+	<p>Try searching for something else, or <%= link_to "start a page yourself", "/wiki/#{WikiPage.escape_page_title(@query.strip)}" %>!</p>
 <% else -%>
 	<h2><%= pluralize @results.size, "result" %></h2>
 	<% content_tag :ol, :class => "search-results" do -%>
