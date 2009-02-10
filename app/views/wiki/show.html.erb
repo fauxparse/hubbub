@@ -7,7 +7,9 @@
 	<% end -%>
 <% end -%>
 
-<%= @wiki_page.body %>
+<% content_tag :div, :class => "wiki-page" do -%>
+	<%= @wiki_page.body %>
+<% end -%>
 
 <% content_tag :div, :id => "history" do -%>
 	<h2>History <%= link_to_function "<small>View</small>", "toggle_history()", :class => "toggle inline button" %></h2>
