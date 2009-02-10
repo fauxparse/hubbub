@@ -14,6 +14,8 @@ class TimeSlice < ActiveRecord::Base
   named_scope :for_user, lambda { |user| user.nil? ? {} : { :conditions => { :user_id => user.id } } }
   named_scope :for_task, lambda { |task| task.nil? ? {} : { :conditions => [ "(time_slices.activity_type = 'Task' AND time_slices.activity_id = ?) OR (time_slices.activity_type = 'Assignment' AND time_slices.activity_id IN (?))", task.id, task.assignment_ids ] } }
   named_scope :reverse_order, :order => "time_slices.date DESC, time_slices.id DESC"
+  named_scope :from_date, lambda { |date| date.nil? ? {} : { :conditions => [ "time_slices.date >= ?", date ] } }
+  named_scope :until_date, lambda { |date| date.nil? ? {} : { :conditions => [ "time_slices.date <= ?", date ] } }
   
   def hours
     elapsed_time.to_s(:hours)

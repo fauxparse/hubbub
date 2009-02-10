@@ -568,6 +568,62 @@ ol.form .project-roles ul {
 #time-table #time_slice_date { width: 6em; }
 #time-table #time_slice_summary { width: 20em; }
 
+#main .timeline { 
+	font-size: 0.75em; 
+	height: 10em;
+	padding: 0px;
+}
+
+#main .timeline li {
+	list-style: none;
+	padding: 0;
+	height: 8em;
+	position: relative;
+	float: left;
+	width: 1.5em; 
+	margin: 0 0.1em;
+}
+
+#main .timeline li a { 
+	display: block;
+	height: 100%;
+	color: #999;
+}
+
+#main .timeline li .label { 
+	display: block;
+	position: absolute;
+	bottom: -2em;
+	line-height: 2em;
+	left: 0;
+	width: 100%;
+	text-align: center;
+}
+
+#main .timeline li a .count { 
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	text-indent: -9999px;
+	overflow: hidden;
+	width: 100%;
+	height: 0;
+	background: #aaa;
+}
+
+#main .timeline li:hover { 
+	background: #e8e8e8; 
+}
+
+#main .timeline li a:hover {
+	color: #ec008c;
+}
+
+#main .timeline li a:hover .count { 
+	background: #00aeef; 
+}
+
 /* }}} */
 
 /* Wiki {{{ */

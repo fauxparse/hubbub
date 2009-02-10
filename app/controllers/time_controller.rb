@@ -12,6 +12,8 @@ class TimeController < ApplicationController
       @users = @user && @user.admin? ? (@task ? @task.users : current_user.company.users) : [ current_user ]
       render :action => "popup"
     else
+      @start_date, @end_date = [ :from, :until ].collect { |p| (params[p] || params[:date]) && (params[p] || params[:date]).to_date }
+      @times = TimeSlice.for_user(@user).for_task(@task).from_date(@start_date).until_date(@end_date).all(:include => [ :user, :activity ])
     end
   end
   

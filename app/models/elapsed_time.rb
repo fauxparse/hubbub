@@ -46,7 +46,7 @@ class ElapsedTime
     case format
     when :hours    then "%d:%.2d" % [ minutes / 60, minutes % 60 ]
     when :minutes  then minutes.to_s
-    when :fraction then ("%.2f" % (minutes / 60.0)).sub /0+$/, ""
+    when :fraction then ("%.2f" % (minutes / 60.0)).sub /\.?0+$/, ""
     else raise ArgumentError, "unknown format: '#{format}'"
     end
   end
