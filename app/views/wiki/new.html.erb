@@ -7,3 +7,7 @@
 <% form_for @wiki_page, :url => wiki_path do |form| -%>
 	<%= render :partial => "form", :object => form %>
 <% end -%>
+
+<% content_for :sidebar do -%>
+	<%= render :partial => "categories" %>
+<% end -%>

@@ -1,0 +1,4 @@
+<h2>Categories</h2>
+<ul class="wiki-categories">
+	<%= render :partial => "category", :collection => WikiPage.categories, :locals => { :depth => 2 } %>
+</ul>

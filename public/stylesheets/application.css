@@ -35,6 +35,10 @@ a {
 	list-style: square;
 }
 
+small {
+	font-size: 90%;
+}
+
 /*}}}*/
 
 /* Messages {{{ */
@@ -57,11 +61,11 @@ a {
 #main {
 	float: left;
 	width: 100%;
-	margin-right: -336px;	
+	margin-right: -352px;	
 }
 
 #main-inner {
-	margin-right: 336px;
+	margin-right: 352px;
 	padding-bottom: 64px;
 }
 
@@ -227,6 +231,11 @@ ol.form ol.form {
 ol.form ol.form li {
   border: none;
   padding: 0px;
+}
+
+ol.form li small {
+	color: #999;
+	line-height: normal;
 }
 
 ol.form li.text label,
@@ -579,6 +588,29 @@ a.wiki.missing {
 
 #history h2 .inline {
 	font-size: 85%;
+}
+
+#sidebar .wiki-categories {
+	border-top: 1px solid #ccc;
+}
+
+#sidebar .wiki-categories li {
+	display: block;
+	margin: 0px;
+	padding: 0px 0px 0px 1em;
+	border-bottom: 1px solid #ccc;
+	font-weight: bold;
+	font-size: 125%;
+}
+
+#sidebar .wiki-categories li li {
+	border-bottom: none;
+	font-weight: normal;
+	font-size: 80%;
+}
+
+#sidebar .wiki-categories li li li {
+	font-size: 100%;
 }
 
 /*}}}*/

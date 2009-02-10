@@ -25,10 +25,6 @@ class WikiPage < ActiveRecord::Base
 
   acts_as_textiled :body
 
-  def self.escape_page_title(title)
-    ERB::Util.url_encode(title).gsub("%20", "+").gsub("%2F", "/")
-  end
-
   def to_param
     @param ||= self.class.escape_page_title(title)
   end
@@ -77,5 +73,24 @@ class WikiPage < ActiveRecord::Base
       @history = history
     end
     @history
+  end
+  
+  class << self
+    def escape_page_title(title)
+      ERB::Util.url_encode(title).gsub("%20", "+").gsub("%2F", "/")
+    end
+    
+    def categories
+      build_categories_from_titles(WikiPage.connection.select_all("SELECT title FROM wiki_pages WHERE 1").collect(&:values).flatten)
+    end
+    
+  protected
+    def build_categories_from_titles(titles, prefix = "")
+      titles.group_by { |t| t[prefix.length..-1].split("/").first }.collect do |p, children|
+        title = prefix + p
+        children = titles.select { |t| t.starts_with?(title + "/")}
+        [ title, children.empty? ? [] : build_categories_from_titles(children, title + "/") ]
+      end
+    end
   end
 end

@@ -1,0 +1,8 @@
+<% content_tag :li do -%>
+	<%= link_to File.basename(category.first), "/wiki/#{WikiPage.escape_page_title(category.first)}" %>
+	<% unless depth == 0 || category.last.blank? -%>
+		<ul>
+			<%= render :partial => "category", :collection => category.last, :locals => { :depth => depth - 1 } %>
+		</ul>
+	<% end -%>
+<% end -%>

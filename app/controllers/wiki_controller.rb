@@ -2,6 +2,8 @@ class WikiController < ApplicationController
   before_filter :internal_login_required_for_wiki
   before_filter :get_wiki_page_from_full_path, :only => [ :show, :edit, :update, :destroy ]
 
+  # TODO: caching for category list, wiki pages etc
+
   def index
     params[:id] = "Home"
     get_wiki_page_from_full_path
@@ -23,7 +25,7 @@ class WikiController < ApplicationController
     @wiki_page = current_agency.wiki_pages.build params[:wiki_page].merge(:author_id => current_user.id)
     if @wiki_page.save
       flash[:notice] = "Page created successfully"
-      redirect_to full_wiki_page_path @wiki_page
+      redirect_to "/wiki#{@wiki_page.to_param}"
     else
       render :action => "new"
     end
@@ -35,7 +37,7 @@ class WikiController < ApplicationController
   def update
     if @wiki_page.update_attributes params[:wiki_page].merge(:author_id => current_user.id)
       flash[:notice] = "Page created successfully"
-      redirect_to full_wiki_page_path @wiki_page
+      redirect_to "/wiki#{@wiki_page.to_param}"
     else
       @wiki_page.title = @wiki_page.title_was if @wiki_page.errors.on(:title).any?
       render :action => "edit"

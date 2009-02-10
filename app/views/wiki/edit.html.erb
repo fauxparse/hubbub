@@ -7,3 +7,7 @@
 <% form_for @wiki_page, :url => update_full_wiki_page_path(@wiki_page), :html => { :method => :put } do |form| -%>
 	<%= render :partial => "form", :object => form %>
 <% end -%>
+
+<% content_for :sidebar do -%>
+	<%= render :partial => "categories" %>
+<% end -%>
