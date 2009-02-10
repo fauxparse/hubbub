@@ -15,7 +15,14 @@
         <tr id="new_task_row">
           <td><%= form.text_field :hours, :class => :hours %></td>
           <td><%= form.text_field :date, :class => :date, :value => form.object.date.readable_inspect %></td>
-          <td><%= form.object.user %><%= form.hidden_field :user_id %><%= form.hidden_field :activity_type %><%= form.hidden_field :activity_id %></td>
+          <td>
+						<% if @users.size == 1 -%>
+							<%= form.object.user %><%= form.hidden_field :user_id %>
+						<% else -%>
+							<%= form.select :user_id, @users.collect { |u| [ u.to_s, u.id ] } %>
+						<% end -%>
+						<%= form.hidden_field :activity_type %><%= form.hidden_field :activity_id %>
+					</td>
           <td><%= form.text_field :summary %></td>
           <td><%= form.submit "Add", :class => "inline button" %>
         </tr>

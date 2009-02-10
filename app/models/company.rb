@@ -1,5 +1,6 @@
 class Company < ActiveRecord::Base
   belongs_to :account
+  delegate :agency, :to => :account
   has_many :users
   has_many :projects
   

@@ -54,4 +54,8 @@ class Task < ActiveRecord::Base
   def task
     self
   end
+  
+  def users
+    anybody? ? project.agency.users : assignments.collect(&:user)
+  end
 end
