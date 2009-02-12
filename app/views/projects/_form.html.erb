@@ -12,7 +12,7 @@
 				<% end -%>
 			</ul>
 			<% form.fields_for @project.project_roles.build do |role| %>
-				<%= role.select :role_id, Role.all.collect { |r| [ r.name, r.id ] } %> <%= role.select :user_id, current_users.collect { |u| [ u.to_s, u.id ] }, :include_blank => "[unassigned]" %> <%= link_to_function "Add", "add_new_project_role()", :class => "inline button roles-add" %>
+				<%= role.select :role_id, Role.all.collect { |r| [ r.name, r.id ] } %> <%= role.select :user_id, current_users.collect { |u| [ u.to_s, u.id ] }, :include_blank => "[unassigned]" %> <%= link_to_function "Add", "add_new_project_role()", :class => "inline add button" %>
 			<% end -%>
 		<% end -%>
 	</li>
@@ -27,7 +27,7 @@
 
 	function add_new_project_role() {
 		id = 'new_' + (new_counter++);
-		$('#existing-project-roles').append('<li><select id="project_project_roles_attributes_' + id + '_role_id" name="project[project_roles_attributes][' + id + '][role_id]"></select> <select id="project_project_roles_attributes_' + id + '_user_id" name="project[project_roles_attributes][' + id + '][user_id]"></select> <a href="#" onclick="delete_project_role(\'' + id + '\')" class="inline button roles-delete">Remove</a></li>');
+		$('#existing-project-roles').append('<li><select id="project_project_roles_attributes_' + id + '_role_id" name="project[project_roles_attributes][' + id + '][role_id]"></select> <select id="project_project_roles_attributes_' + id + '_user_id" name="project[project_roles_attributes][' + id + '][user_id]"></select> <a href="#" onclick="delete_project_role(\'' + id + '\')" class="inline delete button">Remove</a></li>');
 		$('#project_project_roles_attributes_' + id + '_role_id').html($('#project_project_role_role_id').html()).val($('#project_project_role_role_id').val());
 		$('#project_project_roles_attributes_' + id + '_user_id').html($('#project_project_role_user_id').html()).val($('#project_project_role_user_id').val());
 	}

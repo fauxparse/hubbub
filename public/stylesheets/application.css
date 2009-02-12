@@ -307,8 +307,8 @@ ol.form li.checkbox {
 	text-decoration: none;
 }
 
-.cancel {	background: #ed1c24; }
-.ok {	background: #8cc63f; }
+.cancel, .delete { background: #ed1c24; }
+.ok, .add { background: #8cc63f; }
 
 .errorExplanation {
 	background: #ffc;
@@ -347,6 +347,40 @@ ol.form li .assignments dd {
 	width: 6em;
 	float: left;
 }
+
+/* Time Picker {{{ */
+
+.time-picker-select {
+	border: 1px solid #999;
+	background: white;
+	color: #444;
+	line-height: 1.5;
+	height: 7.5em;
+	overflow-y: scroll;
+	text-align: left;
+	z-index: 2000;
+}
+
+.time-picker-select li {
+	list-style: none;
+	display: inline;
+	padding: 0px;
+}
+
+.time-picker-select li a {
+	display: block;
+	padding: 0px 8px;
+	color: #444;
+	outline: none;
+	text-decoration: none;
+}
+
+.time-picker-select li a:hover,
+.time-picker-select li a.selected {
+	background: #ccc;
+}
+
+/*}}}*/
 
 /*}}}*/
 
@@ -564,9 +598,10 @@ ol.form .project-roles ul {
   color: #999;
 }
 
-#time-table #time_slice_hours { width: 3em; }
-#time-table #time_slice_date { width: 6em; }
+#time-table #time_slice_hours { width: 4em; }
+#time-table #time_slice_date { width: 9em; }
 #time-table #time_slice_summary { width: 20em; }
+#time-table #time_slice_user_id { width: 6em; }
 
 .graph {
 	border-top: 4px solid #ccc;
@@ -594,6 +629,7 @@ ol.form .project-roles ul {
 	display: block;
 	height: 100%;
 	color: #999;
+	text-decoration: none;
 }
 
 #main .timeline li.weekend a {

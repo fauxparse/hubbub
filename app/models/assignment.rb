@@ -2,7 +2,7 @@ class Assignment < ActiveRecord::Base
   belongs_to :user
   belongs_to :role
   belongs_to :task, :counter_cache => true
-  has_many :time_slices, :as => :activity
+  has_many :time_slices, :finder_sql => 'SELECT * FROM time_slices WHERE task_id = #{task_id} AND user_id = #{user_id}'
   has_many :blockages, :dependent => :destroy
   has_many :blocked_users, :through => :blockages, :source => :user
   
@@ -55,6 +55,10 @@ class Assignment < ActiveRecord::Base
     super || role
   end
   
+  def company
+    task && task.company
+  end
+  
 protected
   # Make sure time recorded by a user against a task gets associated with this assignment.
   def assign_time_slices_from_task
@@ -64,7 +68,7 @@ protected
   # Make sure time recorded against a task is not lost when the assignment is destroyed.
   def reassign_time_slices_to_task
     time_slices.each do |t|
-      t.update_attribute :activity, task
+      t.update_attribute :task, task
     end
   end
   

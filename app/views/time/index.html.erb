@@ -5,3 +5,12 @@
 <% end -%>
 
 <%= graph_recent_activity(@times) %>
+
+<% content_for :sidebar do -%>
+	<% form_for :report, :url => time_path, :html => { :method => :get, :id => "report-parameters" } do |form| -%>
+		<ol class="form">
+			<li class="text"><%= form.label :user_id %> <%= form.select :user_id, current_agency.users.collect { |u| [ u.to_s, u.id ] }.sort_by(&:first), :include_blank => "(anyone)" %></li>
+			<li class="text"><%= form.label :company_id %> <%= form.select :company_id, current_account.companies.collect { |c| [ c.to_s, c.id ] }.sort_by(&:first), :include_blank => "(any company)" %></li>
+		</ol>
+	<% end -%>
+<% end -%>

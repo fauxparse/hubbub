@@ -7,24 +7,24 @@
 	<% end -%>
 <% end -%>
 
-<% remote_form_for TimeSlice.new(:activity => @task, :user => @user, :hours => "1"), :url => time_path(:user_id => @user, :format => :js), :success => "$('#time-entry-form')[0].reset();", :html => { :id => "time-entry-form" } do |form| -%>
+<% remote_form_for TimeSlice.new(:task => @task, :user => @user, :hours => "1"), :url => time_path(:user_id => @user, :format => :js), :success => "$('#time-entry-form')[0].reset();", :html => { :id => "time-entry-form" } do |form| -%>
   <% content_tag :table, :id => "time-table" do -%>
     <thead>
       <tr><th>Hours</th><th>Date</th><th>User</th><th>Summary</th><th></th></tr>
       <% unless @task.blank? -%>
         <tr id="new_task_row">
           <td><%= form.text_field :hours, :class => :hours %></td>
-          <td><%= form.text_field :date, :class => :date, :value => form.object.date.readable_inspect %></td>
+          <td><%= form.text_field :date, :class => :date, :value => form.object.date.to_s(:date_picker), :autocomplete => :off %></td>
           <td>
 						<% if @users.size == 1 -%>
 							<%= form.object.user %><%= form.hidden_field :user_id %>
 						<% else -%>
 							<%= form.select :user_id, @users.collect { |u| [ u.to_s, u.id ] } %>
 						<% end -%>
-						<%= form.hidden_field :activity_type %><%= form.hidden_field :activity_id %>
+						<%= form.hidden_field :task_id %>
 					</td>
           <td><%= form.text_field :summary %></td>
-          <td><%= form.submit "Add", :class => "inline button" %>
+          <td><%= form.submit "Add", :class => "inline add button" %>
         </tr>
       <% end -%>
     </thead>

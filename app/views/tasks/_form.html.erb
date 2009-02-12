@@ -20,7 +20,7 @@
 	  <%= form.label :billable, "More options" %>
 	  <ol class="form">
 	    <li class="checkbox"><%= form.check_box :billable %> <%= form.label :billable %></li>
-	    <li class="checkbox"><%= form.check_box :has_due_date %> <%= form.label :has_due_date, "Due on" %> <%= form.text_field :due_on, :class => "date", :value => (form.object.has_due_date? ? form.object.due_on : Date.today).readable_inspect %></li>
+	    <li class="checkbox"><%= form.check_box :has_due_date %> <%= form.label :has_due_date, "Due on" %> <%= form.text_field :due_on, :class => "date", :value => (form.object.has_due_date? ? form.object.due_on : Date.today).to_s(:date_picker) %></li>
 	  </ol>
 	</li>
 	<li class="buttons">
