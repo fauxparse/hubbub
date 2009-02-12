@@ -36,12 +36,24 @@ module TimeHelper
     end
   end
   
-  def user_selector(selected = nil, options = {})
-    selected = selected.id if selected.is_a? User
-    result = ""
-    result << content_tag(:optgroup, content_tag(:option, "(Anybody)", :value => nil, :selected => selected.nil?))
-    result << content_tag(:optgroup, content_tag(:option, "#{current_user} (Me)", :value => current_user.id, :selected => (selected == current_user.id)))
-    result << content_tag(:optgroup, options_for_select((current_agency.users - current_user).collect { |u| [ u.to_s, u.id ] }, selected))
-    content_tag :select, result, options
+  module Selectors
+    def user_selector(users, current_user, options = {})
+      select :user_id, [[ "#{current_user} (Me)", current_user.id ]] + (users - [current_user]).collect { |u| [ u.to_s, u.id ] }.sort_by(&:first), options.reverse_merge(:autocomplete => :off, :include_blank => "(anyone)", :class => "user-select")
+    end
+    
+    def company_selector(companies, options = {})
+      select :company_id, companies.collect { |c| [ c.to_s, c.id ] }.sort_by(&:first), options.reverse_merge(:autocomplete => :off, :include_blank => "(any company)", :class => "company-select")
+    end
+
+    def project_selector(projects, options = {})
+      option_tags = @template.options_for_select([[ "(any project)", nil ]], object.project_id) + projects.group_by(&:company_id).collect { |company_id, projects|
+        @template.options_for_select(projects.collect { |p| [p.to_s, p.id ] }, object.project_id).gsub "<option", "<option class=\"company_#{company_id}\""
+      }.flatten.join
+      @template.select_tag "#{object_name}[project_id]", option_tags, options.reverse_merge(:autocomplete => :off, :class => "project-select")
+    end
+  end
+  
+  def self.included(base)
+    ActionView::Helpers::FormBuilder.send :include, Selectors
   end
 end

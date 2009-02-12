@@ -15,12 +15,6 @@ class TimeController < ApplicationController
       render :action => "popup"
     else
       @report = current_agency.reports.build(params[:report])
-      
-      
-      
-      @start_date, @end_date = [ :from, :until ].collect { |p| (params[p] || params[:date]) && (params[p] || params[:date]).to_date }
-      @times = TimeSlice.for_user(@user).for_task(@task).from_date(@start_date).until_date(@end_date).all(:include => [ :user ])
-      
     end
   end
   

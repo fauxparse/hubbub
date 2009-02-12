@@ -4,13 +4,27 @@
 	<h1>Time</h1>
 <% end -%>
 
-<%= graph_recent_activity(@times) %>
+<%= graph_recent_activity(@report.times) %>
 
 <% content_for :sidebar do -%>
-	<% form_for :report, :url => time_path, :html => { :method => :get, :id => "report-parameters" } do |form| -%>
+	<% form_for :report, @report, :url => time_path, :html => { :method => :get, :id => "report-parameters" } do |form| -%>
 		<ol class="form">
-			<li class="text"><%= form.label :user_id %> <%= form.select :user_id, current_agency.users.collect { |u| [ u.to_s, u.id ] }.sort_by(&:first), :include_blank => "(anyone)" %></li>
-			<li class="text"><%= form.label :company_id %> <%= form.select :company_id, current_account.companies.collect { |c| [ c.to_s, c.id ] }.sort_by(&:first), :include_blank => "(any company)" %></li>
+			<li class="text"><%= form.label :user_id %> <%= form.user_selector current_agency.users, current_user %></li>
+			<li class="text"><%= form.label :company_id %> <%= form.company_selector current_account.companies %></li>
+			<li class="text"><%= form.label :project_id %> <%= form.project_selector current_account.projects %></li>
+			<li class="buttons"><%= form.submit "Report", :class => "button" %></li>
 		</ol>
 	<% end -%>
+<% end -%>
+
+<% javascript_tag do -%>
+	function show_projects_for_selected_company() {
+		$('#report_project_id').html($('#report_project_id')[0].html_options);
+		$('#report_project_id option[class]').not('.company_'+$('#report_company_id').val()).remove();
+	}
+	$(document).ready(function() {
+		$('#report_company_id').change(function() { show_projects_for_selected_company(); });
+		$('#report_project_id')[0].html_options = $('#report_project_id').html();
+		show_projects_for_selected_company();
+	});
 <% end -%>
