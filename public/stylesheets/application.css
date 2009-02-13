@@ -545,7 +545,17 @@ ol.form .project-roles ul {
 }
 
 .task-meta {
-	font-size: 90%;
+	color: #999;
+}
+
+.task-meta .due-date {
+	color: #666;
+	cursor: help;
+	border-bottom: 1px solid #ccc;
+}
+
+.task .no-due-date {
+	color: #ccc;
 }
 
 .task .task-status {
@@ -600,6 +610,10 @@ ol.form .project-roles ul {
 
 .task .task-status .details .assignment-recorded-time small {
 	font-size: 100%;
+}
+
+.task .task-status .details .assignment-recorded-time.completed {
+	opacity: 0.75;
 }
 
 .task .task-status .details .assignment-recorded-time:hover {

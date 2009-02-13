@@ -10,7 +10,7 @@
 	  <% if task.completed? -%>
 			<%= content_tag :span, "Completed #{task.completed_on.to_s(:fuzzy)}" %>
 	  <% else -%>
-	  	<%= content_tag :span, task.due_on ? "Due <strong>#{task.due_on.to_s(:fuzzy)}</strong>" : "No due date set" %>
+	  	<%= content_tag :span, task.due_on ? "Due <strong class=\"due-date\" title=\"#{task.due_on.to_s(:long)}\">#{task.due_on.to_s(:fuzzy)}</strong>" : content_tag(:span, "No due date set", :class => "no-due-date") %>
 	  <% end -%>
 	<% end -%>
 

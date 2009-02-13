@@ -89,6 +89,6 @@ protected
   end
   
   def get_project
-    @project ||= scope.find(params[:id].to_i, :include => :company) unless params[:id].blank?
+    @project ||= scope.find(params[:id].to_i, :include => [ :company, { :task_lists => { :tasks => { :assignments => :user } } } ]) unless params[:id].blank?
   end
 end
