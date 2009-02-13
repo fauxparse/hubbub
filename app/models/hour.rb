@@ -46,7 +46,7 @@ class Hour
     case format
     when :hours    then "%d:%.2d" % [ minutes / 60, minutes % 60 ]
     when :minutes  then minutes.to_s
-    when :fraction then ("%.2f" % (minutes / 60.0)).sub /0+$/, ""
+    when :fraction then ("%.2f" % (minutes / 60.0)).sub /(\.\d+)0$/, "\\1"
     else raise ArgumentError, "unknown format: '#{format}'"
     end
   end
@@ -58,6 +58,10 @@ class Hour
       when /^([0-9]+):([0-9]{2})$/ then new($1.to_i * 60 + $2.to_i)
       else                              new(initializer.to_f * 60.0)
       end
+    end
+    
+    def [](i)
+      hours(i)
     end
   end
 end

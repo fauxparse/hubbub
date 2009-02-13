@@ -1,0 +1,5 @@
+<% content_tag :div, :class => "task-status", :id => dom_id(task, :status) do -%>
+	<% content_tag :div, :class => "details", :style => "display: none" do -%>
+		<%= [ task, task.assignments ].flatten.collect { |a| recorded_time_for(a) }.join %>
+	<% end -%>
+<% end -%>

@@ -15,7 +15,8 @@ class Assignment < ActiveRecord::Base
   after_create :assign_time_slices_from_task
   before_destroy :reassign_time_slices_to_task
 
-  composed_of :elapsed_time, :mapping => %w(total_minutes minutes)
+  composed_of :estimated_time, :class_name => "Hour", :mapping => %w(estimated_minutes minutes)
+  composed_of :recorded_time, :class_name => "Hour", :mapping => %w(total_minutes minutes)
   
   include Statefulness
   
@@ -31,6 +32,10 @@ class Assignment < ActiveRecord::Base
   
   def blocked?
     blockages_count > 0
+  end
+  
+  def estimated?
+    estimated_minutes?
   end
   
   # Lets the assignment work with nested_attributes. Hopefully this won't
@@ -59,10 +64,14 @@ class Assignment < ActiveRecord::Base
     task && task.company
   end
   
+  def on_complete
+    update_attribute :completed_on, Date.today
+  end
+  
 protected
   # Make sure time recorded by a user against a task gets associated with this assignment.
   def assign_time_slices_from_task
-    TimeSlice.update_all [ "activity_type = ?, activity_id = ?", self.class.name, self.id ], [ "time_slices.user_id = ? AND time_slices.activity_type = ? AND time_slices.activity_id = ?", user_id, task.class.name, task.id ]
+    TimeSlice.update_all [ "task_id = ?", self.id ], [ "time_slices.user_id = ? AND time_slices.task_id = ?", user_id, task.id ]
   end
 
   # Make sure time recorded against a task is not lost when the assignment is destroyed.

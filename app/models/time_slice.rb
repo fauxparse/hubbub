@@ -4,7 +4,7 @@ class TimeSlice < ActiveRecord::Base
   belongs_to :project
   belongs_to :company
 
-  composed_of :elapsed_time, :mapping => %w(minutes minutes)
+  composed_of :recorded_time, :class_name => "Hour", :mapping => %w(minutes minutes)
   default_value_for(:date) { |record| Date.today }
   validates_presence_of :user_id, :minutes, :date, :company_id
   validates_presence_of :project_id, :if => :task_id?
@@ -23,11 +23,11 @@ class TimeSlice < ActiveRecord::Base
   named_scope :until_date, lambda { |date| date.nil? ? {} : { :conditions => [ "time_slices.date <= ?", date ] } }
   
   def hours
-    elapsed_time.to_s(:hours)
+    recorded_time.to_s(:hours)
   end
   
   def hours=(value)
-    self.elapsed_time = ElapsedTime.hours(value)
+    self.recorded_time = Hour[value]
   end
   
   def assignment

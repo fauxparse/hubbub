@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090212002923) do
+ActiveRecord::Schema.define(:version => 20090212224505) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20090212002923) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "blockages_count",   :default => 0
+    t.date     "completed_on"
   end
 
   create_table "blockages", :force => true do |t|
@@ -124,6 +125,7 @@ ActiveRecord::Schema.define(:version => 20090212002923) do
     t.integer  "assignments_count", :default => 0
     t.boolean  "anybody",           :default => false
     t.date     "due_on"
+    t.date     "completed_on"
   end
 
   create_table "time_slices", :force => true do |t|

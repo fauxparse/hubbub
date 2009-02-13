@@ -2,10 +2,17 @@
   <% content_tag :span, :class => "task-name" do -%>
     <%= link_to task.id, task_path(task, :format => nil), :class => "task-id" %>
     <%= task.name %>
+		<%= content_tag :small, "(" + link_to(task.company, company_path(task.company)) + "/" + link_to(task.project, company_path(task.project)) + ")" unless @project %>
     <%= link_to "Edit", edit_task_path(task, :format => nil), :rel => :facebox, :class => "inline button task-edit" %>
 	<% end -%>
-  
-	<% content_tag :span, :class => :users, :id => dom_id(task, :users) do -%>
-		<%= task_users(task) %>
+
+	<% content_tag :div, :class => "task-meta" do -%>
+	  <% if task.completed? -%>
+			<%= content_tag :span, "Completed #{task.completed_on.to_s(:fuzzy)}" %>
+	  <% else -%>
+	  	<%= content_tag :span, task.due_on ? "Due <strong>#{task.due_on.to_s(:fuzzy)}</strong>" : "No due date set" %>
+	  <% end -%>
 	<% end -%>
+
+	<%= render :partial => "tasks/status.html.erb", :locals => { :task => task } %>
 <% end -%>

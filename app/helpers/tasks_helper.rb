@@ -23,7 +23,7 @@ module TasksHelper
   
   def task_classes(task)
     classes = returning %w(task) do |c|
-      c << "overdue" if task.due_on && task.due_on <= Date.today
+      c << "overdue" if task.due_on && (task.completed? ? (task.due_on < task.completed_on) : (task.due_on <= Date.today))
       c << "blocked" if task.blocked?
       c << task.current.state.name
     end
@@ -35,6 +35,28 @@ module TasksHelper
     classes << "blocked" if assignment.blocked?
     classes << "completed" if assignment.completed?
     classes << "started" if assignment.total_minutes > 0
-    link_to assignment, task_time_path(assignment.task, :user_id => assignment.user || current_user), :rel => :facebox, :title => "#{assignment.elapsed_time} hours", :class => classes * " "
+    link_to assignment, task_time_path(assignment.task, :user_id => assignment.user || current_user), :rel => :facebox, :title => "#{assignment.recorded_time} hours", :class => classes * " "
+  end
+  
+  def recorded_time_for(activity)
+    result = ""
+    if activity.respond_to? :user
+      result << "<span class=\"user\">"
+      result << "<strong>#{activity.user}</strong> " unless activity.user.blank?
+      result << "(#{activity.role})" unless activity.role.blank?
+      result << "</span>"
+    end
+    result << content_tag(:span, activity.recorded_time.to_s(:fraction), :class => "recorded")
+		result << " of " + content_tag(:span, activity.estimated_time.to_s(:fraction), :class => "budget") if activity.estimated?
+		result << " hours"
+		result << " <small>(completed)</small>" if activity.completed?
+		classes = []
+		classes << "blocked" if activity.respond_to?(:blocked?) && activity.blocked?
+		classes << "completed" if activity.completed?
+		if activity.respond_to?(:user) && activity.user
+  		link_to result, task_time_path(activity.task), :rel => :facebox, :class => "#{activity.class.name.underscore}-recorded-time #{dom_id(activity.user)} #{classes.join(' ')}", :id => dom_id(activity, :recorded_time)
+		else
+  		content_tag :span, result, :class => "#{activity.class.name.underscore}-recorded-time #{classes.join(' ')}", :id => dom_id(activity, :recorded_time)
+		end
   end
 end

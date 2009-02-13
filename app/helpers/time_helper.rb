@@ -7,7 +7,7 @@ module TimeHelper
       result << content_tag(:h2, describe_date_range(start_date, end_date))
       result << "<ul class=\"timeline\">"
       dates = (start_date..end_date).to_a
-      hours = dates.collect { |d| times.select { |t| t.date == d }.sum(ElapsedTime.hours(0), &:elapsed_time) }
+      hours = dates.collect { |d| times.select { |t| t.date == d }.sum(Hour[0], &:recorded_time) }
       hours_per_day = dates.zip hours
       max_hours = [ hours.max.to_i, 8 * 60 ].max
       

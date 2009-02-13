@@ -28,7 +28,7 @@ class TimeController < ApplicationController
   end
   
   def destroy
-    @time_slice = TimeSlice.find params[:id], :include => :activity
+    @time_slice = TimeSlice.find params[:id], :include => :task
     @task = @time_slice.task :include => :assignments
     @time_slice.destroy
     respond_to do |format|

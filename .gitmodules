@@ -4,3 +4,6 @@
 [submodule "vendor/plugins/acts_as_textiled"]
 	path = vendor/plugins/acts_as_textiled
 	url = git@github.com:fauxparse/acts_as_textiled.git
+[submodule "vendor/plugins/numb3rs"]
+	path = vendor/plugins/numb3rs
+	url = git@github.com:fauxparse/numb3rs.git

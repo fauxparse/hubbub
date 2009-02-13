@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_many :assignments
   has_many :blockages
   has_many :blocked_assignments, :through => :blockages, :source => :assignment
-  has_attached_file :avatar, :styles => { :thumbnail => "64x64#" }, :default_url => "/images/default-user-:style.png"
+  has_attached_file :avatar, :styles => { :thumbnail => "64x64#", :tiny => "32x32#" }, :default_url => "/images/default-user-:style.png"
   
   alias_attribute :to_s, :display_name
   alias_attribute :to_param, :login

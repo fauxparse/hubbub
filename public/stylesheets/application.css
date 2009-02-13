@@ -499,7 +499,10 @@ ol.form .project-roles ul {
 }
 
 .task-list .header {
-  border-bottom: 4px solid #ccc;
+}
+
+.task-list .header h2 {
+	font-size: 150%;
 }
 
 #main .task-list .tasks {
@@ -511,12 +514,12 @@ ol.form .project-roles ul {
   position: relative;
   display: block;
   list-style: none;
-  border-bottom: 1px solid #ccc;
   margin: 0px;
-  padding: 0px 0px 0px 2em;
+  padding: 0px 0px 8px 40px;
+	line-height: 1.5;
 }
 
-#main .task .task-id {
+.task .task-id {
 	font-weight: bold;
 	letter-spacing: -0.1em;
 	text-transform: lowercase;
@@ -541,20 +544,101 @@ ol.form .project-roles ul {
   visibility: visible;
 }
 
-.task .users {
-  display: block;
-  color: #999;
-  font-size: 95%;
+.task-meta {
+	font-size: 90%;
 }
 
-.task .users a {
-  padding: 1px 0px 1px 16px;
-  background: url(/images/assignment-not-started.png) no-repeat 0px 50%;
+.task .task-status {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 32px;
+	height: 32px;
+	background: url(/images/progress/0.png) no-repeat 0px 0px;
 }
 
-.task .users a.started { background-image: url(/images/assignment-started.png); }
-.task .users a.blocked, .task .users a.unassigned { background-image: url(/images/assignment-blocked.png); }
-.task .users a.completed { background-image: url(/images/assignment-completed.png); }
+.task .p0 { background-image: url(/images/progress/0.png); }
+.task .p1 { background-image: url(/images/progress/1.png); }
+.task .p2 { background-image: url(/images/progress/2.png); }
+.task .p3 { background-image: url(/images/progress/3.png); }
+.task .p4 { background-image: url(/images/progress/4.png); }
+.task .p5 { background-image: url(/images/progress/5.png); }
+.task .p6 { background-image: url(/images/progress/6.png); }
+.task .p7 { background-image: url(/images/progress/7.png); }
+.task .p8 { background-image: url(/images/progress/8.png); }
+.task .p9 { background-image: url(/images/progress/9.png); }
+.task .p10 { background-image: url(/images/progress/10.png); }
+.task .p11 { background-image: url(/images/progress/11.png); }
+.task .p12 { background-image: url(/images/progress/12.png); }
+.task .completed { background-image: url(/images/progress/completed.png); }
+.task .overbudget { background-image: url(/images/progress/overbudget.png); }
+.task .completed.overbudget { background-image: url(/images/progress/completed-overbudget.png); }
+.blocked .task-status { background-image: url(/images/progress/blocked.png); }
+
+.task .task-status .details {
+	position: absolute;
+	left: 0px;
+	top: 24px;
+	background: #00aeef;
+	color: white;
+	width: 20em;
+	padding: 8px;
+	font-size: 90%;
+	line-height: normal;
+	z-index: 20;
+}
+
+.task .task-status .details .assignment-recorded-time {
+	display: block;
+	margin: 0px -4px;
+	padding: 4px 4px 4px 36px;
+	background: url(/images/progress/small/0.png) no-repeat 4px 4px;
+	color: white;
+	text-decoration: none;
+	outline: none;
+}
+
+.task .task-status .details .assignment-recorded-time small {
+	font-size: 100%;
+}
+
+.task .task-status .details .assignment-recorded-time:hover {
+	background-color: #6fbce8;
+}
+
+.task .task-status .details .p0 { background-image: url(/images/progress/small/0.png); }
+.task .task-status .details .p1 { background-image: url(/images/progress/small/1.png); }
+.task .task-status .details .p2 { background-image: url(/images/progress/small/2.png); }
+.task .task-status .details .p3 { background-image: url(/images/progress/small/3.png); }
+.task .task-status .details .p4 { background-image: url(/images/progress/small/4.png); }
+.task .task-status .details .p5 { background-image: url(/images/progress/small/5.png); }
+.task .task-status .details .p6 { background-image: url(/images/progress/small/6.png); }
+.task .task-status .details .p7 { background-image: url(/images/progress/small/7.png); }
+.task .task-status .details .p8 { background-image: url(/images/progress/small/8.png); }
+.task .task-status .details .p9 { background-image: url(/images/progress/small/9.png); }
+.task .task-status .details .p10 { background-image: url(/images/progress/small/10.png); }
+.task .task-status .details .p11 { background-image: url(/images/progress/small/11.png); }
+.task .task-status .details .p12 { background-image: url(/images/progress/small/12.png); }
+.task .task-status .details .completed { background-image: url(/images/progress/small/completed.png); }
+.task .task-status .details .overbudget { background-image: url(/images/progress/small/overbudget.png); }
+.task .task-status .details .completed.overbudget { background-image: url(/images/progress/small/completed-overbudget.png); }
+.task .task-status .details .blocked { background-image: url(/images/progress/small/blocked.png); }
+
+.task .task-status .details .task-recorded-time {
+	display: block;
+	font-size: 150%;
+	font-weight: bold;
+	background: none;
+}
+
+.task .task-status .details .task-recorded-time small {
+	font-weight: normal;
+	font-size: 75%;
+}
+
+.task .task-status .details .assignment-recorded-time .user {
+	display: block;
+}
 
 /* }}} */
 
@@ -773,5 +857,9 @@ a strong.highlight {
 	text-decoration: underline;
 	color: inherit;
 }
+
+/*}}}*/
+
+/* Sidebar {{{ */
 
 /*}}}*/

@@ -24,6 +24,7 @@ class Task < ActiveRecord::Base
   
   def on_complete
     assignments.each &:complete
+    update_attribute :completed_on, Date.today
   end
   
   def on_reopen
@@ -62,4 +63,17 @@ class Task < ActiveRecord::Base
   def users
     anybody? ? project.agency.users : assignments.collect(&:user)
   end
+  
+  def estimated?
+    assignments.any? &:estimated?
+  end
+  
+  def recorded_time
+    assignments.inject(Hour[0]) { |h, a| h + a.recorded_time }
+  end
+  
+  def estimated_time
+    assignments.inject(Hour[0]) { |h, a| h + a.estimated_time }
+  end
+  
 end
