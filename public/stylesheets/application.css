@@ -499,10 +499,23 @@ ol.form .project-roles ul {
 }
 
 .task-list .header {
+  position: relative;
+  border-top: 4px solid #ccc;
 }
 
 .task-list .header h2 {
 	font-size: 150%;
+}
+
+.task-list .header h2 small {
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+
+.task-list .header h2 small .toggle {
+  outline: none;
+  text-decoration: none;
 }
 
 #main .task-list .tasks {
@@ -535,6 +548,7 @@ ol.form .project-roles ul {
 
 #main .overdue .task-id { background: #ed1c24; }
 #main .blocked .task-id { background: #ff6600; }
+#main .completed .task-id { background: #999; }
 
 .task .task-edit {
   visibility: hidden;

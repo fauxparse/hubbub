@@ -35,13 +35,16 @@ $(document).ready(function() {
 function rebind_handlers() {
   $('a[rel*=facebox]').unbind('click.facebox').facebox();
   $('input.date').datepicker('destroy').datepicker({ dateFormat:'D, d M yy' });
-	$('.task-status').unbind('mousemove.popup').bind('mousemove.popup', function() { clearTimeout(this.close_popup); this.open_popup = setTimeout('$("#'+this.id+' .details").fadeIn("fast");', 500); });
-	$('.task-status').unbind('mouseout.popup').bind('mouseout.popup', function() { clearTimeout(this.open_popup); this.close_popup = setTimeout('$("#'+this.id+' .details").fadeOut("fast");', 500); });
-	$('.task-status').unbind('click.toggle').bind('click.toggle', function(e) {
-	  if (e.target == this) {
-	    toggle_task_completion($(this).parent());
-	  }
-	});
+	$('.task-status').unbind('mouseover').unbind('mousemove').unbind('mouseout').hoverIntent({    
+    sensitivity:3, interval: 200, timeout:500,
+    over:function() {
+      $(this).find('.details').fadeIn('fast');
+    },
+    out:function() {
+      $(this).find('.details').fadeOut();
+    }
+  }).unbind('click.toggle').bind('click.toggle', function() { toggle_task_completion($(this).parent()); });
+	$('.task-list .header a.toggle').unbind('click.toggle').bind('click.toggle', function() { var list = $(this.href.replace(/^[^#]+/,'')); $(this).css({ opacity:list.not(':visible').length * 0.5 + 0.5 }); list.toggle("blind"); return false; });
 }
 
 // TODO: replace with selector and cookie
@@ -72,6 +75,8 @@ var add_status_icons = function(task, ref) {
 }
 
 function redraw_tasks() {
+  redraw_task_lists();
+  
 	$('.task .task-status').each(function() {
 		var task = $(this);
 		t = (viewing_user_id && (u = task.find('.user-recorded-time.user_' + viewing_user_id)).length > 0) ? u : task.find('.task-recorded-time');
@@ -85,10 +90,39 @@ function redraw_tasks() {
 	});
 }
 
+function redraw_task_lists() {
+  $('.task-list').each(function() {
+    var task_list = $(this),
+        open_tasks = task_list.find('.task.open'),
+        completed_tasks = task_list.find('.task.completed');
+        
+    task_list.find('.header a.toggle').each(function() {
+      $(this).html(($(this).hasClass('open') ? open_tasks : completed_tasks).length);
+      var list = $(this.href.replace(/^[^#]+/,''));
+      $(this).css({ opacity:list.filter(':visible').length * 0.5 + 0.5 })
+    });
+    
+    (open_tasks.length == 0) ? task_list.find('.empty').show() : task_list.find('.empty').hide();
+  });
+}
+
 function toggle_task_completion(task) {
   task = $(task);
-  task.toggleClass('completed');
-  task.find('.task-status').toggleClass('completed');
+  
+  task.find('.task-status').toggleClass('completed').each(function() { clearTimeout(this.close_popup); clearTimeout(this.open_popup); }).find('.details').hide();
+  task.toggleClass('completed')
+  if (task.hasClass('completed')) {
+    task.removeClass('open').fadeOut('fast', function() {
+      $(this).prependTo($(this).parents('.task-list').find('.completed.tasks')).fadeIn('fast');
+    });
+  } else {
+    task.addClass('open').fadeOut('fast', function() {
+      $(this).prependTo($(this).parents('.task-list').find('.open.tasks')).fadeIn('fast');
+    });
+  }
+  
+  redraw_task_lists();
+  
   task_id = task.attr('id').replace('task_', '');
   $.ajax({
     url:'/tasks/' + task_id + '/complete.js',
