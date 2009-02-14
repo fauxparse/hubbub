@@ -47,6 +47,15 @@ class TasksController < ApplicationController
       end
     end
   end
+  
+  def complete
+    # TODO: scope to account
+    @task = Task.find params[:id], :include => { :assignments => :user }
+    @task.completed? ? @task.reopen : @task.complete
+    respond_to do |format|
+      format.js { render :action => "update" }
+    end
+  end
 
 protected
   def get_task_list

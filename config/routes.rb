@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
         end
       end
     end
-    map.resources :tasks
+    map.resources :tasks, :member => { :complete => :put }
     map.resources :projects
     map.resources :time, :singular => "time_slice"
 

@@ -37,6 +37,11 @@ function rebind_handlers() {
   $('input.date').datepicker('destroy').datepicker({ dateFormat:'D, d M yy' });
 	$('.task-status').unbind('mousemove.popup').bind('mousemove.popup', function() { clearTimeout(this.close_popup); this.open_popup = setTimeout('$("#'+this.id+' .details").fadeIn("fast");', 500); });
 	$('.task-status').unbind('mouseout.popup').bind('mouseout.popup', function() { clearTimeout(this.open_popup); this.close_popup = setTimeout('$("#'+this.id+' .details").fadeOut("fast");', 500); });
+	$('.task-status').unbind('click.toggle').bind('click.toggle', function(e) {
+	  if (e.target == this) {
+	    toggle_task_completion($(this).parent());
+	  }
+	});
 }
 
 // TODO: replace with selector and cookie
@@ -72,5 +77,23 @@ function redraw_tasks() {
 		t = (viewing_user_id && (u = task.find('.user-recorded-time.user_' + viewing_user_id)).length > 0) ? u : task.find('.task-recorded-time');
 		add_status_icons(task, t);
 		task.find('.assignment-recorded-time').map(function() { add_status_icons($(this), $(this)); });
+
+    var project = $(this).parents('.project');
+    if (project.length > 0) {
+      $(this).parent().find('.' + project.attr('id')).hide();
+    }
 	});
+}
+
+function toggle_task_completion(task) {
+  task = $(task);
+  task.toggleClass('completed');
+  task.find('.task-status').toggleClass('completed');
+  task_id = task.attr('id').replace('task_', '');
+  $.ajax({
+    url:'/tasks/' + task_id + '/complete.js',
+    type:'post',
+    data:{ _method:'put' },
+    dataType:'script'
+  });
 }

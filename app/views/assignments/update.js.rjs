@@ -1,0 +1,1 @@
+page.replace dom_id(@assignment, :recorded_time), recorded_time_for(@assignment)

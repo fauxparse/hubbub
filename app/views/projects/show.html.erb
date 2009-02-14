@@ -2,8 +2,10 @@
 	<h1><%= @project %> <small>(<%= link_to @project.company, company_path(@project.company) %>)</small></h1>
 <% end -%>
 
-<% content_tag :div, :id => dom_id(@project, :lists), :class => :lists do -%>
-	<%= render :partial => @project.task_lists %>
+<% content_tag :div, :class => "project", :id => dom_id(@project) do -%>
+  <% content_tag :div, :id => dom_id(@project, :lists), :class => :lists do -%>
+  	<%= render :partial => @project.task_lists %>
+  <% end -%>
 <% end -%>
 
 <% content_for :sidebar do -%>
