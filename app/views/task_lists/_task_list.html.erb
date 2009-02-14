@@ -2,18 +2,19 @@
 	<% content_tag :div, :id => dom_id(task_list, :header), :class => :header do -%>
 		<% content_tag :h2 do -%>
 		  <%= task_list %>
-		  <small><%= link_to "0", "#" + dom_id(task_list, :open_tasks), :class => "toggle open" %> <%= link_to "0", "#" + dom_id(task_list, :completed_tasks), :class => "toggle completed" %></small>
+		  <small>
+		    <%= link_to "0", "#" + dom_id(task_list, :open_tasks), :class => "toggle open" %> <%= link_to "0", "#" + dom_id(task_list, :completed_tasks), :class => "toggle completed" %>
+		    <%= link_to "Add task", new_list_task_path(task_list), :rel => :facebox, :class => "inline add button" %>
+		  </small>
   	<% end -%>
 	<% end -%>
-	<% content_tag :div, :id => dom_id(task_list, :empty), :class => :empty do -%>
-	  This list has no open tasks. <%= link_to "Add a new task?", new_list_task_path(task_list), :rel => :facebox %>
-	<% end -%>	
 	<% content_tag :ul, :id => dom_id(task_list, :open_tasks), :class => "open tasks" do -%>
+  	<% content_tag :li, :id => dom_id(task_list, :empty), :class => :empty do -%>
+  	  This list has no open tasks. <%= link_to "Add a new task?", new_list_task_path(task_list), :rel => :facebox %>
+  	<% end -%>	
 		<%= render :partial => task_list.tasks.select(&:open?) %>
 	<% end -%>
 	<% content_tag :ul, :id => dom_id(task_list, :completed_tasks), :class => "completed tasks", :style => "display: none" do -%>
 		<%= render :partial => task_list.tasks.select(&:completed?) %>
 	<% end -%>
-	
-	<%= link_to "Add task", new_list_task_path(task_list), :rel => :facebox, :class => "task-new" %>
 <% end -%>

@@ -1,7 +1,7 @@
 <% content_tag :li, :class => task_classes(task), :id => dom_id(task) do -%>
   <% content_tag :span, :class => "task-name" do -%>
     <%= link_to task.id, task_path(task, :format => nil), :class => "task-id" %>
-    <%= task.name %>
+    <%= content_tag :strong, task.name %>
 		<% content_tag :small, :class => dom_id(task.project) do -%>
 		  (<%= content_tag :span, link_to (task.company, company_path(task.company)) + " /", :class => dom_id(task.company) %>
 		  <%= link_to(task.project, company_path(task.project)) %>)

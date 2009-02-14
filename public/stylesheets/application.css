@@ -495,7 +495,7 @@ ol.form .project-roles ul {
 /* Tasks {{{ */
 
 .task-list {
-  
+  padding-bottom: 1ex;
 }
 
 .task-list .header {
@@ -518,15 +518,33 @@ ol.form .project-roles ul {
   text-decoration: none;
 }
 
-#main .task-list .tasks {
+.task-list .header .inline {
+  
+}
+
+#main .task-list .empty {
+  padding: 0.5em;
+  background: #ffc;
+  color: #999;
+  margin: 0px 0px 1ex;
+}
+
+#main .tasks {
   margin: 0px;
   padding: 0px;
 }
 
-#main .task {
-  position: relative;
+#main ul.completed li {
+  opacity: 0.5;
+}
+
+#main .tasks li {
   display: block;
   list-style: none;
+}
+
+#main .tasks .task {
+  position: relative;
   margin: 0px;
   padding: 0px 0px 8px 40px;
 	line-height: 1.5;
@@ -544,6 +562,14 @@ ol.form .project-roles ul {
 	font-size: 100%;
 	padding: 1px 0.5em;
 	margin: 0px;
+}
+
+.task .task-name strong {
+  font-weight: normal;
+}
+
+.completed .task-name strong {
+  text-decoration: line-through;
 }
 
 #main .overdue .task-id { background: #ed1c24; }
@@ -667,6 +693,24 @@ ol.form .project-roles ul {
 .task .task-status .details .assignment-recorded-time .user {
 	display: block;
 }
+
+/*
+.completed .task .task-status {
+  left: 16px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  background: url(/images/progress/tiny/completed.png) no-repeat 0px 0px;
+}
+
+.completed .task .overbudget { background-image: url(/images/progress/tiny/overbudget.png); }
+.completed .task .completed.overbudget { background-image: url(/images/progress/tiny/completed-overbudget.png); }
+.completed .task .open { background-image: url(/images/progress/tiny/open.png); }
+
+.completed .task .task-meta {
+  display: none;
+}
+*/
 
 /* }}} */
 
