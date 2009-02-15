@@ -32,7 +32,7 @@ class Task < ActiveRecord::Base
   end
   
   def assigned?
-    anybody? || assignments_count > 0
+    anybody? || (assignments_count > 0 || (@new_record_before_save && assignments.size > 0))
   end
   
   def unassigned?
