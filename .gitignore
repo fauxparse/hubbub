@@ -5,5 +5,5 @@ config/database.yml
 db/*.sqlite3
 coverage
 doc/plugins
-public/system/avatars
+public/images/avatars
 wiki.git

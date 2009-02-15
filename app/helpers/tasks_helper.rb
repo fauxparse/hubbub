@@ -22,11 +22,14 @@ module TasksHelper
   end
   
   def task_classes(task)
-    classes = returning %w(task) do |c|
-      c << "overdue" if task.due_on && (task.completed? ? (task.due_on < task.completed_on) : (task.due_on <= Date.today))
-      c << "blocked" if task.blocked?
-      c << task.current.state.name
-    end
+    classes = %w(task)
+    classes << "overdue"    if task.due_on && (task.completed? ? (task.due_on < task.completed_on) : (task.due_on <= Date.today))
+    classes << "blocked"    if task.blocked?
+    classes << "anybody"    if task.anybody?
+    classes << "unassigned" if task.unassigned?
+    classes << (task.completed? ? "completed" : "open")
+    classes += task.assignments.collect { |a| "user_#{a.user_id}"}
+    classes << task.current.state.name
     classes * " "
   end
   

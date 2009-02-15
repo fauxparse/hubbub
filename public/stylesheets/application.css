@@ -490,6 +490,76 @@ ol.form .project-roles ul {
 	color: #333;
 }
 
+.user-selector {
+  height: 32px;
+  background: white url(/images/default-user-tiny.png) no-repeat 0px 0px;
+  position: relative;
+}
+
+.user-selector .current {
+  display: block;
+  margin: 0px;
+  padding: 0px 0px 0px 40px;
+  line-height: 32px;
+  text-align: middle;
+  font-size: 150%;
+  font-weight: bold;
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+  text-decoration: none;
+  outline: none;
+}
+
+.user-selector .arrow {
+  line-height: 32px;
+  font-weight: bold;
+  background: #00aeef;
+  color: white;
+  padding: 0px 0.25em;
+  float: right;
+  text-decoration: none;
+  outline: none;
+}
+
+.user-selector ul {
+  position: absolute;
+  left: 0px;
+  top: 32px;
+  width: 100%;
+  height: 165px;
+  overflow-y: scroll;
+}
+
+.user-selector ul li {
+  display: block;
+  background: white url(/images/default-user-tiny.png) no-repeat 0px 0px;
+  border-top: 1px solid #f8f8f8;
+}
+
+.user-selector ul li a {
+  display: block;
+  margin: 0px;
+  padding: 0px 0px 0px 32px;
+  line-height: 32px;
+  text-align: middle;
+  font-size: 150%;
+  font-weight: bold;
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+  text-decoration: none;
+  outline: none;
+}
+
+.user-selector ul li a strong {
+  display: block;
+  padding-left: 8px;
+}
+
+.user-selector ul li a:hover strong {
+  background-color: #00aeef;
+  color: white;
+}
+
 /* }}} */
 
 /* Tasks {{{ */
@@ -620,6 +690,7 @@ ol.form .project-roles ul {
 .task .p10 { background-image: url(/images/progress/10.png); }
 .task .p11 { background-image: url(/images/progress/11.png); }
 .task .p12 { background-image: url(/images/progress/12.png); }
+.unassigned .task-status { background-image: url(/images/progress/unassigned.png); }
 .task .completed { background-image: url(/images/progress/completed.png); }
 .task .overbudget { background-image: url(/images/progress/overbudget.png); }
 .task .completed.overbudget { background-image: url(/images/progress/completed-overbudget.png); }

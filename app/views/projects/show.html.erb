@@ -9,7 +9,11 @@
 <% end -%>
 
 <% content_for :sidebar do -%>
-	<%= link_to "New task list", new_project_list_path(@project), :class => "add button" %>
-	<%= link_to "Edit", edit_project_path(@project), :class => "edit button" %>
+  <% content_tag :div, :class => "viewing-user" do -%>
+    <%= select_tag "viewing-user", options_for_select([[ "(anyone)", "" ], [ "#{current_user} (me)", current_user.id ]] + (current_agency.users - [ current_user ]).collect { |u| [ u.to_s, u.id ] }) %>
+  <% end -%>
+
+	<%#= link_to "New task list", new_project_list_path(@project), :class => "add button" %>
+	<%#= link_to "Edit", edit_project_path(@project), :class => "edit button" %>
 <% end -%>
 

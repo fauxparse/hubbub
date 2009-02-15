@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	$.facebox.settings['opacity'] = 0.5;
 	rebind_handlers();
-	redraw_tasks();
 
 	$(document).bind('ajaxSuccess', function() {
 	  rebind_handlers();
@@ -17,6 +16,8 @@ $(document).ready(function() {
 		}
 		rebind_handlers();
 	});
+	
+	load_user_selection();
 
 	$(document).ajaxSend(function(event, request, settings) {
 	  if (typeof(AUTH_TOKEN) == "undefined") return;
@@ -47,7 +48,7 @@ function rebind_handlers() {
 	$('.task-list .header a.toggle').unbind('click.toggle').bind('click.toggle', function() { var list = $(this.href.replace(/^[^#]+/,'')); $(this).css({ opacity:list.not(':visible').length * 0.5 + 0.5 }); list.toggle("blind"); return false; });
 }
 
-// TODO: replace with selector and cookie
+// TODO: load from cookie
 var viewing_user_id = null;
 
 var add_status_icons = function(task, ref) {
@@ -97,7 +98,7 @@ function redraw_task_lists() {
         completed_tasks = task_list.find('.task.completed');
         
     task_list.find('.header a.toggle').each(function() {
-      $(this).html(($(this).hasClass('open') ? open_tasks : completed_tasks).length);
+      $(this).html(($(this).hasClass('open') ? open_tasks : completed_tasks).filter(':visible').length);
       var list = $(this.href.replace(/^[^#]+/,''));
       $(this).css({ opacity:list.filter(':visible').length * 0.5 + 0.5 })
     });
@@ -130,4 +131,44 @@ function toggle_task_completion(task) {
     data:{ _method:'put' },
     dataType:'script'
   });
+}
+
+function load_user_selection() {
+  if ((select_tag = $('select#viewing-user')).length > 0) {
+    var v = '<div id="viewing-user" class="user-selector">';
+    v += '<a href="#" class="arrow">▼</a>';
+    v += '<span class="current"></span>';
+    v += '<ul class="options" style="display: none;">';
+    $.each(select_tag[0].options, function() {
+      u = (this.value == '' ? 'anybody' : 'user_' + this.value)
+      v += '<li><a class="' + u + '" href="#' + u + '" style="background-image: url(' + (this.value == '' ? '/images/select-anybody.png' : '/images/avatars/' + this.value + '/tiny.jpg') + ')"><strong>' + this.text + '</strong></a></li>';
+    });
+    v += '</ul>';
+    v += '</div>';
+    select_tag.replaceWith(v);
+    $('#viewing-user .arrow, #viewing-user .current').click(function(e) {
+      $(this).parent().find('.options').slideToggle('fast');
+      e.stopPropagation();
+    });
+    $('#viewing-user .options a').click(function(e) {
+      set_selected_user(this.className == 'anybody' ? '' : this.className.replace('user_', ''));
+      e.stopPropagation();
+    });
+    $(document).click(function() { $('#viewing-user .options:visible').hide('slide', { direction:'up' }, 'fast'); });
+  }
+  set_selected_user(viewing_user_id);
+}
+
+function set_selected_user(v) {
+  var u = (v == null || v == 0 || v == '' ? 'anybody' : 'user_' + v);
+  var a = $('#viewing-user .options .' + u);
+  $('#viewing-user .current').html(a.find('strong').html()).css('background-image', a.css('background-image'));
+  $('#viewing-user .options:visible').hide('slide', { direction:'up' }, 'fast');
+  var tasks = $('li.task');
+  if (u == 'anybody') {
+    tasks.show();
+  } else {
+    tasks.hide().filter('.' + u + ', .anybody, .unassigned').show();
+  }
+  redraw_tasks();
 }

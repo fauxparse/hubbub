@@ -8,7 +8,7 @@
 		<% end -%>
     <%= link_to "Edit", edit_task_path(task, :format => nil), :rel => :facebox, :class => "inline button task-edit" %>
 	<% end -%>
-
+	
 	<% content_tag :div, :class => "task-meta" do -%>
 	  <% if task.completed? -%>
 			<%= content_tag :span, "Completed #{task.completed_on.to_s(:fuzzy)}" %>
