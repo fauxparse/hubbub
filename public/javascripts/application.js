@@ -48,8 +48,7 @@ function rebind_handlers() {
 	$('.task-list .header a.toggle').unbind('click.toggle').bind('click.toggle', function() { var list = $(this.href.replace(/^[^#]+/,'')); $(this).css({ opacity:list.not(':visible').length * 0.5 + 0.5 }); list.toggle("blind"); return false; });
 }
 
-// TODO: load from cookie
-var viewing_user_id = null;
+var viewing_user_id = $.cookie('selected_user');
 
 var add_status_icons = function(task, ref) {
 	recorded = parseFloat(ref.find('.recorded').html());
@@ -149,10 +148,12 @@ function load_user_selection() {
     $('#viewing-user .arrow, #viewing-user .current').click(function(e) {
       $(this).parent().find('.options').slideToggle('fast');
       e.stopPropagation();
+      return false;
     });
     $('#viewing-user .options a').click(function(e) {
       set_selected_user(this.className == 'anybody' ? '' : this.className.replace('user_', ''));
       e.stopPropagation();
+      return false;
     });
     $(document).click(function() { $('#viewing-user .options:visible').hide('slide', { direction:'up' }, 'fast'); });
   }
@@ -160,6 +161,7 @@ function load_user_selection() {
 }
 
 function set_selected_user(v) {
+  $.cookie('selected_user', v);
   var u = (v == null || v == 0 || v == '' ? 'anybody' : 'user_' + v);
   var a = $('#viewing-user .options .' + u);
   $('#viewing-user .current').html(a.find('strong').html()).css('background-image', a.css('background-image'));
@@ -171,4 +173,5 @@ function set_selected_user(v) {
     tasks.hide().filter('.' + u + ', .anybody, .unassigned').show();
   }
   redraw_tasks();
+  return false;
 }
