@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
   belongs_to :company
-  has_many :task_lists
+  has_many :task_lists, :order => "position ASC"
   has_many :project_roles, :dependent => :destroy
   accepts_nested_attributes_for :project_roles, :allow_destroy => true, :reject_if => lambda { |p| p['role_id'].blank? }
   has_many :users, :through => :project_roles, :uniq => true

@@ -3,7 +3,7 @@
     <%= link_to task.id, task_path(task, :format => nil), :class => "task-id" %>
     <%= content_tag :strong, task.name %>
 		<% content_tag :small, :class => dom_id(task.project) do -%>
-		  (<%= content_tag :span, link_to (task.company, company_path(task.company)) + " /", :class => dom_id(task.company) %>
+		  (<%= content_tag :span, link_to(task.company, company_path(task.company)) + " /", :class => dom_id(task.company) %>
 		  <%= link_to(task.project, company_path(task.project)) %>)
 		<% end -%>
     <%= link_to "Edit", edit_task_path(task, :format => nil), :rel => :facebox, :class => "inline button task-edit" %>

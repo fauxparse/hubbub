@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.with_options :conditions => { :subdomain => true } do |account|
+    account.resources :lists, :controller => "task_lists", :collection => { :reorder => :put }
+    account.resources :tasks, :member => { :complete => :put }, :collection => { :reorder => :put }
     account.resources :companies, :shallow => true do |company|
       company.resources :people, :controller => "users"
       company.resources :projects do |project|
@@ -11,9 +13,8 @@ ActionController::Routing::Routes.draw do |map|
         end
       end
     end
-    map.resources :tasks, :member => { :complete => :put }
-    map.resources :projects
-    map.resources :time, :singular => "time_slice"
+    account.resources :projects
+    account.resources :time, :singular => "time_slice"
 
     account.resource :settings, :controller => "users"
     account.resources :people, :controller => "users"

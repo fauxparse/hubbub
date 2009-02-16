@@ -93,11 +93,15 @@ function redraw_tasks() {
 function redraw_task_lists() {
   $('.task-list').each(function() {
     var task_list = $(this),
-        open_tasks = task_list.find('.task.open'),
-        completed_tasks = task_list.find('.task.completed');
+        open_tasks = task_list.find('.task.open:visible'),
+        completed_tasks = task_list.find('.task.completed:visible');
         
     task_list.find('.header a.toggle').each(function() {
-      $(this).html(($(this).hasClass('open') ? open_tasks : completed_tasks).filter(':visible').length);
+			if ($(this).hasClass('open')) {
+	      $(this).html('<strong>' + open_tasks.length + '</strong> open');
+			} else {
+	      $(this).html('<strong>' + completed_tasks.length + '</strong> completed');
+			}
       var list = $(this.href.replace(/^[^#]+/,''));
       $(this).css({ opacity:list.filter(':visible').length * 0.5 + 0.5 })
     });
@@ -175,3 +179,21 @@ function set_selected_user(v) {
   redraw_tasks();
   return false;
 }
+
+function reorder_task_lists() {
+	$('#sidebar .actions a.button, .task-list .header small').toggle();
+	var reordering = $('#sidebar .actions .reorder.done:visible').length > 0;
+	$('.task-list .contents').slideToggle('fast');
+	if (reordering) {
+		$('.project .lists').sortable({ items:'.task-list', axis:'y' });
+	} else {
+		$.ajax({
+			url:'/lists/reorder.js',
+			type:'post',
+			data:'_method=put&' + $('.project .lists').sortable('serialize'),
+			dataType:'script'
+		});
+		$('.project .lists').sortable('destroy');
+	}
+}
+

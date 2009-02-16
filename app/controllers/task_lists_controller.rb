@@ -1,5 +1,5 @@
 class TaskListsController < ApplicationController
-  before_filter :get_task_list, :except => [ :index, :new, :create ]
+  before_filter :get_task_list, :only => [ :edit, :update, :destroy ]
   helper_method :scope
 
   # GET /task_lists
@@ -45,7 +45,7 @@ class TaskListsController < ApplicationController
     respond_to do |format|
       if @task_list.save
         flash[:notice] = 'TaskList was successfully created.'
-        format.html { redirect_to list_path(@task_list) }
+        format.html { redirect_to project_path(@task_list.project) }
         format.xml  { render :xml => @task_list, :status => :created, :location => @task_list }
       else
         format.html { render :action => "new" }
@@ -59,12 +59,16 @@ class TaskListsController < ApplicationController
   def update
     respond_to do |format|
       if @task_list.update_attributes(params[:task_list])
-        flash[:notice] = 'TaskList was successfully updated.'
-        format.html { redirect_to list_path(@task_list) }
+        format.html do
+          flash[:notice] = 'TaskList was successfully updated.'
+          redirect_to list_path(@task_list)
+        end
         format.xml  { head :ok }
+        format.js
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @task_list.errors, :status => :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -77,6 +81,14 @@ class TaskListsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to project_lists_path(@task_list.project) }
       format.xml  { head :ok }
+    end
+  end
+  
+  def reorder
+    TaskList.order = params[:task_list]
+    
+    respond_to do |format|
+      format.js { render :nothing => true }
     end
   end
 

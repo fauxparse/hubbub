@@ -4,16 +4,52 @@
 
 <% content_tag :div, :class => "project", :id => dom_id(@project) do -%>
   <% content_tag :div, :id => dom_id(@project, :lists), :class => :lists do -%>
-  	<%= render :partial => @project.task_lists %>
+  	<%= render :partial => @project.task_lists.sort_by(&:position) %>
   <% end -%>
 <% end -%>
 
 <% content_for :sidebar do -%>
   <% content_tag :div, :class => "viewing-user" do -%>
+		<label for="viewing-user">View tasks for:</label>
     <%= select_tag "viewing-user", options_for_select([[ "(anyone)", "" ], [ "#{current_user} (me)", current_user.id ]] + (current_agency.users - [ current_user ]).collect { |u| [ u.to_s, u.id ] }) %>
   <% end -%>
 
-	<%#= link_to "New task list", new_project_list_path(@project), :class => "add button" %>
-	<%#= link_to "Edit", edit_project_path(@project), :class => "edit button" %>
+	<% content_tag :ul, :class => "actions" do -%>
+		<li><%= link_to "New task list", new_project_list_path(@project), :class => "add button" %></li>
+		<li><%= link_to "Edit Project", edit_project_path(@project), :class => "edit button" %></li>
+		<li><%= link_to_function "Reorder Lists", "reorder_task_lists()", :class => "reorder button" %> <%= link_to_function "Finished reordering", "reorder_task_lists()", :class => "reorder button done", :style => "display: none;" %></li>
+	<% end -%>
 <% end -%>
 
+<% javascript_tag do -%>
+	$(document).ready(function() {
+		$('.open.tasks').sortable({
+			items:'.task.open',
+			handle:'.task-name',
+			axis:'y',
+			connectWith:['.open.tasks'],
+			receive:function(event, ui) {
+				list = $(event.target);
+				item = $(ui.item)
+				list_id = list.attr('id').replace(/^[^0-9]+/, '');
+				item_id = item.attr('id').replace(/^[^0-9]+/, '');
+				$.ajax({
+					url:'/lists/' + list_id + '.js',
+					type:'post',
+					data:'_method=put&' + $(list).sortable('serialize', { key:'task_list[task_positions][]' }),
+					dataType:'script'
+				});
+			},
+			stop:function(event, ui) {
+				list_id = event.target.id.replace(/^[^0-9]+/, '');
+				$.ajax({
+					url:'/lists/' + list_id + '.js',
+					type:'post',
+					data:'_method=put&' + $(event.target).sortable('serialize', { key:'task_list[task_positions][]' }),
+					dataType:'script'
+				});
+				redraw_task_lists();
+			}
+		});
+	});
+<% end -%>

@@ -494,6 +494,7 @@ ol.form .project-roles ul {
   height: 32px;
   background: white url(/images/default-user-tiny.png) no-repeat 0px 0px;
   position: relative;
+	margin: 0px 0px 16px;
 }
 
 .user-selector .current {
@@ -581,6 +582,7 @@ ol.form .project-roles ul {
   position: absolute;
   right: 0px;
   bottom: 0px;
+	font-weight: normal;
 }
 
 .task-list .header h2 small .toggle {
@@ -782,6 +784,11 @@ ol.form .project-roles ul {
   display: none;
 }
 */
+
+.ui-sortable .task-list,
+.task-name {
+	cursor: move;
+}
 
 /* }}} */
 
@@ -1004,5 +1011,19 @@ a strong.highlight {
 /*}}}*/
 
 /* Sidebar {{{ */
+
+#sidebar ul.actions {
+	
+}
+
+#sidebar ul.actions li {
+	display: inline;
+	list-style: none;
+}
+
+#sidebar ul.actions li a {
+	float: left;
+	margin: 0px 8px 8px 0px;
+}
 
 /*}}}*/

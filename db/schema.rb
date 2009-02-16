@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090212224505) do
+ActiveRecord::Schema.define(:version => 20090216013810) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20090212224505) do
     t.integer  "open_tasks_count", :default => 0, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
   end
 
   create_table "tasks", :force => true do |t|
@@ -126,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20090212224505) do
     t.boolean  "anybody",           :default => false
     t.date     "due_on"
     t.date     "completed_on"
+    t.integer  "position"
   end
 
   create_table "time_slices", :force => true do |t|
