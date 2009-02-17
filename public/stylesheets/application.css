@@ -1062,3 +1062,17 @@ a strong.highlight {
 }
 
 /*}}}*/
+
+/* Dashboard {{{ */
+
+#dashboard h2 {
+	color: #00aeef;
+	font-size: 400%;
+	font-weight: bold;
+	line-height: 1em;
+	text-transform: lowercase;
+	text-decoration: none;
+	letter-spacing: -0.1em;
+}
+
+/*}}}*/

@@ -13,6 +13,9 @@ class Task < ActiveRecord::Base
   
   named_scope :unassigned, :conditions => { :anybody => false, :assignments_count => 0 }
   named_scope :for_user, lambda { |user| { :include => :assignments, :conditions => user.nil? ? "1" : [ "tasks.anybody = ? OR assignments.user_id = ? OR (assignments.user_id IS NULL AND assignments.role_id IN (?))", true, user.id, user.role_ids ] } }
+  named_scope :overdue, :conditions => [ "tasks.current_state = ? AND tasks.due_on IS NOT NULL AND tasks.due_on <= ?", "open", Date.today ], :order => "tasks.due_on ASC", :include => { :assignments => :user, :task_list => { :project => :company } }
+  named_scope :upcoming, :conditions => [ "tasks.current_state = ? AND tasks.due_on IS NOT NULL AND tasks.due_on > ?", "open", Date.today ], :order => "tasks.due_on ASC", :include => { :assignments => :user, :task_list => { :project => :company } }
+  named_scope :recently_completed, :conditions => [ "tasks.current_state = ?", "completed" ], :order => "tasks.completed_on DESC", :include => { :assignments => :user, :task_list => { :project => :company } }
 
   acts_as_list :scope => :task_list_id
   default_scope :order => "position ASC"
