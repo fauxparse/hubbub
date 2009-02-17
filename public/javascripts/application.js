@@ -186,7 +186,7 @@ function reorder_task_lists() {
 	var reordering = $('#sidebar .actions .reorder.done:visible').length > 0;
 	$('.task-list .contents').slideToggle('fast');
 	if (reordering) {
-		$('.project .lists').sortable({ items:'.task-list', axis:'y' });
+		$('.project .lists').sortable({ items:'.task-list', axis:'y', forceHelperSize:true });
 	} else {
 		$.ajax({
 			url:'/lists/reorder.js',

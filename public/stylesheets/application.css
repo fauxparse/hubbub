@@ -588,6 +588,7 @@ ol.form .project-roles ul {
 
 .task-list {
   padding-bottom: 1ex;
+	width: 100%;
 }
 
 .task-list .header {
@@ -626,7 +627,9 @@ ol.form .project-roles ul {
   padding: 0px;
 }
 
-#main ul.completed li {
+#main ul.completed li .status-icon,
+#main ul.completed li .task-name,
+#main ul.completed li .task-meta {
   opacity: 0.5;
 }
 
@@ -696,44 +699,57 @@ ol.form .project-roles ul {
 	top: 0px;
 	width: 32px;
 	height: 32px;
+}
+
+.task .task-status .status-icon {
+	display: block;
+	width: 32px;
+	height: 32px;
 	background: url(/images/progress/0.png) no-repeat 0px 0px;
 }
 
-.task .p0 { background-image: url(/images/progress/0.png); }
-.task .p1 { background-image: url(/images/progress/1.png); }
-.task .p2 { background-image: url(/images/progress/2.png); }
-.task .p3 { background-image: url(/images/progress/3.png); }
-.task .p4 { background-image: url(/images/progress/4.png); }
-.task .p5 { background-image: url(/images/progress/5.png); }
-.task .p6 { background-image: url(/images/progress/6.png); }
-.task .p7 { background-image: url(/images/progress/7.png); }
-.task .p8 { background-image: url(/images/progress/8.png); }
-.task .p9 { background-image: url(/images/progress/9.png); }
-.task .p10 { background-image: url(/images/progress/10.png); }
-.task .p11 { background-image: url(/images/progress/11.png); }
-.task .p12 { background-image: url(/images/progress/12.png); }
-.unassigned .task-status { background-image: url(/images/progress/unassigned.png); }
-.task .completed { background-image: url(/images/progress/completed.png); }
-.task .overbudget { background-image: url(/images/progress/overbudget.png); }
-.task .completed.overbudget { background-image: url(/images/progress/completed-overbudget.png); }
-.blocked .task-status { background-image: url(/images/progress/blocked.png); }
+.task .p0 .status-icon { background-image: url(/images/progress/0.png); }
+.task .p1 .status-icon { background-image: url(/images/progress/1.png); }
+.task .p2 .status-icon { background-image: url(/images/progress/2.png); }
+.task .p3 .status-icon { background-image: url(/images/progress/3.png); }
+.task .p4 .status-icon { background-image: url(/images/progress/4.png); }
+.task .p5 .status-icon { background-image: url(/images/progress/5.png); }
+.task .p6 .status-icon { background-image: url(/images/progress/6.png); }
+.task .p7 .status-icon { background-image: url(/images/progress/7.png); }
+.task .p8 .status-icon { background-image: url(/images/progress/8.png); }
+.task .p9 .status-icon { background-image: url(/images/progress/9.png); }
+.task .p10 .status-icon { background-image: url(/images/progress/10.png); }
+.task .p11 .status-icon { background-image: url(/images/progress/11.png); }
+.task .p12 .status-icon { background-image: url(/images/progress/12.png); }
+.unassigned .task-status .status-icon { background-image: url(/images/progress/unassigned.png); }
+.task .completed .status-icon { background-image: url(/images/progress/completed.png); }
+.task .overbudget .status-icon { background-image: url(/images/progress/overbudget.png); }
+.task .completed.overbudget .status-icon { background-image: url(/images/progress/completed-overbudget.png); }
+.blocked .task-status .status-icon { background-image: url(/images/progress/blocked.png); }
 
 .task .task-status .details {
 	position: absolute;
-	left: 0px;
-	top: 24px;
-	background: #00aeef;
+	left: -10px;
+	top: 32px;
+	background: url(/images/task-status-popup-bottom.png) no-repeat 0px 100%;
 	color: white;
-	width: 20em;
-	padding: 8px;
+	width: 284px;
+	padding: 0px 14px 14px;
 	font-size: 90%;
 	line-height: normal;
-	z-index: 20;
+	z-index: 50;
+	opacity: 0.9;
+}
+
+.task .task-status .details .details-inner {
+	margin: -20px -14px 0px;
+	padding: 28px 14px 0px;
+	background: url(/images/task-status-popup-top.png) no-repeat 0px 0px;
 }
 
 .task .task-status .details .assignment-recorded-time {
 	display: block;
-	margin: 0px -4px;
+	margin: 0px 24px 0px -4px;
 	padding: 4px 4px 4px 36px;
 	background: url(/images/progress/small/0.png) no-repeat 4px 4px;
 	color: white;
