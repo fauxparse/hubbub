@@ -16,6 +16,7 @@ body {
 
 a {
 	color: #ec008c;
+	outline: none;
 }
 
 .cleaner {
@@ -148,7 +149,6 @@ small {
 	text-transform: lowercase;
 	background: #ccc;
 	color: #aaa;
-	outline: none;
 }
 
 #header #tabs li a:hover {
@@ -305,6 +305,7 @@ ol.form li.checkbox {
 	line-height: normal;
 	margin-left: 0.25em;
 	text-decoration: none;
+	outline: none;
 }
 
 .cancel, .delete { background: #ed1c24; }
@@ -371,7 +372,6 @@ ol.form li .assignments dd {
 	display: block;
 	padding: 0px 8px;
 	color: #444;
-	outline: none;
 	text-decoration: none;
 }
 
@@ -406,6 +406,30 @@ ol.form .project-roles ul {
 
 .project-roles select {
 	width: 8em !important;
+}
+
+#new-task-list-form {
+	display: block;
+	background: #8cc63f;
+	border: none;
+	padding: 8px;
+}
+
+#new-task-list-form input.text {
+	font-size: 125%;
+	border: none;
+	width: 100%;
+	padding: 0.25ex 0px;
+	display: block;
+	margin-bottom: 8px;
+}
+
+#new-task-list-form .button {
+	font-size: 150%;
+}
+
+#new-task-list-form .add {
+	background: #00aeef;
 }
 
 /* }}} */
@@ -508,7 +532,6 @@ ol.form .project-roles ul {
   background-position: 0px 0px;
   background-repeat: no-repeat;
   text-decoration: none;
-  outline: none;
 }
 
 .user-selector .arrow {
@@ -519,7 +542,6 @@ ol.form .project-roles ul {
   padding: 0px 0.25em;
   float: right;
   text-decoration: none;
-  outline: none;
 }
 
 .user-selector ul {
@@ -548,7 +570,6 @@ ol.form .project-roles ul {
   background-position: 0px 0px;
   background-repeat: no-repeat;
   text-decoration: none;
-  outline: none;
 }
 
 .user-selector ul li a strong {
@@ -586,7 +607,6 @@ ol.form .project-roles ul {
 }
 
 .task-list .header h2 small .toggle {
-  outline: none;
   text-decoration: none;
 }
 
@@ -718,7 +738,6 @@ ol.form .project-roles ul {
 	background: url(/images/progress/small/0.png) no-repeat 4px 4px;
 	color: white;
 	text-decoration: none;
-	outline: none;
 }
 
 .task .task-status .details .assignment-recorded-time small {

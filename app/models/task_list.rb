@@ -6,6 +6,7 @@ class TaskList < ActiveRecord::Base
   default_scope :order => "position ASC"
   
   validates_presence_of :name, :project_id
+  validates_uniqueness_of :name, :scope => :project_id
   include Statefulness
   
   alias_attribute :to_s, :name

@@ -14,8 +14,13 @@
     <%= select_tag "viewing-user", options_for_select([[ "(anyone)", "" ], [ "#{current_user} (me)", current_user.id ]] + (current_agency.users - [ current_user ]).collect { |u| [ u.to_s, u.id ] }) %>
   <% end -%>
 
+	<% remote_form_for :task_list, @project.task_lists.build, :url => project_lists_path(@project, :format => :js), :html => { :id => "new-task-list-form", :style => "display: none" } do |form| -%>
+		<%= form.text_field :name, :class => "text" %>
+		<%= link_to_function "Cancel", "toggle_new_task_list_form()", :class => "inline cancel button" %>
+		<%= form.submit "Create", :class => "inline add button" %>
+	<% end -%>
 	<% content_tag :ul, :class => "actions" do -%>
-		<li><%= link_to "New task list", new_project_list_path(@project), :class => "add button" %></li>
+		<li><%= link_to_function "New task list", "toggle_new_task_list_form()", :class => "add button" %></li>
 		<li><%= link_to "Edit Project", edit_project_path(@project), :class => "edit button" %></li>
 		<li><%= link_to_function "Reorder Lists", "reorder_task_lists()", :class => "reorder button" %> <%= link_to_function "Finished reordering", "reorder_task_lists()", :class => "reorder button done", :style => "display: none;" %></li>
 	<% end -%>
@@ -52,4 +57,14 @@
 			}
 		});
 	});
+	
+	function toggle_new_task_list_form() {
+		$('#new-task-list-form:visible #task_list_name').val('');
+		$('#new-task-list-form').slideToggle('normal', function() {
+			$('#new-task-list-form:visible').each(function() {
+				$(this).find(':input:visible')[0].select();
+			});
+		});
+		return false;
+	}
 <% end -%>

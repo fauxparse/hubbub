@@ -182,6 +182,7 @@ function set_selected_user(v) {
 
 function reorder_task_lists() {
 	$('#sidebar .actions a.button, .task-list .header small').toggle();
+	$('#sidebar #new-task-list-form').hide();
 	var reordering = $('#sidebar .actions .reorder.done:visible').length > 0;
 	$('.task-list .contents').slideToggle('fast');
 	if (reordering) {

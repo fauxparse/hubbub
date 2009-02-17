@@ -1,0 +1,6 @@
+if @task_list.valid?
+  page.insert_html :top, dom_id(@task_list.project, :lists), :partial => "task_list", :object => @task_list
+  page.call "toggle_new_task_list_form"
+else
+  page << "$('#sidebar #task_list_name').effect('shake', { times:2, distance:4 }, 50, function() { $('#sidebar #task_list_name')[0].select(); });"
+end

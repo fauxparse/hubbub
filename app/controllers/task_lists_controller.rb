@@ -44,12 +44,17 @@ class TaskListsController < ApplicationController
 
     respond_to do |format|
       if @task_list.save
-        flash[:notice] = 'TaskList was successfully created.'
-        format.html { redirect_to project_path(@task_list.project) }
+        @task_list.move_to_top
+        format.html do
+          flash[:notice] = 'TaskList was successfully created.'
+          redirect_to project_path(@task_list.project)
+        end
         format.xml  { render :xml => @task_list, :status => :created, :location => @task_list }
+        format.js
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @task_list.errors, :status => :unprocessable_entity }
+        format.js
       end
     end
   end
