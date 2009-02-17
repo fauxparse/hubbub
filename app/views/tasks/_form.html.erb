@@ -7,12 +7,18 @@
 		
 		<div class="assignments">
 			<%= form.check_box :anybody %> <%= form.label :anybody %>
-			<dl>
-				<% current_users.group_by(&:company).each do |company, users| -%>
-					<dt><%= company %></dt>
-					<%= task_assignment_fields_for form, users %>
+			<ul>
+				<% form.fields_for :assignments do |fields| -%>
+					<% content_tag :li, :id => dom_id(fields.object) do -%>
+						<%= assignment_user_selector "task[assignments_attributes][#{fields.object.id}][user_id]", current_users, fields.object.user_id, current_user %>
+						<%= fields.text_field :estimate, :class => "text hours" %>
+						<%= link_to_function "Delete", "delete_assignment(this)", :class => "inline delete button" %>
+					<% end -%>
 				<% end -%>
-			</dl>
+				<% content_tag :li, :id => "new_assignment_row" do -%>
+					<%= content_tag :label, "Add:", :for => "new_assignment_id" %> <%= assignment_user_selector "new_user_id", current_users, nil, current_user, :include_blank => true %>
+				<% end -%>
+			</ul>
 			<%= clear_floats %>
 		</div>
 	</li>
@@ -30,20 +36,30 @@
 </ol>
 
 <% javascript_tag do -%>
-	$('#task_anybody').click(function() { $('#task_anybody').siblings('dl').slideToggle(); })
-	function show_or_hide_assignments() {
-		$('#task_anybody').siblings('dl').toggle(!$('#task_anybody')[0].checked);
-	}
-	show_or_hide_assignments();
+	var id_for_new_assignment = 1;
+	$('#new_user_id').change(function() {
+		if ((user_id = $(this).val()) != '') {
+			var id = id_for_new_assignment++;
+			var new_row = $(this).parent('li').before('<li></li>').prev('li');
+			var new_selector = $(this).clone().appendTo(new_row).attr({
+			 	id:   'task_assignments_attributes_new_' + id + '_user_id',
+			 	name: 'task[assignments_attributes][new_' + id + '][user_id]'
+			 }).val(user_id);
+			new_row.append('<input class="text hours" name="task[assignments_attributes][new_' + id + '][user_id]" id="task_assignments_attributes_new_' + id + '_user_id" />');
+			new_row.append('<a href="#" onclick="delete_new_assignment(this); return false;" class="inline delete button">Delete</a>');
+			$(this).val('');
+		}
+	});
 	
-	$('#task_has_due_date').click(function() {
-	  enable_disable_due_date();
-	  if (this.checked) {
-	    $('#task_due_on')[0].focus();
-	  }
-	})
-	function enable_disable_due_date() {
-	  $('#task_due_on')[0].disabled = !$('#task_has_due_date')[0].checked;
+	function delete_assignment(a) {
+		console.log($(a).parents('form'));
+		var id = $(a).parent('li')[0].id.replace(/^[^0-9]+/, '');
+		$(a).closest('form').append('<input type="hidden" name="task[assignments_attributes][' + id + '][_delete]" value="1" />');
+		$(a).closest('li').remove();
 	}
-	enable_disable_due_date();
+  
+	function delete_new_assignment(a) {
+		$(a).closest('li').remove();
+	}
+
 <% end -%>
