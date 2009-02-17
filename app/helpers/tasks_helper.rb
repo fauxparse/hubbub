@@ -11,6 +11,12 @@ module TasksHelper
     end
   end
   
+  def assignment_user_selector(name, users, selected, current, options = {})
+    option_tags = (b = options.delete(:include_blank)) ? "<option value=\"\">#{b === true ? 'Select user...' : b}</option>" : ""
+    option_tags += options_for_select([[ "#{current.display_name} (me)", current.id ]], selected) + grouped_options_for_select(users.collect(&:company).uniq.sort.collect { |c| [ c, (users - [ current ]).select { |u| u.company_id == c.id }.collect { |u| [ u.display_name, u.id ] }.sort_by(&:first) ] }, selected)
+    select_tag name, option_tags, options
+  end
+  
   def task_users(task)
     result = if task.anybody?
       # TODO: make 'anybody' link show whether time has been recorded

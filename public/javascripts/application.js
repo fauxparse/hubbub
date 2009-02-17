@@ -79,7 +79,7 @@ function redraw_tasks() {
   
 	$('.task .task-status').each(function() {
 		var task = $(this);
-		t = (viewing_user_id && (u = task.find('.user-recorded-time.user_' + viewing_user_id)).length > 0) ? u : task.find('.task-recorded-time');
+		t = (viewing_user_id && (u = task.find('.assignment-recorded-time.user_' + viewing_user_id)).length > 0) ? u : task.find('.task-recorded-time');
 		add_status_icons(task, t);
 		task.find('.assignment-recorded-time').map(function() { add_status_icons($(this), $(this)); });
 
@@ -172,8 +172,10 @@ function set_selected_user(v) {
   $('#viewing-user .options:visible').hide('slide', { direction:'up' }, 'fast');
   var tasks = $('li.task');
   if (u == 'anybody') {
+		viewing_user_id = null;
     tasks.show();
   } else {
+		viewing_user_id = u.replace(/^[^0-9]+/, '');
     tasks.hide().filter('.' + u + ', .anybody, .unassigned').show();
   }
   redraw_tasks();

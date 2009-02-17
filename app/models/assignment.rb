@@ -38,6 +38,14 @@ class Assignment < ActiveRecord::Base
     estimated_minutes?
   end
   
+  def estimate
+    estimated_minutes && estimated_time.to_s(:fraction)
+  end
+  
+  def estimate=(value)
+    self.estimated_time = value.blank? ? nil : Hour[value]
+  end
+  
   # Lets the assignment work with nested_attributes. Hopefully this won't
   # be needed anymore after Rails 2.3 final!
   def _delete=(value)

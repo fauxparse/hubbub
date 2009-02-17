@@ -337,16 +337,42 @@ ol.form li .assignments label {
 	color: #333;
 }
 
-ol.form li .assignments dt {
-	clear: left;
-	font-weight: bold;
-	display: none;
+ol.form li .assignments li {
+	margin: 0px;
+	padding: 4px 0px;
+	border: none;
 }
 
-ol.form li .assignments dd {
-	padding-left: 1.5em;
-	width: 6em;
-	float: left;
+ol.form li .assignments li select {
+	width: 10em;
+}
+
+ol.form li .assignments li select option,
+ol.form li .assignments li select optgroup option {
+	padding-left: 1em;
+	text-transform: none;
+	color: #333;
+}
+
+ol.form li .assignments li select optgroup {
+	font-style: normal;
+	font-weight: normal;
+	color: #999;
+	text-transform: uppercase;
+	padding-left: 0.25em;
+}
+
+ol.form li .assignments li select optgroup option {
+	padding-left: 0.75em;
+}
+
+ol.form li .assignments li .hours {
+	width: 3em;
+}
+
+ol.form li .assignments #new_assignment_row {
+	padding: 4px;
+	background: #eee;
 }
 
 /* Time Picker {{{ */
@@ -801,6 +827,8 @@ ol.form .project-roles ul {
 .task .task-status .details .assignment-recorded-time .user {
 	display: block;
 }
+
+
 
 /*
 .completed .task .task-status {

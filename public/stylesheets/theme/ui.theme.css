@@ -4,36 +4,33 @@
 * jQuery UI CSS Framework
 * Copyright (c) 2009 AUTHORS.txt (http://ui.jquery.com/about)
 * Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
-* To view and modify this theme, visit http://ui.jquery.com/themeroller/?tr=&ffDefault=Helvetica,sans-serif&fwDefault=normal&fsDefault=1.1em&cornerRadius=0px&bgColorHeader=00aeef&bgTextureHeader=03_highlight_soft.png&bgImgOpacityHeader=75&borderColorHeader=00aeef&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=ffffff&bgTextureContent=01_flat.png&bgImgOpacityContent=75&borderColorContent=999999&fcContent=333333&iconColorContent=333333&bgColorDefault=ffffff&bgTextureDefault=01_flat.png&bgImgOpacityDefault=100&borderColorDefault=ffffff&fcDefault=333333&iconColorDefault=999999&bgColorHover=ec008c&bgTextureHover=02_glass.png&bgImgOpacityHover=75&borderColorHover=ec008c&fcHover=212121&iconColorHover=ffffff&bgColorActive=ec008c&bgTextureActive=01_flat.png&bgImgOpacityActive=100&borderColorActive=ec008c&fcActive=ffffff&iconColorActive=ffffff&bgColorHighlight=fcefa1&bgTextureHighlight=02_glass.png&bgImgOpacityHighlight=55&borderColorHighlight=fcefa1&fcHighlight=363636&iconColorHighlight=8cc63f&bgColorError=fef1ec&bgTextureError=05_inset_soft.png&bgImgOpacityError=95&borderColorError=cd0a0a&fcError=cd0a0a&iconColorError=cd0a0a&bgColorOverlay=aaaaaa&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=50&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=8px
+* To view and modify this theme, visit http://ui.jquery.com/themeroller/?ffDefault=Helvetica,sans-serif&fwDefault=normal&fsDefault=1em&cornerRadius=0px&bgColorHeader=00aeef&bgTextureHeader=03_highlight_soft.png&bgImgOpacityHeader=0&borderColorHeader=00aeef&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=f8f8f8&bgTextureContent=01_flat.png&bgImgOpacityContent=0&borderColorContent=f8f8f8&fcContent=333333&iconColorContent=ec008c&bgColorDefault=eeeeee&bgTextureDefault=04_highlight_hard.png&bgImgOpacityDefault=0&borderColorDefault=eeeeee&fcDefault=ec008c&iconColorDefault=ec008c&bgColorHover=ec008c&bgTextureHover=04_highlight_hard.png&bgImgOpacityHover=0&borderColorHover=ec008c&fcHover=ffffff&iconColorHover=ffffff&bgColorActive=00aeef&bgTextureActive=01_flat.png&bgImgOpacityActive=0&borderColorActive=00aeef&fcActive=ffffff&iconColorActive=ffffff&bgColorHighlight=cccccc&bgTextureHighlight=02_glass.png&bgImgOpacityHighlight=0&borderColorHighlight=cccccc&fcHighlight=333&iconColorHighlight=00aeef&bgColorError=ed1c24&bgTextureError=08_diagonals_thick.png&bgImgOpacityError=0&borderColorError=ed1c24&fcError=ffffff&iconColorError=ffffff&bgColorOverlay=000000&bgTextureOverlay=09_dots_small.png&bgImgOpacityOverlay=0&opacityOverlay=50&bgColorShadow=000000&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=50&thicknessShadow=6px&offsetTopShadow=-6px&offsetLeftShadow=-6px&cornerRadiusShadow=6px
 */
 
 
 /* Component containers
 ----------------------------------*/
-.ui-widget { font-family: Helvetica,sans-serif; font-size: 1em; line-height: 1em; }
+.ui-widget { font-family: Helvetica,sans-serif; font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Helvetica,sans-serif; font-size: 1em; }
-.ui-widget-header { border: 1px solid #00aeef; background: #00aeef url(images/ui-bg_highlight-soft_75_00aeef_1x100.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
+.ui-widget-header { border: 1px solid #00aeef; background: #00aeef url(images/ui-bg_highlight-soft_0_00aeef_1x100.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
 .ui-widget-header a { color: #ffffff; }
-.ui-widget-content { border: 1px solid #999999; background: #ffffff url(images/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x; color: #333333; }
+.ui-widget-content { border: 1px solid #f8f8f8; background: #f8f8f8 url(images/ui-bg_flat_0_f8f8f8_40x100.png) 50% 50% repeat-x; color: #333333; }
 .ui-widget-content a { color: #333333; }
-.ui-widget * {
-  line-height: 1em;
-}
 
 /* Interaction states
 ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #ffffff; background: #ffffff url(images/ui-bg_flat_100_ffffff_40x100.png) 50% 50% repeat-x; font-weight: normal; color: #333333; outline: none; }
-.ui-state-default a { color: #333333; text-decoration: none; outline: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #ec008c; background: #ec008c url(images/ui-bg_glass_75_ec008c_1x400.png) 50% 50% repeat-x; font-weight: normal; color: #212121; outline: none; }
-.ui-state-hover a { color: #212121; text-decoration: none; outline: none; }
-.ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #ec008c; background: #ec008c url(images/ui-bg_flat_100_ec008c_40x100.png) 50% 50% repeat-x; font-weight: normal; color: #ffffff; outline: none; }
+.ui-state-default, .ui-widget-content .ui-state-default { border: 1px solid #eeeeee; background: #eeeeee url(images/ui-bg_highlight-hard_0_eeeeee_1x100.png) 50% 50% repeat-x; font-weight: normal; color: #ec008c; outline: none; }
+.ui-state-default a { color: #ec008c; text-decoration: none; outline: none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #ec008c; background: #ec008c url(images/ui-bg_highlight-hard_0_ec008c_1x100.png) 50% 50% repeat-x; font-weight: normal; color: #ffffff; outline: none; }
+.ui-state-hover a { color: #ffffff; text-decoration: none; outline: none; }
+.ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #00aeef; background: #00aeef url(images/ui-bg_flat_0_00aeef_40x100.png) 50% 50% repeat-x; font-weight: normal; color: #ffffff; outline: none; }
 .ui-state-active a { color: #ffffff; outline: none; text-decoration: none; }
 
 /* Interaction Cues
 ----------------------------------*/
-.ui-state-highlight, .ui-widget-content .ui-state-highlight {border: 1px solid #fcefa1; background: #fcefa1 url(images/ui-bg_glass_55_fcefa1_1x400.png) 50% 50% repeat-x; color: #363636; }
-.ui-state-error, .ui-widget-content .ui-state-error {border: 1px solid #cd0a0a; background: #fef1ec url(images/ui-bg_inset-soft_95_fef1ec_1x100.png) 50% bottom repeat-x; color: #cd0a0a; }
-.ui-state-error-text, .ui-widget-content .ui-state-error-text { color: #cd0a0a; }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight {border: 1px solid #cccccc; background: #cccccc url(images/ui-bg_glass_0_cccccc_1x400.png) 50% 50% repeat-x; color: #333; }
+.ui-state-error, .ui-widget-content .ui-state-error {border: 1px solid #ed1c24; background: #ed1c24 url(images/ui-bg_diagonals-thick_0_ed1c24_40x40.png) 50% 50% repeat; color: #ffffff; }
+.ui-state-error-text, .ui-widget-content .ui-state-error-text { color: #ffffff; }
 .ui-state-disabled, .ui-widget-content .ui-state-disabled { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
 .ui-priority-primary, .ui-widget-content .ui-priority-primary { font-weight: bold; }
 .ui-priority-secondary, .ui-widget-content .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
@@ -42,14 +39,14 @@
 ----------------------------------*/
 
 /* states and images */
-.ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_333333_256x240.png); }
-.ui-widget-content .ui-icon {background-image: url(images/ui-icons_333333_256x240.png); }
+.ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_ec008c_256x240.png); }
+.ui-widget-content .ui-icon {background-image: url(images/ui-icons_ec008c_256x240.png); }
 .ui-widget-header .ui-icon {background-image: url(images/ui-icons_ffffff_256x240.png); }
-.ui-state-default .ui-icon { background-image: url(images/ui-icons_999999_256x240.png); }
+.ui-state-default .ui-icon { background-image: url(images/ui-icons_ec008c_256x240.png); }
 .ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(images/ui-icons_ffffff_256x240.png); }
 .ui-state-active .ui-icon {background-image: url(images/ui-icons_ffffff_256x240.png); }
-.ui-state-highlight .ui-icon {background-image: url(images/ui-icons_8cc63f_256x240.png); }
-.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url(images/ui-icons_cd0a0a_256x240.png); }
+.ui-state-highlight .ui-icon {background-image: url(images/ui-icons_00aeef_256x240.png); }
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url(images/ui-icons_ffffff_256x240.png); }
 
 /* positioning */
 .ui-icon-carat-1-n { background-position: 0 0; }
@@ -242,5 +239,5 @@
 .ui-corner-all { -moz-border-radius: 0px; -webkit-border-radius: 0px; }
 
 /* Overlays */
-.ui-widget-overlay { background: #aaaaaa url(images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .30;filter:Alpha(Opacity=30); }
-.ui-widget-shadow { margin: -8px 0 0 -8px; padding: 8px; background: #aaaaaa url(images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x; opacity: .50;filter:Alpha(Opacity=50); -moz-border-radius: 8px; -webkit-border-radius: 8px; }
+.ui-widget-overlay { background: #000000 url(images/ui-bg_dots-small_0_000000_2x2.png) 50% 50% repeat; opacity: .50;filter:Alpha(Opacity=50); }
+.ui-widget-shadow { margin: -6px 0 0 -6px; padding: 6px; background: #000000 url(images/ui-bg_flat_0_000000_40x100.png) 50% 50% repeat-x; opacity: .50;filter:Alpha(Opacity=50); -moz-border-radius: 6px; -webkit-border-radius: 6px; }
