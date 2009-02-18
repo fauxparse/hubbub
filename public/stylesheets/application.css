@@ -759,7 +759,7 @@ ol.form .project-roles ul {
 	top: 32px;
 	background: url(/images/task-status-popup-bottom.png) no-repeat 0px 100%;
 	color: white;
-	width: 284px;
+	width: 272px;
 	padding: 0px 14px 14px;
 	font-size: 90%;
 	line-height: normal;
@@ -775,7 +775,7 @@ ol.form .project-roles ul {
 
 .task .task-status .details .assignment-recorded-time {
 	display: block;
-	margin: 0px 24px 0px -4px;
+	margin: 0px -4px 0px -4px;
 	padding: 4px 4px 4px 36px;
 	color: white;
 	text-decoration: none;
