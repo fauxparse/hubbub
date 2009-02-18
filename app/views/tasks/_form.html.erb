@@ -62,4 +62,20 @@
 		$(a).closest('li').remove();
 	}
 
+	$('#task_anybody').click(function() { $('#task_anybody').siblings('ul').slideToggle(); })
+	function show_or_hide_assignments() {
+		$('#task_anybody').siblings('ul').toggle(!$('#task_anybody')[0].checked);
+	}
+	show_or_hide_assignments();
+
+	$('#task_has_due_date').click(function() {
+	  enable_disable_due_date();
+	  if (this.checked) {
+	    $('#task_due_on')[0].focus();
+	  }
+	})
+	function enable_disable_due_date() {
+	  $('#task_due_on')[0].disabled = !$('#task_has_due_date')[0].checked;
+	}
+	enable_disable_due_date();
 <% end -%>
