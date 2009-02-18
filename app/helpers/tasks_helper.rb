@@ -50,6 +50,7 @@ module TasksHelper
   def recorded_time_for(activity)
     result = ""
     if activity.respond_to? :user
+      result << "<span class=\"icon\"></span>"
       result << "<span class=\"user\">"
       result << "<strong>#{activity.user}</strong> " unless activity.user.blank?
       result << "(#{activity.role})" unless activity.role.blank?

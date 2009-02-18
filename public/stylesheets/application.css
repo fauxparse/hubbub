@@ -731,27 +731,27 @@ ol.form .project-roles ul {
 	display: block;
 	width: 32px;
 	height: 32px;
-	background: url(/images/progress/0.png) no-repeat 0px 0px;
+	background: url(/images/progress-32.png) no-repeat 0px 0px;
 }
 
-.task .p0 .status-icon { background-image: url(/images/progress/0.png); }
-.task .p1 .status-icon { background-image: url(/images/progress/1.png); }
-.task .p2 .status-icon { background-image: url(/images/progress/2.png); }
-.task .p3 .status-icon { background-image: url(/images/progress/3.png); }
-.task .p4 .status-icon { background-image: url(/images/progress/4.png); }
-.task .p5 .status-icon { background-image: url(/images/progress/5.png); }
-.task .p6 .status-icon { background-image: url(/images/progress/6.png); }
-.task .p7 .status-icon { background-image: url(/images/progress/7.png); }
-.task .p8 .status-icon { background-image: url(/images/progress/8.png); }
-.task .p9 .status-icon { background-image: url(/images/progress/9.png); }
-.task .p10 .status-icon { background-image: url(/images/progress/10.png); }
-.task .p11 .status-icon { background-image: url(/images/progress/11.png); }
-.task .p12 .status-icon { background-image: url(/images/progress/12.png); }
-.unassigned .task-status .status-icon { background-image: url(/images/progress/unassigned.png); }
-.task .completed .status-icon { background-image: url(/images/progress/completed.png); }
-.task .overbudget .status-icon { background-image: url(/images/progress/overbudget.png); }
-.task .completed.overbudget .status-icon { background-image: url(/images/progress/completed-overbudget.png); }
-.blocked .task-status .status-icon { background-image: url(/images/progress/blocked.png); }
+.task .p0 .status-icon                   { background-position: 0px 0px; }
+.task .p1 .status-icon                   { background-position: 0px -32px; }
+.task .p2 .status-icon                   { background-position: 0px -64px; }
+.task .p3 .status-icon                   { background-position: 0px -96px; }
+.task .p4 .status-icon                   { background-position: 0px -128px; }
+.task .p5 .status-icon                   { background-position: 0px -160px; }
+.task .p6 .status-icon                   { background-position: 0px -192px; }
+.task .p7 .status-icon                   { background-position: 0px -224px; }
+.task .p8 .status-icon                   { background-position: 0px -256px; }
+.task .p9 .status-icon                   { background-position: 0px -288px; }
+.task .p10 .status-icon                  { background-position: 0px -320px; }
+.task .p11 .status-icon                  { background-position: 0px -352px; }
+.task .p12 .status-icon                  { background-position: 0px -384px; }
+.unassigned .task-status .status-icon    { background-position: 0px -544px; }
+.task .completed .status-icon            { background-position: 0px -416px; }
+.task .overbudget .status-icon           { background-position: 0px -448px; }
+.task .completed.overbudget .status-icon { background-position: 0px -480px; }
+.blocked .task-status .status-icon       { background-position: 0px -512px; }
 
 .task .task-status .details {
 	position: absolute;
@@ -777,9 +777,18 @@ ol.form .project-roles ul {
 	display: block;
 	margin: 0px 24px 0px -4px;
 	padding: 4px 4px 4px 36px;
-	background: url(/images/progress/small/0.png) no-repeat 4px 4px;
 	color: white;
 	text-decoration: none;
+	position: relative;
+}
+
+.task .task-status .details .assignment-recorded-time .icon {
+	position: absolute;
+	left: 4px;
+	top: 4px;
+	width: 24px;
+	height: 24px;
+	background: url(/images/progress-24.png) no-repeat 0px 0px;
 }
 
 .task .task-status .details .assignment-recorded-time small {
@@ -794,23 +803,23 @@ ol.form .project-roles ul {
 	background-color: #6fbce8;
 }
 
-.task .task-status .details .p0 { background-image: url(/images/progress/small/0.png); }
-.task .task-status .details .p1 { background-image: url(/images/progress/small/1.png); }
-.task .task-status .details .p2 { background-image: url(/images/progress/small/2.png); }
-.task .task-status .details .p3 { background-image: url(/images/progress/small/3.png); }
-.task .task-status .details .p4 { background-image: url(/images/progress/small/4.png); }
-.task .task-status .details .p5 { background-image: url(/images/progress/small/5.png); }
-.task .task-status .details .p6 { background-image: url(/images/progress/small/6.png); }
-.task .task-status .details .p7 { background-image: url(/images/progress/small/7.png); }
-.task .task-status .details .p8 { background-image: url(/images/progress/small/8.png); }
-.task .task-status .details .p9 { background-image: url(/images/progress/small/9.png); }
-.task .task-status .details .p10 { background-image: url(/images/progress/small/10.png); }
-.task .task-status .details .p11 { background-image: url(/images/progress/small/11.png); }
-.task .task-status .details .p12 { background-image: url(/images/progress/small/12.png); }
-.task .task-status .details .completed { background-image: url(/images/progress/small/completed.png); }
-.task .task-status .details .overbudget { background-image: url(/images/progress/small/overbudget.png); }
-.task .task-status .details .completed.overbudget { background-image: url(/images/progress/small/completed-overbudget.png); }
-.task .task-status .details .blocked { background-image: url(/images/progress/small/blocked.png); }
+.task .task-status .details .p0                    .icon { background-position: 0px 0px; }
+.task .task-status .details .p1                    .icon { background-position: 0px -24px; }
+.task .task-status .details .p2                    .icon { background-position: 0px -48px; }
+.task .task-status .details .p3                    .icon { background-position: 0px -72px; }
+.task .task-status .details .p4                    .icon { background-position: 0px -96px; }
+.task .task-status .details .p5                    .icon { background-position: 0px -120px; }
+.task .task-status .details .p6                    .icon { background-position: 0px -144px; }
+.task .task-status .details .p7                    .icon { background-position: 0px -168px; }
+.task .task-status .details .p8                    .icon { background-position: 0px -192px; }
+.task .task-status .details .p9                    .icon { background-position: 0px -216px; }
+.task .task-status .details .p10                   .icon { background-position: 0px -240px; }
+.task .task-status .details .p11                   .icon { background-position: 0px -264px; }
+.task .task-status .details .p12                   .icon { background-position: 0px -288px; }
+.task .task-status .details .completed             .icon { background-position: 0px -312px; }
+.task .task-status .details .overbudget            .icon { background-position: 0px -336px; }
+.task .task-status .details .completed.overbudget  .icon { background-position: 0px -360px; }
+.task .task-status .details .blocked               .icon { background-position: 0px -384px; }
 
 .task .task-status .details .task-recorded-time {
 	display: block;
