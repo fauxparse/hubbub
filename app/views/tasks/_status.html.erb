@@ -2,7 +2,12 @@
 	<span class="status-icon"></span>
 	<% content_tag :div, :class => "details", :style => "display: none" do -%>
 		<% content_tag :div, :class => "details-inner" do -%>
-			<%= [ task, task.assignments ].flatten.collect { |a| recorded_time_for(a) }.join %>
+			<% if task.anybody? -%>
+				<%= recorded_time_for(task) %>
+				<%= link_to "Add time", task_time_path(task), :rel => "facebox", :class => "anybody-add-time" %>
+			<% else -%>
+				<%= [ task, task.assignments ].flatten.collect { |a| recorded_time_for(a) }.join %>
+			<% end -%>
 		<% end -%>
 	<% end -%>
 <% end -%>

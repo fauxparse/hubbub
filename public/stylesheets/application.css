@@ -837,7 +837,18 @@ ol.form .project-roles ul {
 	display: block;
 }
 
+.task .task-status .details .anybody-add-time {
+	display: block;
+	margin: 0px -4px 0px -4px;
+	padding: 4px;
+	text-decoration: none;
+	color: white;
+	font-weight: bold;
+}
 
+.task .task-status .details .anybody-add-time:hover {
+	background: #6fbce8;
+}
 
 /*
 .completed .task .task-status {
