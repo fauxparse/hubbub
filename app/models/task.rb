@@ -20,6 +20,8 @@ class Task < ActiveRecord::Base
   acts_as_list :scope => :task_list_id
   default_scope :order => "position ASC"
   
+  acts_as_textiled :description
+  
   include Statefulness
   
   alias_attribute :to_s, :name
@@ -58,6 +60,10 @@ class Task < ActiveRecord::Base
     self.due_on = nil if !value || value.to_i.zero?
   end
   
+  def estimated?
+    !assignments.any? { |a| !a.estimated? }
+  end
+  
   def task
     self
   end
@@ -75,11 +81,11 @@ class Task < ActiveRecord::Base
   end
   
   def recorded_time
-    assignments.inject(Hour[0]) { |h, a| h + a.recorded_time }
+    assignments.inject(Hour[0]) { |h, a| h + (a.recorded_time || Hour[0]) }
   end
   
   def estimated_time
-    assignments.inject(Hour[0]) { |h, a| h + a.estimated_time }
+    assignments.inject(Hour[0]) { |h, a| h + (a.estimated_time || Hour[0]) }
   end
   
 end

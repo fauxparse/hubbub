@@ -2,6 +2,7 @@
 <%= form.hidden_field :task_list_id %>
 <ol class="form">
 	<li class="text"><%= form.label :name %> <%= form.text_field :name, :class => "text" %></li>
+	<li class="text"><%= form.label :description %> <%= form.text_area :description, :rows => 3 %></li>
 	<li class="text">
 		<%= label_tag "Assign to" %>
 		
