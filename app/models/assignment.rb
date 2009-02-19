@@ -35,7 +35,7 @@ class Assignment < ActiveRecord::Base
   end
   
   def estimated?
-    estimated_minutes?
+    !estimate.blank?
   end
   
   def estimate
@@ -43,7 +43,7 @@ class Assignment < ActiveRecord::Base
   end
   
   def estimate=(value)
-    self.estimated_time = value.blank? ? nil : Hour[value]
+    self.estimated_time = Hour[value]
   end
   
   # Lets the assignment work with nested_attributes. Hopefully this won't
