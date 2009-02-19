@@ -3,4 +3,5 @@ if @user.blank? || @user == @time_slice.user
   page.visual_effect :highlight, "##{dom_id(@time_slice)} td"
 end
 page.call "empty_time_table_message"
+page.replace ".popup.graph.#{dom_id(@time_slice.user)} .d#{@time_slice.date.to_s} .count", graph_bar(@time_slice.date, @total_time_for_user)
 page.replace_html dom_id(@task, :status), :partial => "tasks/status.html.erb", :locals => { :task => @task }

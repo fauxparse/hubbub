@@ -22,6 +22,7 @@ class TimeController < ApplicationController
     @user = params[:user_id] && User.find_by_login(params[:user_id])
     @time_slice = TimeSlice.create params[:time_slice]
     @task = @time_slice.task :include => :assignments
+    @total_time_for_user = TimeSlice.total_time :user => @user, :task => @task, :date => @time_slice.date
     respond_to do |format|
       format.js
     end

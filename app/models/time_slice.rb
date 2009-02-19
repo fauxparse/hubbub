@@ -34,6 +34,13 @@ class TimeSlice < ActiveRecord::Base
     @assignment ||= Assignment.find_by_user_id_and_task_id(user_id, task_id) if user_id && task_id
   end
   
+  class << self
+    def total_time(options = {})
+      times = self.for_user(options[:user]).for_task(options[:task]).from_date(options[:from_date] || options[:date]).until_date(options[:until_date] || options[:date])
+      times.inject(Hour[0]) { |v, h| v + h.recorded_time } 
+    end
+  end
+  
 protected
   def fill_in_project_and_company
     self.project = self.task.project if task || task_id

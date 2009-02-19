@@ -87,5 +87,4 @@ class Task < ActiveRecord::Base
   def estimated_time
     assignments.inject(Hour[0]) { |h, a| h + (a.estimated_time || Hour[0]) }
   end
-  
 end

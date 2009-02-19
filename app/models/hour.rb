@@ -46,6 +46,10 @@ class Hour
     minutes.nil?
   end
   
+  def hours
+    minutes && (minutes / 60.0)
+  end
+  
   def to_s(format = :hours)
     return "" if minutes.blank?
     case format
