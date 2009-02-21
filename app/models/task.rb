@@ -3,7 +3,7 @@ class Task < ActiveRecord::Base
   delegate :project, :to => :task_list
   has_many :assignments, :dependent => :destroy, :include => [ :user, :role ]
   has_many :blockages, :through => :assignments
-  has_many :time_slices, :as => :activity, :dependent => :destroy
+  has_many :time_slices, :dependent => :destroy
   
   accepts_nested_attributes_for :assignments, :allow_destroy => true
   default_value_for :billable, true

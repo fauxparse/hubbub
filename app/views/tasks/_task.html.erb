@@ -8,6 +8,7 @@
 		<% end -%>
     <%= link_to "Edit", edit_task_path(task, :format => nil), :rel => :facebox, :class => "inline edit button" %>
     <%= link_to "Add Time", task_time_path(task, :format => nil), :rel => :facebox, :class => "inline add button" %>
+    <%= link_to_remote "Delete", :url => task_path(task, :format => :js), :method => :delete, :html => { :class => "inline delete button" } %>
 	<% end -%>
 	
 	<% content_tag :div, :class => "task-meta" do -%>

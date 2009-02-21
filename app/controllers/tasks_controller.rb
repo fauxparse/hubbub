@@ -56,6 +56,15 @@ class TasksController < ApplicationController
       format.js { render :action => "update" }
     end
   end
+  
+  def destroy
+    # TODO: scope to account
+    @task = Task.find params[:id]
+    @task.destroy
+    respond_to do |format|
+      format.js
+    end
+  end
 
 protected
   def get_task_list
