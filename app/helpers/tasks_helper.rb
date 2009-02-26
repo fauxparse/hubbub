@@ -69,4 +69,8 @@ module TasksHelper
   		content_tag :span, result, :class => "#{activity.class.name.underscore}-recorded-time #{classes.join(' ')}", :id => dom_id(activity, :recorded_time)
 		end
   end
+  
+  def render_tasks_or_nothing(tasks)
+    tasks.empty? ? content_tag(:li, "(No tasks to display)", :class => :empty) : render(:partial => tasks)
+  end
 end

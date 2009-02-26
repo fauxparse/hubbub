@@ -659,7 +659,8 @@ ol.form li ul.roles li label {
   
 }
 
-.task-list .empty {
+.task-list .empty,
+.tasks .empty {
   padding: 0.5em;
   background: #ffc;
   color: #999;

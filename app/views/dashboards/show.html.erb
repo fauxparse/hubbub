@@ -4,21 +4,21 @@
 	<% content_tag :div, :id => "overdue" do -%>
 		<%= content_tag :h2, "Overdue Tasks" %>
 		<% content_tag :ul, :id => "overdue-tasks", :class => "overdue tasks" do -%>
-			<%= render :partial => @overdue_tasks %>
+			<%= render_tasks_or_nothing @overdue_tasks %>
 		<% end -%>
 	<% end -%>
 	
 	<% content_tag :div, :id => "upcoming" do -%>
 		<%= content_tag :h2, "Upcoming Tasks" %>
 		<% content_tag :ul, :id => "upcoming-tasks", :class => "upcoming tasks" do -%>
-			<%= render :partial => @upcoming_tasks %>
+			<%= render_tasks_or_nothing @upcoming_tasks %>
 		<% end -%>
 	<% end -%>
 
 	<% content_tag :div, :id => "recently-completed" do -%>
 		<%= content_tag :h2, "Recently Completed" %>
 		<% content_tag :ul, :id => "recently-completed-tasks", :class => "recently-completed tasks" do -%>
-			<%= render :partial => @recently_completed_tasks %>
+			<%= render_tasks_or_nothing @recently_completed_tasks %>
 		<% end -%>
 	<% end -%>
 <% end -%>
