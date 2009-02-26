@@ -9,7 +9,7 @@ class Assignment < ActiveRecord::Base
   default_value_for :billable_minutes, 0
   default_value_for :total_minutes, 0
   
-  validates_presence_of :task_id, :unless => :assigning_from_nested_attributes?
+  validates_presence_of :task_id, :unless => :task
   validates_presence_of :role_id, :unless => :assigned?
   
   after_create :assign_time_slices_from_task

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090219012512) do
+ActiveRecord::Schema.define(:version => 20090224231000) do
 
   create_table "accounts", :force => true do |t|
     t.string   "name"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(:version => 20090219012512) do
   end
 
   create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
+    t.string   "session_id", :default => "", :null => false
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(:version => 20090219012512) do
 
   create_table "tasks", :force => true do |t|
     t.integer  "task_list_id"
-    t.string   "name"
+    t.text     "name"
     t.string   "current_state"
     t.boolean  "billable"
     t.boolean  "visible_to_client"

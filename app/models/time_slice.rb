@@ -60,7 +60,7 @@ protected
       elsif billable?
         counters[:billable_minutes] = counters[:total_minutes]
       end
-      Assignment.update_counters assignment.id, counters
+      Assignment.update_counters assignment.id, counters unless assignment.blank?
     end
   end
   
@@ -69,6 +69,6 @@ protected
     if billable?
       counters[:billable_minutes] = -minutes
     end
-    Assignment.update_counters assignment.id, counters
+    Assignment.update_counters assignment.id, counters unless assignment.blank?
   end
 end
