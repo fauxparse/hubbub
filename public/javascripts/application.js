@@ -46,6 +46,9 @@ function rebind_handlers() {
     }
   }).unbind('click.toggle').bind('click.toggle', function() { toggle_task_completion($(this).parent()); });
 	$('.task-list .header a.toggle').unbind('click.toggle').bind('click.toggle', function() { var list = $(this.href.replace(/^[^#]+/,'')); $(this).css({ opacity:list.not(':visible').length * 0.5 + 0.5 }); list.toggle("blind"); return false; });
+	$('.task .delete.button').unbind('click.delete').bind('click.delete', function() {
+	  $(this).closest('.task').fadeOut();
+	});
 }
 
 var viewing_user_id = $.cookie('selected_user');

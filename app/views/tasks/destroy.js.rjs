@@ -1,0 +1,3 @@
+page.call "$.facebox.close"
+page.remove dom_id(@task)
+page.call "redraw_tasks"
