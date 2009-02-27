@@ -2,7 +2,7 @@
 	<%= image_tag user.avatar.url(:thumbnail), :alt => user.name, :class => :thumbnail %>
 	<% content_tag :span, :class => :name do -%>
 	  <%= link_to user.name, person_path(user) %>
-	  <%= content_tag :small, "(#{user})" unless user.name.starts_with? user.display_name + " " %>
+	  <%= content_tag :small, "(#{user})" unless user.name.starts_with? user.display_name %>
 	<% end -%>
 	<%= content_tag :span, user.roles.collect { |r| content_tag :strong, r }.to_sentence, :class => :roles %>
 	<% content_tag :dl do -%>
