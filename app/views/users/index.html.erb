@@ -4,6 +4,9 @@
 	<h1>People</h1>
 <% end -%>
 
-<% @companies.each do |company| -%>
-	<%= render :partial => company.class.name.underscore, :object => company %>
+<% auto_tabs(@companies, :keys => ('A'..'Z'), :weight => lambda { |c| 10 + c.users.size }) do |tab_keys, companies| -%>
+	<% companies.each do |company| -%>
+		<%= render :partial => company.class.name.underscore, :object => company %>
+	<% end -%>
 <% end -%>
+

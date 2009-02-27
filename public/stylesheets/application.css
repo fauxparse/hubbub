@@ -1212,3 +1212,41 @@ body.dashboards #sidebar h2 {
 }
 
 /*}}}*/
+
+/* Tabbed Blocks {{{ */
+
+.tabbed .tabs {
+  height: 1.5em;
+  line-height: 1.5em;
+  font-size: 150%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.tabbed .tabs li {
+  display: inline;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.tabbed .tabs li a {
+  float: left;
+  font-weight: bold;
+  text-transform: lowercase;
+  text-decoration: none;
+  height: 1.5em;
+  line-height: 1.5em;
+  vertical-align: middle;
+  padding: 0em 0.5em;
+  background: #eee;
+  margin-right: 0.25em;
+  color: #ccc;
+}
+
+.tabbed .tabs li.active a {
+  color: #ec008c;
+  background: #ccc;
+}
+
+/*}}}*/
