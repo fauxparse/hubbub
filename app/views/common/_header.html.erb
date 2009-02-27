@@ -1,0 +1,20 @@
+		<div id="header">
+			<div id="header-inner">
+				<a id="logo" href="/">Hubbub</a>
+				
+				<%= tabs %w(projects time people) + (current_user.agency_user? ? [ "wiki" ] : []), :aliases => { "people" => "users", "root" => "dashboards" } %>
+				
+				<div id="account">
+					<%= content_tag :span, current_agency, :class => :agency %>
+					<%= link_to current_user, settings_path, :class => :user %>
+					<% content_tag :span, :class => "user-links" do -%>
+					  <%= link_to "Settings", settings_path %> |
+					  <%= link_to "Log Out", logout_path, :method => :delete %>
+					<% end -%>
+				</div>
+			</div>
+		</div>
+
+		<% flash.each_pair do |type, message| -%>
+			<%= content_tag :div, message, :class => "flash #{type}" %>
+		<% end -%>

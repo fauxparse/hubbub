@@ -16,6 +16,8 @@ class Task < ActiveRecord::Base
   named_scope :overdue, :conditions => [ "tasks.current_state = ? AND tasks.due_on IS NOT NULL AND tasks.due_on <= ?", "open", Date.today ], :order => "tasks.due_on ASC", :include => { :assignments => :user, :task_list => { :project => :company } }
   named_scope :upcoming, :conditions => [ "tasks.current_state = ? AND tasks.due_on IS NOT NULL AND tasks.due_on > ?", "open", Date.today ], :order => "tasks.due_on ASC", :include => { :assignments => :user, :task_list => { :project => :company } }
   named_scope :recently_completed, :conditions => [ "tasks.current_state = ?", "completed" ], :order => "tasks.completed_on DESC", :include => { :assignments => :user, :task_list => { :project => :company } }
+  named_scope :blocked_by, lambda { |user| { :include => :blockages, :conditions => [ "blockages.blocker_id = ?", user.id ] } }
+  named_scope :blocked_for, lambda { |user| { :include => :blockages, :conditions => [ "blockages.user_id = ?", user.id ] } }
 
   acts_as_list :scope => :task_list_id
   default_scope :order => "position ASC"

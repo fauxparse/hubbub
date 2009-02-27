@@ -26,6 +26,7 @@
 				<% content_tag :li, :id => dom_id(blockage) do -%>
 					<%= content_tag :strong, blockage.user %>
 					<%= blockage.description %>
+					<%= "(waiting on <strong>#{blockage.blocker}</strong>)" if blockage.blocker_id? %>
 					<%= link_to_remote "Unblocked", :url => blockage_path(blockage, :format => :js), :method => :delete, :html => { :class => "inline delete unblocked button" } if blockage.user == current_user %>
 				<% end -%>
 			<% end -%>

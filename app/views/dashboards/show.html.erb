@@ -22,3 +22,13 @@
 		<% end -%>
 	<% end -%>
 <% end -%>
+
+<% content_for :sidebar do -%>
+	<% content_tag :div, :id => "blocking" do -%>
+		<%= content_tag :h2, "Tasks I'm blocking" %>
+		<% content_tag :ul, :id => "blocking-tasks", :class => "blocking tasks" do -%>
+			<%= render_tasks_or_nothing @blocking_tasks %>
+		<% end -%>
+	<% end -%>
+	
+<% end -%>

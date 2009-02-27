@@ -44,7 +44,8 @@ function rebind_handlers() {
     out:function() {
       $(this).find('.details').fadeOut();
     }
-  }).unbind('click.toggle').bind('click.toggle', function() { toggle_task_completion($(this).parent()); });
+  });
+  $('.task-status .status-icon').unbind('click.toggle').bind('click.toggle', function() { toggle_task_completion($(this).closest('li')); });
 	$('.task-list .header a.toggle').unbind('click.toggle').bind('click.toggle', function() { var list = $(this.href.replace(/^[^#]+/,'')); $(this).css({ opacity:list.not(':visible').length * 0.5 + 0.5 }); list.toggle("blind"); return false; });
 	$('.task .delete.button').unbind('click.delete').bind('click.delete', function() {
 	  $(this).closest('li').fadeOut();

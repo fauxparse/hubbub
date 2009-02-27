@@ -1180,7 +1180,28 @@ a strong.highlight {
 
 /* Dashboard {{{ */
 
-#dashboard h2 {
+body.dashboards #main {
+  float: left;
+  width: 50%;
+  margin-right: 0px;
+}
+
+body.dashboards #main-inner {
+  margin-right: 16px;
+}
+
+body.dashboards #sidebar {
+  float: right;
+  width: 50%;
+  margin-right: 0px;
+}
+
+body.dashboards #sidebar-inner {
+  margin-left: 16px;
+}
+
+#dashboard h2,
+body.dashboards #sidebar h2 {
 	color: #00aeef;
 	font-size: 400%;
 	font-weight: bold;
