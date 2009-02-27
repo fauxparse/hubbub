@@ -8,6 +8,7 @@
 		<% end -%>
     <%= link_to "Edit", edit_task_path(task, :format => nil), :rel => :facebox, :class => "inline edit button" %>
     <%= link_to "Add Time", task_time_path(task, :format => nil), :rel => :facebox, :class => "inline add button" %>
+    <%= link_to "Blocked", new_task_blockage_path(task, :format => nil), :rel => :facebox, :class => "inline blockage button" %>
     <%= link_to_remote "Delete", :url => task_path(task, :format => :js), :method => :delete, :html => { :class => "inline delete button" } %>
 	<% end -%>
 	
@@ -17,6 +18,18 @@
 	  <% else -%>
 	  	<%= content_tag :span, task.due_on ? "Due <strong class=\"due-date\" title=\"#{task.due_on.to_s(:long)}\">#{task.due_on.to_s(:fuzzy)}</strong>" : content_tag(:span, "No due date set", :class => "no-due-date") %>
 	  <% end -%>
+	<% end -%>
+	
+	<% unless task.blockages.empty? -%>
+		<% content_tag :ul, :class => :blockages do -%>
+			<% task.blockages.each do |blockage| -%>
+				<% content_tag :li, :id => dom_id(blockage) do -%>
+					<%= content_tag :strong, blockage.user %>
+					<%= blockage.description %>
+					<%= link_to_remote "Unblocked", :url => blockage_path(blockage, :format => :js), :method => :delete, :html => { :class => "inline delete unblocked button" } if blockage.user == current_user %>
+				<% end -%>
+			<% end -%>
+		<% end -%>
 	<% end -%>
 
 	<%= render :partial => "tasks/status.html.erb", :locals => { :task => task } %>

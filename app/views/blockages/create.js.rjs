@@ -1,0 +1,8 @@
+if @blockage.valid?
+  @blockage.task.reload
+  page.call "$.facebox.close"
+  page.replace dom_id(@blockage.task), :partial => "tasks/task", :object => @blockage.task
+  page.call "redraw_tasks"
+else
+  page.replace_html "#facebox .content", :file => "blockages/new.html.erb"
+end

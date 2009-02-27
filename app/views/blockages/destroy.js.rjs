@@ -1,0 +1,3 @@
+@blockage.task.reload
+page.replace dom_id(@blockage.task), :partial => "tasks/task", :object => @blockage.task
+page.call "redraw_tasks"

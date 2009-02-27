@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
           list.resources :tasks do |task|
             task.resources :assignments
             task.resources :time, :singular => "time_slice"
+            task.resources :blockages
           end
         end
       end

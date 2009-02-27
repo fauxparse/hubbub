@@ -1,0 +1,10 @@
+<%= form.error_messages %>
+<%= form.hidden_field :task_id %>
+<ol class="form">
+	<li class="text"><%= form.label :description %> <%= form.text_area :description, :rows => 3 %></li>
+	<li class="text"><%= form.label :blocker_id %> <%= form.select :blocker_id, (current_users - [ current_user ]).collect { |u| [ u.to_s, u.id ] }, :include_blank => "(nobody in particular)" %></li>
+	<li class="buttons">
+		<%= link_to_function "Cancel", "$.facebox.close()", :class => "cancel button" %>
+		<%= form.submit button, :class => "ok button" %>
+	</li>
+</ol>

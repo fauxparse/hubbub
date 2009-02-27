@@ -3,8 +3,6 @@ class Assignment < ActiveRecord::Base
   belongs_to :role
   belongs_to :task, :counter_cache => true
   has_many :time_slices, :finder_sql => 'SELECT * FROM time_slices WHERE task_id = #{task_id} AND user_id = #{user_id}'
-  has_many :blockages, :dependent => :destroy
-  has_many :blocked_users, :through => :blockages, :source => :user
   
   default_value_for :billable_minutes, 0
   default_value_for :total_minutes, 0
@@ -31,7 +29,7 @@ class Assignment < ActiveRecord::Base
   end
   
   def blocked?
-    blockages_count > 0
+    task.blockages.any? { |b| b.user_id == self.id }
   end
   
   def estimated?

@@ -2,7 +2,7 @@ class Task < ActiveRecord::Base
   belongs_to :task_list
   delegate :project, :to => :task_list
   has_many :assignments, :dependent => :destroy, :include => [ :user, :role ]
-  has_many :blockages, :through => :assignments
+  has_many :blockages, :dependent => :destroy
   has_many :time_slices, :dependent => :destroy
   
   accepts_nested_attributes_for :assignments, :allow_destroy => true
@@ -48,7 +48,7 @@ class Task < ActiveRecord::Base
   end
   
   def blocked?
-    assignments.any? { |a| a.blocked? }
+    blockages_count.to_i > 0
   end
   
   def has_due_date?

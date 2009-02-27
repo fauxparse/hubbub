@@ -316,6 +316,7 @@ ol.form li.checkbox {
 
 .cancel, .delete { background: #ed1c24; }
 .ok, .add { background: #8cc63f; }
+.blockage { background: #ff6600; }
 
 .errorExplanation {
 	background: #ffc;
@@ -894,6 +895,30 @@ ul.completed li .task-meta {
 .ui-sortable .task-list,
 .task-name {
 	cursor: move;
+}
+
+.task .blockages {
+  margin: 0px;
+  padding: 0px;
+}
+
+.task .blockages li {
+  margin: 0px;
+  padding: 0px;
+}
+
+.task .blockages li strong {
+  background: #ff6600;
+  color: white;
+  padding: 1px 0.5em;
+}
+
+.task .blockages li .delete {
+  visibility: hidden;
+}
+
+.task .blockages li:hover .delete {
+  visibility: visible;
 }
 
 /* }}} */
