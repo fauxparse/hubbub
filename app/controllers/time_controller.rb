@@ -3,18 +3,20 @@ class TimeController < ApplicationController
     # TODO: scope to account
     @task = params[:task_id] && Task.find(params[:task_id], :include => :assignments)
     # TODO: visibility permissions
-    @user = params[:user_id] ? User.find_by_login(params[:user_id]) : current_user
+    @user = params[:user_id] ? (params[:user_id].blank? ? nil : User.find_by_login(params[:user_id])) : current_user
     @assignment = @task && @user && @task.assignments.detect { |a| a.user == @user }
-    
-    logger.info Date.today.to_formatted_s(:long)
 
+    logger.info @user.inspect
+    
     if request.xhr?
       @times = TimeSlice.for_user(@user).for_task(@task).reverse_order.all(:include => [ :user, :task ])
       # TODO: proper credentials
       @users = @user && @user.admin? ? (@task ? @task.users : current_user.company.users) : [ current_user ]
       render :action => "popup"
     else
-      @report = current_agency.reports.build(params[:report])
+      @report_params = params[:report] || {}
+      @report_params[:user_id] = @user.id unless @report_params.has_key?(:user_id)
+      @report = current_agency.reports.build(@report_params)
     end
   end
   
