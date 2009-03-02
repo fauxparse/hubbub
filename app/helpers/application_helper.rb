@@ -22,7 +22,7 @@ module ApplicationHelper
     key_method = options[:key] || lambda { |item| item.to_s.upcase.first }
     weight_method = options[:weight] || lambda { |item| 1 }
     max_groups = options[:groups] || 5
-    dict = options[:keys] ? Hash[options[:keys].to_a.zip([])] : {}
+    dict = options[:keys] ? Hash[*options[:keys].to_a.zip([])] : {}
     items.each do |item|
       key = key_method.is_a?(Proc) ? key_method.call(item) : item.send(key_method.to_sym)
       weight = weight_method.is_a?(Proc) ? weight_method.call(item) : item.send(weight_method.to_sym)
