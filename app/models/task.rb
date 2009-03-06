@@ -20,7 +20,7 @@ class Task < ActiveRecord::Base
   named_scope :blocked_for, lambda { |user| { :include => :blockages, :conditions => [ "blockages.user_id = ?", user.id ] } }
 
   acts_as_list :scope => :task_list_id
-  default_scope :order => "position ASC"
+  default_scope :order => "tasks.position ASC"
   
   acts_as_textiled :description
   
