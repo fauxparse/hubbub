@@ -6,6 +6,7 @@ class ProjectsController < ApplicationController
   # GET /projects.xml
   def index
     @projects = scope.all :include => :company
+    @companies = @projects.collect(&:company).flatten.uniq.sort_by(&:to_s)
 
     respond_to do |format|
       format.html # index.html.erb

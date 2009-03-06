@@ -432,6 +432,14 @@ ol.form li .assignments #new_assignment_row {
 	padding-bottom: 16px;
 }
 
+.company-projects h2 {
+  font-size: 250%;
+}
+
+.company-projects h2 .inline {
+  font-size: 40%;
+}
+
 .project-roles {
 	margin-left: 30%;
 }

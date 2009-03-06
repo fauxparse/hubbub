@@ -4,13 +4,14 @@
 	<h1>Projects</h1>
 <% end -%>
 
-<% @projects.group_by(&:company).sort_by(&:first).each do |company, projects| -%>
-	<% content_tag :div, :class => "company-projects", :id => dom_id(company, :projects) do -%>
-		<h2><%= link_to company, company_projects_path(company) %></h2>
-		<% content_tag :ul, :class => :projects do -%>
-			<%= render :partial => projects %>
+<% auto_tabs(@companies, :keys => ('A'..'Z'), :weight => lambda { |c| 10 + c.projects.size }) do |tab_keys, companies| -%>
+	<% companies.each do |company| -%>
+		<% content_tag :div, :class => "company-projects" do -%>
+			<h2><%= link_to company, company_projects_path(company) %> <%= link_to "New project", new_company_project_path(company), :class => "inline button" %></h2>
+			<% content_tag :ul, :class => :projects do -%>
+				<%= render :partial => company.projects %>
+			<% end -%>
 		<% end -%>
-		<%= link_to "New project for #{company}", new_company_project_path(company), :class => "inline button" %>
 	<% end -%>
 <% end -%>
 
