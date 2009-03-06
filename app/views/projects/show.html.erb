@@ -11,7 +11,7 @@
 <% content_for :sidebar do -%>
   <% content_tag :div, :class => "viewing-user" do -%>
 		<label for="viewing-user">View tasks for:</label>
-    <%= select_tag "viewing-user", options_for_select([[ "(anyone)", "" ], [ "#{current_user} (me)", current_user.id ]] + (current_agency.users - [ current_user ]).collect { |u| [ u.to_s, u.id ] }) %>
+    <%= select_tag "viewing-user", options_for_select([[ "(anyone)", "" ], [ "#{current_user} (me)", current_user.id ]] + (current_agency.users - [ current_user ]).collect { |u| [ u.to_s, u.id ] } + [[ "(unassigned)", "_" ]]) %>
   <% end -%>
 
 	<% remote_form_for :task_list, @project.task_lists.build, :url => project_lists_path(@project, :format => :js), :html => { :id => "new-task-list-form", :style => "display: none" } do |form| -%>

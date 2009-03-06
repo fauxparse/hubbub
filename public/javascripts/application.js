@@ -164,7 +164,7 @@ function load_user_selection() {
     v += '<span class="current"></span>';
     v += '<ul class="options" style="display: none;">';
     $.each(select_tag[0].options, function() {
-      u = (this.value == '' ? 'anybody' : 'user_' + this.value)
+      u = (this.value == '' ? 'anybody' : (this.value == '_' ? 'unassigned' : 'user_' + this.value));
       v += '<li><a class="' + u + '" href="#' + u + '" style="background-image: url(' + (this.value == '' ? '/images/select-anybody.png' : '/images/avatars/' + this.value + '/tiny.jpg') + ')"><strong>' + this.text + '</strong></a></li>';
     });
     v += '</ul>';
@@ -176,7 +176,7 @@ function load_user_selection() {
       return false;
     });
     $('#viewing-user .options a').click(function(e) {
-      set_selected_user(this.className == 'anybody' ? '' : this.className.replace('user_', ''));
+      set_selected_user(this.className == 'anybody' ? '' : (this.className == 'unassigned' ? '_' : this.className.replace('user_', '')));
       e.stopPropagation();
       return false;
     });
@@ -187,7 +187,7 @@ function load_user_selection() {
 
 function set_selected_user(v) {
   $.cookie('selected_user', v);
-  var u = (v == null || v == 0 || v == '' ? 'anybody' : 'user_' + v);
+  var u = (v == null || v == 0 || v == '' ? 'anybody' : (v == '_' ? 'unassigned' : 'user_' + v));
   var a = $('#viewing-user .options .' + u);
   $('#viewing-user .current').html(a.find('strong').html()).css('background-image', a.css('background-image'));
   $('#viewing-user .options:visible').hide('slide', { direction:'up' }, 'fast');
@@ -195,6 +195,8 @@ function set_selected_user(v) {
   if (u == 'anybody') {
 		viewing_user_id = null;
     tasks.show();
+  } else if (u == 'unassigned') {
+    tasks.hide().filter('.unassigned').show();
   } else {
 		viewing_user_id = u.replace(/^[^0-9]+/, '');
     tasks.hide().filter('.' + u + ', .anybody, .unassigned').show();
