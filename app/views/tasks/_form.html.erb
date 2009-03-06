@@ -1,8 +1,7 @@
 <%= form.error_messages %>
 <%= form.hidden_field :task_list_id %>
-<ol class="form">
-	<li class="text"><%= form.label :name %> <%= form.text_field :name, :class => "text" %></li>
-	<li class="text"><%= form.label :description %> <%= form.text_area :description, :rows => 3 %></li>
+<ol class="form task-form">
+	<li class="text"><%= form.label :name %> <%= form.text_area :name, :rows => 3 %></li>
 	<li class="text">
 		<%= label_tag "Assign to" %>
 		
@@ -17,7 +16,7 @@
 					<% end -%>
 				<% end -%>
 				<% content_tag :li, :id => "new_assignment_row" do -%>
-					<%= content_tag :label, "Add:", :for => "new_assignment_id" %> <%= assignment_user_selector "new_user_id", current_users, nil, current_user, :include_blank => true %>
+					<%= content_tag :label, "+", :for => "new_assignment_id" %> <%= assignment_user_selector "new_user_id", current_users, nil, current_user, :include_blank => true %>
 				<% end -%>
 			</ul>
 			<%= clear_floats %>
@@ -46,9 +45,10 @@
 			 	id:   'task_assignments_attributes_new_' + id + '_user_id',
 			 	name: 'task[assignments_attributes][new_' + id + '][user_id]'
 			 }).val(user_id);
-			new_row.append('<input class="text hours" name="task[assignments_attributes][new_' + id + '][user_id]" id="task_assignments_attributes_new_' + id + '_user_id" />');
+			new_row.append('<input class="text hours" name="task[assignments_attributes][new_' + id + '][estimate]" id="task_assignments_attributes_new_' + id + '_user_id" />');
 			new_row.append('<a href="#" onclick="delete_new_assignment(this); return false;" class="inline delete button">Delete</a>');
 			$(this).val('');
+			$(new_row).find('input.hours')[0].focus();
 		}
 	});
 	

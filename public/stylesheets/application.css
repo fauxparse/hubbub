@@ -375,11 +375,27 @@ ol.form li .assignments li select optgroup option {
 
 ol.form li .assignments li .hours {
 	width: 3em;
+	line-height: normal;
 }
 
 ol.form li .assignments #new_assignment_row {
-	padding: 4px;
+	padding: 4px 4px 4px 0px;
 	background: #eee;
+	margin-left: -2em;
+}
+
+ol.form li .assignments #new_assignment_row label {
+  width: 1em;
+  font-size: 200%;
+  line-height: 50%;
+  font-weight: bold;
+  color: #00aeef;
+  float: left;
+  text-align: center;
+}
+
+.task-form {
+  width: 512px;
 }
 
 /* Time Picker {{{ */
