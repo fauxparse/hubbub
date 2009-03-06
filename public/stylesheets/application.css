@@ -741,18 +741,6 @@ ul.completed li .task-meta {
 .blocked .task-id { background: #ff6600; }
 .completed .task-id { background: #999; }
 
-.task .task-name .button {
-  visibility: hidden;
-}
-
-.task:hover {
-	background: #eee;
-}
-
-.task:hover .task-name .button {
-  visibility: visible;
-}
-
 .task-meta {
 	color: #999;
 }
@@ -765,6 +753,23 @@ ul.completed li .task-meta {
 
 .task .no-due-date {
 	color: #ccc;
+}
+
+.task .task-buttons a {
+  float: right;
+  margin-right: 0.25em;
+}
+
+.task .task-buttons .button {
+  visibility: hidden;
+}
+
+.task:hover {
+	background: #eee;
+}
+
+.task:hover .task-buttons .button {
+  visibility: visible;
 }
 
 .task .task-status {

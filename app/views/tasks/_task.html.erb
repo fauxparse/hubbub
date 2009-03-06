@@ -6,10 +6,6 @@
 		  (<%= content_tag :span, link_to(task.company, company_path(task.company)) + " /", :class => dom_id(task.company) %>
 		  <%= link_to(task.project, project_path(task.project)) %>)
 		<% end -%>
-    <%= link_to "Edit", edit_task_path(task, :format => nil), :rel => :facebox, :class => "inline edit button" %>
-    <%= link_to "Add Time", task_time_path(task, :format => nil), :rel => :facebox, :class => "inline add button" %>
-    <%= link_to "Blocked", new_task_blockage_path(task, :format => nil), :rel => :facebox, :class => "inline blockage button" %>
-    <%= link_to_remote "Delete", :url => task_path(task, :format => :js), :method => :delete, :html => { :class => "inline delete button" } %>
 	<% end -%>
 	
 	<% content_tag :div, :class => "task-meta" do -%>
@@ -18,6 +14,12 @@
 	  <% else -%>
 	  	<%= content_tag :span, task.due_on ? "Due <strong class=\"due-date\" title=\"#{task.due_on.to_s(:long)}\">#{task.due_on.to_s(:fuzzy)}</strong>" : content_tag(:span, "No due date set", :class => "no-due-date") %>
 	  <% end -%>
+		<% content_tag :span, :class => "task-buttons" do -%>
+		  <%= link_to_remote "Delete", :url => task_path(task, :format => :js), :method => :delete, :html => { :class => "inline delete button" } %>
+		  <%= link_to "Blocked", new_task_blockage_path(task, :format => nil), :rel => :facebox, :class => "inline blockage button" %>
+		  <%= link_to "Add Time", task_time_path(task, :format => nil), :rel => :facebox, :class => "inline add button" %>
+		  <%= link_to "Edit", edit_task_path(task, :format => nil), :rel => :facebox, :class => "inline edit button" %>
+		<% end -%>
 	<% end -%>
 	
 	<% unless task.blockages.empty? -%>
