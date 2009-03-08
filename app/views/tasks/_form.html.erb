@@ -10,7 +10,8 @@
 			<ul>
 				<% form.fields_for :assignments do |fields| -%>
 					<% content_tag :li, :id => dom_id(fields.object) do -%>
-						<%= assignment_user_selector "task[assignments_attributes][#{fields.object.id}][user_id]", current_users, fields.object.user_id, current_user %>
+					  <%= fields.hidden_field :_delete, :value => 0 %>
+					  <%= fields.select :user_id, [[ "#{current_user} (me)", current_user.id ]] + (current_users - [ current_user ]).collect { |u| [ u.name, u.id ] }.sort_by(&:first) %>
 						<%= fields.text_field :estimate, :class => "text hours" %>
 						<%= link_to_function "Delete", "delete_assignment(this)", :class => "inline delete button" %>
 					<% end -%>
@@ -36,7 +37,7 @@
 </ol>
 
 <% javascript_tag do -%>
-	var id_for_new_assignment = 1;
+	var id_for_new_assignment = 1000;
 	$('#new_user_id').change(function() {
 		if ((user_id = $(this).val()) != '') {
 			var id = id_for_new_assignment++;
@@ -45,17 +46,15 @@
 			 	id:   'task_assignments_attributes_new_' + id + '_user_id',
 			 	name: 'task[assignments_attributes][new_' + id + '][user_id]'
 			 }).val(user_id);
-			new_row.append('<input class="text hours" name="task[assignments_attributes][new_' + id + '][estimate]" id="task_assignments_attributes_new_' + id + '_user_id" />');
-			new_row.append('<a href="#" onclick="delete_new_assignment(this); return false;" class="inline delete button">Delete</a>');
+			new_row.append(' <input class="text hours" name="task[assignments_attributes][new_' + id + '][estimate]" id="task_assignments_attributes_new_' + id + '_user_id" /> ');
+			new_row.append('<a href="#" onclick="delete_new_assignment(this); return false;" class="inline delete button">Delete</a> ');
 			$(this).val('');
 			$(new_row).find('input.hours')[0].focus();
 		}
 	});
 	
 	function delete_assignment(a) {
-		console.log($(a).parents('form'));
-		var id = $(a).parent('li')[0].id.replace(/^[^0-9]+/, '');
-		$(a).closest('form').append('<input type="hidden" name="task[assignments_attributes][' + id + '][_delete]" value="1" />');
+		$(a).siblings('input[type=hidden]').val('1').appendTo($(a).closest('form'));
 		$(a).closest('li').remove();
 	}
   

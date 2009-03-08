@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(:version => 20090227002436) do
   end
 
   create_table "sessions", :force => true do |t|
-    t.string   "session_id", :default => "", :null => false
+    t.string   "session_id", :null => false
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -117,14 +117,14 @@ ActiveRecord::Schema.define(:version => 20090227002436) do
 
   create_table "tasks", :force => true do |t|
     t.integer  "task_list_id"
-    t.text     "name"
+    t.text     "name",              :limit => 255
     t.string   "current_state"
     t.boolean  "billable"
     t.boolean  "visible_to_client"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "assignments_count", :default => 0
-    t.boolean  "anybody",           :default => false
+    t.integer  "assignments_count",                :default => 0
+    t.boolean  "anybody",                          :default => false
     t.date     "due_on"
     t.date     "completed_on"
     t.integer  "position"

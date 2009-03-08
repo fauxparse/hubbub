@@ -62,7 +62,6 @@ function rebind_handlers() {
 }
 
 function select_tab(tab_id) {
-	console.log($('#tab-' + tab_id));
 	$('.pane.tab-' + tab_id).siblings('.pane').hide();
 	$('.pane.tab-' + tab_id).show();
 	$('.tabs li.tab-' + tab_id).siblings('li').removeClass('active');
