@@ -1,6 +1,6 @@
 class TaskList < ActiveRecord::Base
   belongs_to :project
-  has_many :tasks
+  has_many :tasks, :order => "tasks.position ASC"
 
   acts_as_list :scope => :project_id
   default_scope :order => "position ASC"

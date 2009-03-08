@@ -22,7 +22,7 @@
 		<% end -%>
 	<% end -%>
 	
-	<% unless task.blockages.empty? -%>
+	<% if task.blocked? -%>
 		<% content_tag :ul, :class => :blockages do -%>
 			<% task.blockages.each do |blockage| -%>
 				<% content_tag :li, :id => dom_id(blockage) do -%>

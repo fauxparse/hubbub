@@ -29,7 +29,7 @@ class Assignment < ActiveRecord::Base
   end
   
   def blocked?
-    task.blockages.any? { |b| b.user_id == self.id }
+    task.blocked? && task.blockages.any? { |b| b.user_id == self.id }
   end
   
   def estimated?
