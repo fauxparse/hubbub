@@ -1,6 +1,7 @@
 class WikiController < ApplicationController
   before_filter :internal_login_required_for_wiki
   before_filter :get_wiki_page_from_full_path, :only => [ :show, :edit, :update, :destroy ]
+  cache_sweeper :wiki_sweeper, :only => [ :create, :update ]
 
   # TODO: caching for category list, wiki pages etc
 

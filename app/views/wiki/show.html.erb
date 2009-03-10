@@ -8,7 +8,9 @@
 <% end -%>
 
 <% content_tag :div, :class => "wiki-page" do -%>
-	<%= @wiki_page.body %>
+	<% cache :action => "show", :id => @wiki_page.to_param do -%>
+		<%= @wiki_page.body %>
+	<% end -%>
 <% end -%>
 
 <% content_tag :div, :id => "history" do -%>

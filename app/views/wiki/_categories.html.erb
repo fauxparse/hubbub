@@ -1,4 +1,6 @@
 <h2>Categories</h2>
 <ul class="wiki-categories">
-	<%= render :partial => "category", :collection => WikiPage.categories, :locals => { :depth => 2 } %>
+	<% cache :controller => "wiki", :list => "categories" do -%>
+		<%= render :partial => "category", :collection => WikiPage.categories, :locals => { :depth => 2 } %>
+	<% end -%>
 </ul>

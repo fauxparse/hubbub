@@ -1116,6 +1116,7 @@ a.wiki.missing {
 
 #sidebar .wiki-categories {
 	border-top: 1px solid #ccc;
+	padding-left: 0px;
 }
 
 #sidebar .wiki-categories li {
@@ -1125,6 +1126,10 @@ a.wiki.missing {
 	border-bottom: 1px solid #ccc;
 	font-weight: bold;
 	font-size: 125%;
+}
+
+#sidebar .wiki-categories li ul {
+  padding: 0px;
 }
 
 #sidebar .wiki-categories li li {
