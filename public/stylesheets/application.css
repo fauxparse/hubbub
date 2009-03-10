@@ -765,7 +765,7 @@ ul.completed li .task-meta {
 }
 
 .task:hover {
-	background: #eee;
+	background: url(/images/000000-10.png);
 }
 
 .task:hover .task-buttons .button {
